@@ -1,0 +1,320 @@
+{
+  "timestamp": "2025-12-03T15:10:56.569996",
+  "project_info": {
+    "title": "Crypto Sentiment Analytics - Big Data Analytics Final Project",
+    "team": [
+      "Emre Akyol",
+      "Harmanpreet Chauhan",
+      "Mohamed Nasr"
+    ],
+    "description": "Impact of Social Media Buzz on Cryptocurrency Volatility"
+  },
+  "data_summary": {
+    "total_cryptocurrencies": 6,
+    "features_analyzed": [
+      "symbol",
+      "name",
+      "price",
+      "change24h",
+      "volume24h",
+      "marketCap",
+      "volatility",
+      "sparkline",
+      "socialSentiment",
+      "buzzVolume"
+    ],
+    "data_sources": [
+      "Yahoo Finance API",
+      "Generated Sentiment Data"
+    ]
+  },
+  "cryptocurrencies": [
+    {
+      "symbol": "BTC",
+      "name": "Bitcoin",
+      "price": 92115.08,
+      "change24h": 0.84,
+      "volume24h": 84114333696,
+      "marketCap": 1838350729216,
+      "volatility": 0.0265,
+      "sparkline": [
+        88270.56,
+        87341.89,
+        90518.37,
+        91285.38,
+        90919.27,
+        90851.76,
+        90394.31,
+        86321.57,
+        91350.2,
+        92115.08
+      ],
+      "socialSentiment": 1.0,
+      "buzzVolume": 95790
+    },
+    {
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "price": 3046.11,
+      "change24h": 1.61,
+      "volume24h": 29450256384,
+      "marketCap": 367651061760,
+      "volatility": 0.0377,
+      "sparkline": [
+        2952.71,
+        2957.94,
+        3027.81,
+        3014.54,
+        3032.3,
+        2991.69,
+        2992.11,
+        2800.19,
+        2997.94,
+        3046.11
+      ],
+      "socialSentiment": 0.45,
+      "buzzVolume": 58678
+    },
+    {
+      "symbol": "XRP",
+      "name": "Ripple",
+      "price": 2.15,
+      "change24h": -0.21,
+      "volume24h": 4769713152,
+      "marketCap": 129749311488,
+      "volatility": 0.0403,
+      "sparkline": [
+        2.23,
+        2.2,
+        2.22,
+        2.2,
+        2.18,
+        2.2,
+        2.16,
+        2.03,
+        2.16,
+        2.15
+      ],
+      "socialSentiment": 1.0,
+      "buzzVolume": 36568
+    },
+    {
+      "symbol": "SOL",
+      "name": "Solana",
+      "price": 139.57,
+      "change24h": 0.64,
+      "volume24h": 6793747456,
+      "marketCap": 78125350912,
+      "volatility": 0.0421,
+      "sparkline": [
+        138.37,
+        138.89,
+        143.01,
+        140.85,
+        137.39,
+        136.08,
+        133.56,
+        126.71,
+        138.67,
+        139.57
+      ],
+      "socialSentiment": 0.53,
+      "buzzVolume": 47890
+    },
+    {
+      "symbol": "DOGE",
+      "name": "Dogecoin",
+      "price": 0.15,
+      "change24h": 0.95,
+      "volume24h": 1815616768,
+      "marketCap": 22402875392,
+      "volatility": 0.0421,
+      "sparkline": [
+        0.15,
+        0.15,
+        0.15,
+        0.15,
+        0.15,
+        0.15,
+        0.15,
+        0.14,
+        0.15,
+        0.15
+      ],
+      "socialSentiment": 0.5,
+      "buzzVolume": 74645
+    },
+    {
+      "symbol": "ADA",
+      "name": "Cardano",
+      "price": 0.43,
+      "change24h": -1.28,
+      "volume24h": 978735552,
+      "marketCap": 15378867200,
+      "volatility": 0.045,
+      "sparkline": [
+        0.43,
+        0.42,
+        0.44,
+        0.43,
+        0.42,
+        0.42,
+        0.42,
+        0.39,
+        0.43,
+        0.43
+      ],
+      "socialSentiment": 0.55,
+      "buzzVolume": 30791
+    }
+  ],
+  "ml_metrics": {
+    "volatility_mse": 0.00012690289249999993,
+    "volatility_r2": -3.0466483577806107,
+    "price_mse": 0.6671832049999997,
+    "price_r2": -3.501151661325684
+  },
+  "feature_importance": {
+    "socialSentiment": 0.12947963372080254,
+    "buzzVolume": 0.3684451492946367,
+    "change24h": 0.28610486917981093,
+    "volume24h": 0.21597034780474988
+  },
+  "correlations": {
+    "socialSentiment": {
+      "socialSentiment": 1.0,
+      "buzzVolume": 0.22595555974623868,
+      "volatility": -0.6054175131948305,
+      "change24h": -0.18946450901160075,
+      "volume24h": 0.5096786924829048
+    },
+    "buzzVolume": {
+      "socialSentiment": 0.22595555974623868,
+      "buzzVolume": 1.0,
+      "volatility": -0.8018461099081305,
+      "change24h": 0.6638191428346081,
+      "volume24h": 0.7798382251164525
+    },
+    "volatility": {
+      "socialSentiment": -0.6054175131948305,
+      "buzzVolume": -0.8018461099081305,
+      "volatility": 1.0,
+      "change24h": -0.46304847912543945,
+      "volume24h": -0.9799853823934238
+    },
+    "change24h": {
+      "socialSentiment": -0.18946450901160075,
+      "buzzVolume": 0.6638191428346081,
+      "volatility": -0.46304847912543945,
+      "change24h": 1.0,
+      "volume24h": 0.4068453472253567
+    },
+    "volume24h": {
+      "socialSentiment": 0.5096786924829048,
+      "buzzVolume": 0.7798382251164525,
+      "volatility": -0.9799853823934238,
+      "change24h": 0.4068453472253567,
+      "volume24h": 1.0
+    }
+  },
+  "market_overview": {
+    "totalMarketCap": 2451658195968,
+    "totalVolume": 127922403008,
+    "btcDominance": 68.4,
+    "fearGreedIndex": 72,
+    "socialSentiment": 0.6716666666666667,
+    "timestamp": "2025-12-03T14:10:55.775071Z"
+  },
+  "insights": {
+    "top_by_sentiment": [
+      {
+        "name": "Bitcoin",
+        "socialSentiment": 1.0,
+        "change24h": 0.84,
+        "volatility": 0.0265
+      },
+      {
+        "name": "Ripple",
+        "socialSentiment": 1.0,
+        "change24h": -0.21,
+        "volatility": 0.0403
+      },
+      {
+        "name": "Cardano",
+        "socialSentiment": 0.55,
+        "change24h": -1.28,
+        "volatility": 0.045
+      }
+    ],
+    "top_by_volatility": [
+      {
+        "name": "Cardano",
+        "volatility": 0.045,
+        "socialSentiment": 0.55,
+        "change24h": -1.28
+      },
+      {
+        "name": "Solana",
+        "volatility": 0.0421,
+        "socialSentiment": 0.53,
+        "change24h": 0.64
+      },
+      {
+        "name": "Dogecoin",
+        "volatility": 0.0421,
+        "socialSentiment": 0.5,
+        "change24h": 0.95
+      }
+    ],
+    "stable_positive": [
+      {
+        "symbol": "BTC",
+        "name": "Bitcoin",
+        "price": 92115.08,
+        "change24h": 0.84,
+        "volume24h": 84114333696,
+        "marketCap": 1838350729216,
+        "volatility": 0.0265,
+        "sparkline": [
+          88270.56,
+          87341.89,
+          90518.37,
+          91285.38,
+          90919.27,
+          90851.76,
+          90394.31,
+          86321.57,
+          91350.2,
+          92115.08
+        ],
+        "socialSentiment": 1.0,
+        "buzzVolume": 95790
+      }
+    ],
+    "high_activity": [
+      {
+        "symbol": "DOGE",
+        "name": "Dogecoin",
+        "price": 0.15,
+        "change24h": 0.95,
+        "volume24h": 1815616768,
+        "marketCap": 22402875392,
+        "volatility": 0.0421,
+        "sparkline": [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.14,
+          0.15,
+          0.15
+        ],
+        "socialSentiment": 0.5,
+        "buzzVolume": 74645
+      }
+    ]
+  }
+}

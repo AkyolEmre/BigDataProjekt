@@ -1,0 +1,95 @@
+{
+  "sentimentOverview": {
+    "overallSentiment": 0.67,
+    "sentimentChange": 0.12,
+    "totalMentions": 456789,
+    "positiveMentions": 234567,
+    "negativeMentions": 123456,
+    "neutralMentions": 98766,
+    "timestamp": "2025-11-19T15:30:00Z"
+  },
+  "platforms": [
+    {
+      "name": "Twitter",
+      "sentiment": 0.72,
+      "volume": 234567,
+      "influence": 0.85,
+      "trendingKeywords": ["Bitcoin", "BTC", "crypto", "altcoin", "bull run"],
+      "sentimentHistory": [
+        {"time": "2025-11-19T10:00:00Z", "sentiment": 0.65},
+        {"time": "2025-11-19T11:00:00Z", "sentiment": 0.68},
+        {"time": "2025-11-19T12:00:00Z", "sentiment": 0.71},
+        {"time": "2025-11-19T13:00:00Z", "sentiment": 0.69},
+        {"time": "2025-11-19T14:00:00Z", "sentiment": 0.73},
+        {"time": "2025-11-19T15:00:00Z", "sentiment": 0.72}
+      ]
+    },
+    {
+      "name": "Reddit",
+      "sentiment": 0.58,
+      "volume": 156789,
+      "influence": 0.72,
+      "trendingKeywords": ["HODL", "diamond hands", "moon", "whale", "dip"],
+      "sentimentHistory": [
+        {"time": "2025-11-19T10:00:00Z", "sentiment": 0.52},
+        {"time": "2025-11-19T11:00:00Z", "sentiment": 0.55},
+        {"time": "2025-11-19T12:00:00Z", "sentiment": 0.59},
+        {"time": "2025-11-19T13:00:00Z", "sentiment": 0.57},
+        {"time": "2025-11-19T14:00:00Z", "sentiment": 0.61},
+        {"time": "2025-11-19T15:00:00Z", "sentiment": 0.58}
+      ]
+    },
+    {
+      "name": "YouTube",
+      "sentiment": 0.45,
+      "volume": 45678,
+      "influence": 0.63,
+      "trendingKeywords": ["technical analysis", "price prediction", "altcoin gems", "crypto news"],
+      "sentimentHistory": [
+        {"time": "2025-11-19T10:00:00Z", "sentiment": 0.41},
+        {"time": "2025-11-19T11:00:00Z", "sentiment": 0.43},
+        {"time": "2025-11-19T12:00:00Z", "sentiment": 0.47},
+        {"time": "2025-11-19T13:00:00Z", "sentiment": 0.44},
+        {"time": "2025-11-19T14:00:00Z", "sentiment": 0.48},
+        {"time": "2025-11-19T15:00:00Z", "sentiment": 0.45}
+      ]
+    }
+  ],
+  "trendingTopics": [
+    {
+      "topic": "Bitcoin ETF Approval",
+      "sentiment": 0.89,
+      "volume": 67890,
+      "impact": "High",
+      "keywords": ["ETF", "institutional", "adoption", "bullish"]
+    },
+    {
+      "topic": "Regulatory Concerns",
+      "sentiment": -0.34,
+      "volume": 45678,
+      "impact": "Medium",
+      "keywords": ["regulation", "SEC", "compliance", "crackdown"]
+    },
+    {
+      "topic": "Altcoin Season",
+      "sentiment": 0.78,
+      "volume": 34567,
+      "impact": "High",
+      "keywords": ["altcoin", "season", "Ethereum", "gains"]
+    },
+    {
+      "topic": "Market Correction",
+      "sentiment": -0.56,
+      "volume": 23456,
+      "impact": "High",
+      "keywords": ["correction", "dip", "bear", "panic"]
+    }
+  ],
+  "sentimentDistribution": {
+    "veryPositive": 15.6,
+    "positive": 35.2,
+    "neutral": 21.6,
+    "negative": 18.7,
+    "veryNegative": 8.9
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "correlationAnalysis": {
+    "overallCorrelation": 0.73,
+    "significance": 0.001,
+    "rSquared": 0.5329,
+    "sampleSize": 1000,
+    "timePeriod": "2024-01-01 to 2025-11-19"
+  },
+  "cryptoCorrelations": [
+    {
+      "symbol": "BTC",
+      "correlation": 0.81,
+      "pValue": 0.001,
+      "slope": 0.0234,
+      "intercept": 0.0123,
+      "volatilityImpact": "High",
+      "buzzSensitivity": 0.67
+    },
+    {
+      "symbol": "ETH",
+      "correlation": 0.69,
+      "pValue": 0.002,
+      "slope": 0.0189,
+      "intercept": 0.0156,
+      "volatilityImpact": "Medium-High",
+      "buzzSensitivity": 0.54
+    },
+    {
+      "symbol": "XRP",
+      "correlation": 0.74,
+      "pValue": 0.001,
+      "slope": 0.0312,
+      "intercept": 0.0089,
+      "volatilityImpact": "High",
+      "buzzSensitivity": 0.72
+    },
+    {
+      "symbol": "SOL",
+      "correlation": 0.58,
+      "pValue": 0.005,
+      "slope": 0.0156,
+      "intercept": 0.0234,
+      "volatilityImpact": "Medium",
+      "buzzSensitivity": 0.43
+    },
+    {
+      "symbol": "DOGE",
+      "correlation": 0.85,
+      "pValue": 0.001,
+      "slope": 0.0412,
+      "intercept": 0.0067,
+      "volatilityImpact": "Very High",
+      "buzzSensitivity": 0.89
+    },
+    {
+      "symbol": "ADA",
+      "correlation": 0.62,
+      "pValue": 0.003,
+      "slope": 0.0198,
+      "intercept": 0.0145,
+      "volatilityImpact": "Medium",
+      "buzzSensitivity": 0.48
+    }
+  ],
+  "scatterPlotData": [
+    {"buzzVolume": 10000, "volatility": 0.023, "crypto": "BTC", "timestamp": "2025-11-19T10:00:00Z"},
+    {"buzzVolume": 15000, "volatility": 0.031, "crypto": "BTC", "timestamp": "2025-11-19T10:30:00Z"},
+    {"buzzVolume": 8000, "volatility": 0.018, "crypto": "ETH", "timestamp": "2025-11-19T11:00:00Z"},
+    {"buzzVolume": 12000, "volatility": 0.027, "crypto": "ETH", "timestamp": "2025-11-19T11:30:00Z"},
+    {"buzzVolume": 20000, "volatility": 0.045, "crypto": "DOGE", "timestamp": "2025-11-19T12:00:00Z"},
+    {"buzzVolume": 25000, "volatility": 0.052, "crypto": "DOGE", "timestamp": "2025-11-19T12:30:00Z"},
+    {"buzzVolume": 5000, "volatility": 0.015, "crypto": "XRP", "timestamp": "2025-11-19T13:00:00Z"},
+    {"buzzVolume": 18000, "volatility": 0.038, "crypto": "XRP", "timestamp": "2025-11-19T13:30:00Z"},
+    {"buzzVolume": 7000, "volatility": 0.019, "crypto": "SOL", "timestamp": "2025-11-19T14:00:00Z"},
+    {"buzzVolume": 11000, "volatility": 0.025, "crypto": "SOL", "timestamp": "2025-11-19T14:30:00Z"},
+    {"buzzVolume": 3000, "volatility": 0.012, "crypto": "ADA", "timestamp": "2025-11-19T15:00:00Z"},
+    {"buzzVolume": 9000, "volatility": 0.022, "crypto": "ADA", "timestamp": "2025-11-19T15:30:00Z"}
+  ],
+  "significantEvents": [
+    {
+      "date": "2025-11-15",
+      "event": "Elon Musk Dogecoin Tweet",
+      "crypto": "DOGE",
+      "buzzChange": 450,
+      "volatilityChange": 0.089,
+      "sentimentImpact": 0.78
+    },
+    {
+      "date": "2025-11-12",
+      "event": "Bitcoin ETF News",
+      "crypto": "BTC",
+      "buzzChange": 234,
+      "volatilityChange": 0.045,
+      "sentimentImpact": 0.89
+    },
+    {
+      "date": "2025-11-10",
+      "event": "Regulatory Announcement",
+      "crypto": "XRP",
+      "buzzChange": 156,
+      "volatilityChange": 0.067,
+      "sentimentImpact": -0.34
+    },
+    {
+      "date": "2025-11-08",
+      "event": "Ethereum Upgrade",
+      "crypto": "ETH",
+      "buzzChange": 189,
+      "volatilityChange": 0.038,
+      "sentimentImpact": 0.67
+    }
+  ]
+}

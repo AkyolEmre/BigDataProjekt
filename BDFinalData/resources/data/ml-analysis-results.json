@@ -1,0 +1,193 @@
+{
+  "timestamp": "2025-11-19T13:43:49.481682",
+  "cryptocurrencies": [
+    {
+      "symbol": "BTC",
+      "name": "Bitcoin",
+      "price": 95061.1,
+      "change_24h": 2.28,
+      "volume_24h": 76416040960,
+      "market_cap": 1896356118528,
+      "volatility": 0.0218,
+      "sentiment": 0.29,
+      "buzz_volume": 42168
+    },
+    {
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "price": 3187.76,
+      "change_24h": 2.1,
+      "volume_24h": 33814495232,
+      "market_cap": 384751173632,
+      "volatility": 0.0312,
+      "sentiment": 0.54,
+      "buzz_volume": 39721
+    },
+    {
+      "symbol": "XRP",
+      "name": "Ripple",
+      "price": 2.25,
+      "change_24h": 1.49,
+      "volume_24h": 4279639552,
+      "market_cap": 135371407360,
+      "volatility": 0.0203,
+      "sentiment": 0.23,
+      "buzz_volume": 19975
+    },
+    {
+      "symbol": "SOL",
+      "name": "Solana",
+      "price": 140.25,
+      "change_24h": -0.31,
+      "volume_24h": 5050844160,
+      "market_cap": 77739982848,
+      "volatility": 0.0446,
+      "sentiment": 0.85,
+      "buzz_volume": 73523
+    },
+    {
+      "symbol": "DOGE",
+      "name": "Dogecoin",
+      "price": 0.16,
+      "change_24h": -0.39,
+      "volume_24h": 1923162368,
+      "market_cap": 24451504128,
+      "volatility": 0.042,
+      "sentiment": 0.8,
+      "buzz_volume": 48682
+    },
+    {
+      "symbol": "ADA",
+      "name": "Cardano",
+      "price": 0.49,
+      "change_24h": 3.58,
+      "volume_24h": 1121377664,
+      "market_cap": 17650804736,
+      "volatility": 0.0287,
+      "sentiment": 0.08,
+      "buzz_volume": 38120
+    }
+  ],
+  "ml_metrics": {
+    "volatility_mse": 2.5978068500000246e-05,
+    "volatility_r2": -0.1760103440470917,
+    "price_mse": 0.5242814600000002,
+    "price_r2": -63.726106172839735
+  },
+  "correlations": {
+    "sentiment": {
+      "sentiment": 1.0,
+      "buzz_volume": 0.7543920551223492,
+      "volatility": 0.873807018448857,
+      "change_24h": -0.9011863917592864,
+      "volume_24h": -0.20356101220960002
+    },
+    "buzz_volume": {
+      "sentiment": 0.7543920551223492,
+      "buzz_volume": 1.0,
+      "volatility": 0.8397284842911819,
+      "change_24h": -0.5757178274936626,
+      "volume_24h": -0.07569794269078306
+    },
+    "volatility": {
+      "sentiment": 0.873807018448857,
+      "buzz_volume": 0.8397284842911819,
+      "volatility": 1.0,
+      "change_24h": -0.725514374462981,
+      "volume_24h": -0.46626166032553745
+    },
+    "change_24h": {
+      "sentiment": -0.9011863917592864,
+      "buzz_volume": -0.5757178274936626,
+      "volatility": -0.725514374462981,
+      "change_24h": 1.0,
+      "volume_24h": 0.3179753275442167
+    },
+    "volume_24h": {
+      "sentiment": -0.20356101220960002,
+      "buzz_volume": -0.07569794269078306,
+      "volatility": -0.46626166032553745,
+      "change_24h": 0.3179753275442167,
+      "volume_24h": 1.0
+    }
+  },
+  "insights": {
+    "high_sentiment": [
+      {
+        "name": "Solana",
+        "sentiment": 0.85,
+        "change_24h": -0.31,
+        "volatility": 0.0446
+      },
+      {
+        "name": "Dogecoin",
+        "sentiment": 0.8,
+        "change_24h": -0.39,
+        "volatility": 0.042
+      },
+      {
+        "name": "Ethereum",
+        "sentiment": 0.54,
+        "change_24h": 2.1,
+        "volatility": 0.0312
+      }
+    ],
+    "high_volatility": [
+      {
+        "name": "Solana",
+        "volatility": 0.0446,
+        "sentiment": 0.85,
+        "change_24h": -0.31
+      },
+      {
+        "name": "Dogecoin",
+        "volatility": 0.042,
+        "sentiment": 0.8,
+        "change_24h": -0.39
+      },
+      {
+        "name": "Ethereum",
+        "volatility": 0.0312,
+        "sentiment": 0.54,
+        "change_24h": 2.1
+      }
+    ],
+    "stable_positive": [
+      {
+        "symbol": "ETH",
+        "name": "Ethereum",
+        "price": 3187.76,
+        "change_24h": 2.1,
+        "volume_24h": 33814495232,
+        "market_cap": 384751173632,
+        "volatility": 0.0312,
+        "sentiment": 0.54,
+        "buzz_volume": 39721
+      }
+    ],
+    "high_activity": [
+      {
+        "symbol": "SOL",
+        "name": "Solana",
+        "price": 140.25,
+        "change_24h": -0.31,
+        "volume_24h": 5050844160,
+        "market_cap": 77739982848,
+        "volatility": 0.0446,
+        "sentiment": 0.85,
+        "buzz_volume": 73523
+      },
+      {
+        "symbol": "DOGE",
+        "name": "Dogecoin",
+        "price": 0.16,
+        "change_24h": -0.39,
+        "volume_24h": 1923162368,
+        "market_cap": 24451504128,
+        "volatility": 0.042,
+        "sentiment": 0.8,
+        "buzz_volume": 48682
+      }
+    ]
+  }
+}
