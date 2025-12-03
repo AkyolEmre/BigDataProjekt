@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Predictions - CryptoSentiment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #0f1419;
+            color: #e5e7eb;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #00d4ff, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+        }
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 20, 25, 0.9);
+        }
+        .prediction-positive { color: #10b981; }
+        .prediction-negative { color: #ef4444; }
+        .prediction-neutral { color: #f59e0b; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-blur border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">CS</span>
+                    </div>
+                    <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors font-medium">Dashboard</a>
+                    <a href="sentiment.html" class="text-gray-300 hover:text-white transition-colors font-medium">Sentiment</a>
+                    <a href="correlation.html" class="text-gray-300 hover:text-white transition-colors font-medium">Correlation</a>
+                    <a href="predictions.html" class="text-blue-400 hover:text-blue-300 transition-colors font-medium">Predictions</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-bold mb-6">
+                    <span class="gradient-text">Machine Learning</span><br>
+                    <span class="text-white">Predictions Dashboard</span>
+                </h1>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Advanced ML models predict cryptocurrency price movements based on social media sentiment analysis. 
+                    Get actionable insights with confidence intervals and feature importance.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prediction Controls -->
+    <section class="py-12 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-12">
+                <h2 class="text-2xl font-bold mb-6">Prediction Configuration</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Cryptocurrency</label>
+                        <select id="crypto-select" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="BTC">Bitcoin (BTC)</option>
+                            <option value="ETH">Ethereum (ETH)</option>
+                            <option value="XRP">Ripple (XRP)</option>
+                            <option value="SOL">Solana (SOL)</option>
+                            <option value="DOGE">Dogecoin (DOGE)</option>
+                            <option value="ADA">Cardano (ADA)</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Prediction Horizon</label>
+                        <select id="horizon-select" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="1h">1 Hour</option>
+                            <option value="4h">4 Hours</option>
+                            <option value="24h" selected>24 Hours</option>
+                            <option value="7d">7 Days</option>
+                            <option value="30d">30 Days</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">ML Model</label>
+                        <select id="model-select" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="ensemble">Ensemble Model</option>
+                            <option value="lstm">LSTM Neural Network</option>
+                            <option value="xgboost">XGBoost</option>
+                            <option value="randomforest">Random Forest</option>
+                            <option value="linear">Linear Regression</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <button id="run-prediction" class="bg-gradient-to-r from-blue-500 to-emerald-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-emerald-600 transition-all transform hover:scale-105">
+                        Run Prediction
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prediction Results -->
+    <section class="py-12 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Current Price -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">Current Price</h3>
+                        <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
+                    </div>
+                    <p class="text-3xl font-bold text-white" id="current-price">$98,750.32</p>
+                    <p class="text-sm text-gray-400 mt-2">Bitcoin (BTC)</p>
+                </div>
+                
+                <!-- Predicted Price -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">24h Prediction</h3>
+                        <div class="w-3 h-3 bg-emerald-400 rounded-full"></div>
+                    </div>
+                    <p class="text-3xl font-bold prediction-positive" id="predicted-price">$102,345.67</p>
+                    <p class="text-sm prediction-positive mt-2">+3.65% (+$3,595.35)</p>
+                </div>
+                
+                <!-- Confidence Level -->
+                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">Confidence</h3>
+                        <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    </div>
+                    <p class="text-3xl font-bold text-yellow-400" id="confidence-level">87.3%</p>
+                    <p class="text-sm text-gray-400 mt-2">Model Confidence</p>
+                </div>
+            </div>
+
+            <!-- Prediction Chart -->
+            <div class="bg-gray-900 rounded-xl p-8 border border-gray-700 mb-12">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold">Price Prediction with Confidence Intervals</h3>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
+                            <span class="text-sm text-gray-400">Historical</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-emerald-400 rounded-full"></div>
+                            <span class="text-sm text-gray-400">Prediction</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                            <span class="text-sm text-gray-400">Confidence</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="prediction-chart" class="h-96"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model Performance -->
+    <section class="py-12 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Model Performance</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">Accuracy</h3>
+                        <div class="w-3 h-3 bg-emerald-400 rounded-full"></div>
+                    </div>
+                    <p class="text-3xl font-bold text-emerald-400">87.3%</p>
+                    <p class="text-sm text-emerald-400 mt-2">+2.1% vs last week</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">Precision</h3>
+                        <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
+                    </div>
+                    <p class="text-3xl font-bold text-blue-400">84.7%</p>
+                    <p class="text-sm text-blue-400 mt-2">+1.8% vs last week</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">Recall</h3>
+                        <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    </div>
+                    <p class="text-3xl font-bold text-yellow-400">82.1%</p>
+                    <p class="text-sm text-yellow-400 mt-2">+1.2% vs last week</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">F1-Score</h3>
+                        <div class="w-3 h-3 bg-purple-400 rounded-full"></div>
+                    </div>
+                    <p class="text-3xl font-bold text-purple-400">83.4%</p>
+                    <p class="text-sm text-purple-400 mt-2">+1.5% vs last week</p>
+                </div>
+            </div>
+
+            <!-- Model Comparison -->
+            <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-12">
+                <h3 class="text-2xl font-bold mb-6">Model Comparison</h3>
+                <div id="model-comparison" class="h-96"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Importance -->
+    <section class="py-12 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Feature Importance</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
+                    <h3 class="text-xl font-bold mb-6">Top Predictive Features</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300">Twitter Sentiment Score</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-32 bg-gray-700 rounded-full h-2">
+                                    <div class="bg-emerald-400 h-2 rounded-full" style="width: 92%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-emerald-400">92%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300">Reddit Mention Volume</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-32 bg-gray-700 rounded-full h-2">
+                                    <div class="bg-blue-400 h-2 rounded-full" style="width: 87%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-blue-400">87%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300">Google Trends Index</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-32 bg-gray-700 rounded-full h-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 78%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-yellow-400">78%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300">YouTube Sentiment</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-32 bg-gray-700 rounded-full h-2">
+                                    <div class="bg-purple-400 h-2 rounded-full" style="width: 65%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-purple-400">65%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300">Fear & Greed Index</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-32 bg-gray-700 rounded-full h-2">
+                                    <div class="bg-orange-400 h-2 rounded-full" style="width: 58%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-orange-400">58%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300">Trading Volume</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-32 bg-gray-700 rounded-full h-2">
+                                    <div class="bg-red-400 h-2 rounded-full" style="width: 43%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-red-400">43%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
+                    <h3 class="text-xl font-bold mb-6">Feature Correlation Matrix</h3>
+                    <div id="feature-correlation" class="h-80"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Backtesting Results -->
+    <section class="py-12 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Backtesting Results</h2>
+            
+            <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-12">
+                <h3 class="text-2xl font-bold mb-6">Historical Performance</h3>
+                <div id="backtesting-chart" class="h-96"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <h3 class="text-xl font-bold mb-4">Portfolio Returns</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">1 Month</span>
+                            <span class="font-bold text-emerald-400">+12.4%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">3 Months</span>
+                            <span class="font-bold text-emerald-400">+28.7%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">6 Months</span>
+                            <span class="font-bold text-emerald-400">+45.2%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">1 Year</span>
+                            <span class="font-bold text-emerald-400">+67.8%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <h3 class="text-xl font-bold mb-4">Risk Metrics</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Sharpe Ratio</span>
+                            <span class="font-bold text-blue-400">1.89</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Max Drawdown</span>
+                            <span class="font-bold text-red-400">-12.3%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Volatility</span>
+                            <span class="font-bold text-yellow-400">24.6%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">VaR (95%)</span>
+                            <span class="font-bold text-orange-400">-4.2%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <h3 class="text-xl font-bold mb-4">Trade Statistics</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Total Trades</span>
+                            <span class="font-bold text-white">247</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Win Rate</span>
+                            <span class="font-bold text-emerald-400">73.2%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Avg Win</span>
+                            <span class="font-bold text-emerald-400">+5.8%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Avg Loss</span>
+                            <span class="font-bold text-red-400">-2.1%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-12 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center space-x-2 mb-4">
+                <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">CS</span>
+                </div>
+                <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
+            </div>
+            <p class="text-gray-400">© 2025 Crypto Sentiment Analytics Dashboard. Advanced data analytics for cryptocurrency markets.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ML Predictions Page JavaScript
+        let predictionChart = null;
+        let modelComparisonChart = null;
+        let featureCorrelationChart = null;
+        let backtestingChart = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            setupEventListeners();
+        });
+
+        function initializeCharts() {
+            initializePredictionChart();
+            initializeModelComparison();
+            initializeFeatureCorrelation();
+            initializeBacktestingChart();
+        }
+
+        function initializePredictionChart() {
+            const chartElement = document.getElementById('prediction-chart');
+            if (!chartElement) return;
+
+            predictionChart = echarts.init(chartElement);
+
+            // Generate sample prediction data
+            const historicalData = [];
+            const predictionData = [];
+            const upperBound = [];
+            const lowerBound = [];
+            
+            const now = new Date();
+            const basePrice = 98750;
+            
+            // Historical data (last 24 hours)
+            for (let i = 23; i >= 0; i--) {
+                const time = new Date(now.getTime() - i * 3600000);
+                const price = basePrice + (Math.random() - 0.5) * 2000;
+                historicalData.push([time.toISOString(), price]);
+            }
+            
+            // Prediction data (next 24 hours)
+            for (let i = 1; i <= 24; i++) {
+                const time = new Date(now.getTime() + i * 3600000);
+                const predictedPrice = basePrice * (1 + 0.0365); // +3.65% prediction
+                const confidence = 0.15; // 15% confidence interval
+                
+                predictionData.push([time.toISOString(), predictedPrice]);
+                upperBound.push([time.toISOString(), predictedPrice * (1 + confidence)]);
+                lowerBound.push([time.toISOString(), predictedPrice * (1 - confidence)]);
+            }
+
+            const option = {
+                backgroundColor: 'transparent',
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: '#1f2937',
+                    borderColor: '#374151',
+                    textStyle: { color: '#e5e7eb' }
+                },
+                legend: {
+                    data: ['Historical', 'Prediction', 'Upper Bound', 'Lower Bound'],
+                    textStyle: { color: '#e5e7eb' },
+                    top: 10
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'time',
+                    axisLine: { lineStyle: { color: '#374151' } },
+                    axisLabel: { color: '#9ca3af' }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLine: { lineStyle: { color: '#374151' } },
+                    axisLabel: { color: '#9ca3af', formatter: '${value}' },
+                    splitLine: { lineStyle: { color: '#374151' } }
+                },
+                series: [
+                    {
+                        name: 'Historical',
+                        type: 'line',
+                        data: historicalData,
+                        lineStyle: { color: '#3b82f6', width: 2 },
+                        symbol: 'none'
+                    },
+                    {
+                        name: 'Upper Bound',
+                        type: 'line',
+                        data: upperBound,
+                        lineStyle: { color: '#f59e0b', width: 1, type: 'dashed' },
+                        symbol: 'none',
+                        areaStyle: {
+                            color: 'rgba(245, 158, 11, 0.1)'
+                        }
+                    },
+                    {
+                        name: 'Lower Bound',
+                        type: 'line',
+                        data: lowerBound,
+                        lineStyle: { color: '#f59e0b', width: 1, type: 'dashed' },
+                        symbol: 'none',
+                        areaStyle: {
+                            color: 'rgba(245, 158, 11, 0.1)'
+                        }
+                    },
+                    {
+                        name: 'Prediction',
+                        type: 'line',
+                        data: predictionData,
+                        lineStyle: { color: '#10b981', width: 3 },
+                        symbol: 'circle',
+                        symbolSize: 6
+                    }
+                ]
+            };
+
+            predictionChart.setOption(option);
+        }
+
+        function initializeModelComparison() {
+            const chartElement = document.getElementById('model-comparison');
+            if (!chartElement) return;
+
+            modelComparisonChart = echarts.init(chartElement);
+
+            const option = {
+                backgroundColor: 'transparent',
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: '#1f2937',
+                    borderColor: '#374151',
+                    textStyle: { color: '#e5e7eb' }
+                },
+                legend: {
+                    data: ['Accuracy', 'Precision', 'Recall', 'F1-Score'],
+                    textStyle: { color: '#e5e7eb' },
+                    top: 10
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['Ensemble', 'LSTM', 'XGBoost', 'Random Forest', 'Linear'],
+                    axisLine: { lineStyle: { color: '#374151' } },
+                    axisLabel: { color: '#9ca3af' }
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 0,
+                    max: 100,
+                    axisLine: { lineStyle: { color: '#374151' } },
+                    axisLabel: { color: '#9ca3af', formatter: '{value}%' },
+                    splitLine: { lineStyle: { color: '#374151' } }
+                },
+                series: [
+                    {
+                        name: 'Accuracy',
+                        type: 'bar',
+                        data: [87.3, 84.1, 82.7, 79.3, 71.2],
+                        itemStyle: { color: '#10b981' }
+                    },
+                    {
+                        name: 'Precision',
+                        type: 'bar',
+                        data: [84.7, 81.9, 80.3, 77.1, 69.8],
+                        itemStyle: { color: '#3b82f6' }
+                    },
+                    {
+                        name: 'Recall',
+                        type: 'bar',
+                        data: [82.1, 79.5, 78.9, 75.2, 68.4],
+                        itemStyle: { color: '#f59e0b' }
+                    },
+                    {
+                        name: 'F1-Score',
+                        type: 'bar',
+                        data: [83.4, 80.7, 79.6, 76.1, 69.1],
+                        itemStyle: { color: '#8b5cf6' }
+                    }
+                ]
+            };
+
+            modelComparisonChart.setOption(option);
+        }
+
+        function initializeFeatureCorrelation() {
+            const chartElement = document.getElementById('feature-correlation');
+            if (!chartElement) return;
+
+            featureCorrelationChart = echarts.init(chartElement);
+
+            const features = ['Twitter Sentiment', 'Reddit Volume', 'Google Trends', 'YouTube Sentiment', 'Fear & Greed', 'Volume'];
+            
+            // Generate correlation matrix data
+            const data = [];
+            for (let i = 0; i < features.length; i++) {
+                for (let j = 0; j < features.length; j++) {
+                    const correlation = i === j ? 1 : (Math.random() - 0.5) * 2;
+                    data.push([i, j, correlation.toFixed(2)]);
+                }
+            }
+
+            const option = {
+                backgroundColor: 'transparent',
+                tooltip: {
+                    position: 'top',
+                    backgroundColor: '#1f2937',
+                    borderColor: '#374151',
+                    textStyle: { color: '#e5e7eb' },
+                    formatter: function(params) {
+                        return `${features[params.data[0]]} vs ${features[params.data[1]]}<br/>Correlation: ${params.data[2]}`;
+                    }
+                },
+                grid: {
+                    height: '50%',
+                    top: '10%'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: features,
+                    splitArea: { show: true },
+                    axisLabel: { 
+                        color: '#9ca3af',
+                        interval: 0,
+                        rotate: 45
+                    }
+                },
+                yAxis: {
+                    type: 'category',
+                    data: features,
+                    splitArea: { show: true },
+                    axisLabel: { color: '#9ca3af' }
+                },
+                visualMap: {
+                    min: -1,
+                    max: 1,
+                    calculable: true,
+                    orient: 'horizontal',
+                    left: 'center',
+                    bottom: '15%',
+                    textStyle: { color: '#e5e7eb' },
+                    inRange: {
+                        color: ['#ef4444', '#ffffff', '#10b981']
+                    }
+                },
+                series: [{
+                    name: 'Correlation',
+                    type: 'heatmap',
+                    data: data,
+                    label: {
+                        show: true,
+                        color: '#000000',
+                        fontSize: 10
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }]
+            };
+
+            featureCorrelationChart.setOption(option);
+        }
+
+        function initializeBacktestingChart() {
+            const chartElement = document.getElementById('backtesting-chart');
+            if (!chartElement) return;
+
+            backtestingChart = echarts.init(chartElement);
+
+            // Generate sample backtesting data
+            const portfolioData = [];
+            const benchmarkData = [];
+            const dates = [];
+            
+            const now = new Date();
+            let portfolioValue = 100000; // Start with $100k
+            let benchmarkValue = 100000;
+            
+            for (let i = 30; i >= 0; i--) {
+                const date = new Date(now.getTime() - i * 86400000);
+                dates.push(date.toISOString());
+                
+                // Simulate portfolio growth (better than benchmark)
+                portfolioValue *= (1 + (Math.random() * 0.04 - 0.01)); // -1% to +3% daily
+                benchmarkValue *= (1 + (Math.random() * 0.03 - 0.015)); // -1.5% to +1.5% daily
+                
+                portfolioData.push(portfolioValue);
+                benchmarkData.push(benchmarkValue);
+            }
+
+            const option = {
+                backgroundColor: 'transparent',
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: '#1f2937',
+                    borderColor: '#374151',
+                    textStyle: { color: '#e5e7eb' },
+                    formatter: function(params) {
+                        let result = `${new Date(params[0].axisValue).toLocaleDateString()}<br/>`;
+                        params.forEach(param => {
+                            result += `${param.seriesName}: $${param.value.toLocaleString()}<br/>`;
+                        });
+                        return result;
+                    }
+                },
+                legend: {
+                    data: ['Portfolio', 'Benchmark'],
+                    textStyle: { color: '#e5e7eb' },
+                    top: 10
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: dates,
+                    axisLine: { lineStyle: { color: '#374151' } },
+                    axisLabel: { color: '#9ca3af' }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLine: { lineStyle: { color: '#374151' } },
+                    axisLabel: { color: '#9ca3af', formatter: '${value}' },
+                    splitLine: { lineStyle: { color: '#374151' } }
+                },
+                series: [
+                    {
+                        name: 'Benchmark',
+                        type: 'line',
+                        data: benchmarkData,
+                        lineStyle: { color: '#6b7280', width: 2 },
+                        symbol: 'none'
+                    },
+                    {
+                        name: 'Portfolio',
+                        type: 'line',
+                        data: portfolioData,
+                        lineStyle: { color: '#10b981', width: 3 },
+                        symbol: 'circle',
+                        symbolSize: 4
+                    }
+                ]
+            };
+
+            backtestingChart.setOption(option);
+        }
+
+        function setupEventListeners() {
+            // Run prediction button
+            document.getElementById('run-prediction').addEventListener('click', function() {
+                const crypto = document.getElementById('crypto-select').value;
+                const horizon = document.getElementById('horizon-select').value;
+                const model = document.getElementById('model-select').value;
+                
+                console.log('Running prediction:', { crypto, horizon, model });
+                
+                // Simulate prediction update
+                updatePrediction(crypto, horizon, model);
+            });
+        }
+
+        function updatePrediction(crypto, horizon, model) {
+            // Simulate API call and update UI
+            setTimeout(() => {
+                // Update current price based on crypto selection
+                const prices = {
+                    'BTC': 98750.32,
+                    'ETH': 3456.78,
+                    'XRP': 2.89,
+                    'SOL': 178.45,
+                    'DOGE': 0.234,
+                    'ADA': 0.789
+                };
+                
+                const currentPrice = prices[crypto] || 98750.32;
+                document.getElementById('current-price').textContent = `$${currentPrice.toLocaleString()}`;
+                
+                // Update predicted price (simulate different predictions)
+                const predictions = {
+                    'BTC': currentPrice * 1.0365,
+                    'ETH': currentPrice * 1.0289,
+                    'XRP': currentPrice * 1.0456,
+                    'SOL': currentPrice * 0.9876,
+                    'DOGE': currentPrice * 1.1234,
+                    'ADA': currentPrice * 1.0156
+                };
+                
+                const predictedPrice = predictions[crypto] || currentPrice * 1.0365;
+                const change = predictedPrice - currentPrice;
+                const changePercent = (change / currentPrice) * 100;
+                
+                document.getElementById('predicted-price').textContent = `$${predictedPrice.toFixed(2)}`;
+                document.getElementById('predicted-price').nextElementSibling.textContent = 
+                    `${changePercent >= 0 ? '+' : ''}${changePercent.toFixed(2)}% (${change >= 0 ? '+' : ''}$${Math.abs(change).toFixed(2)})`;
+                
+                // Update prediction chart
+                initializePredictionChart();
+                
+                // Show success message
+                alert(`Prediction updated for ${crypto} using ${model} model (${horizon} horizon)`);
+            }, 1000);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (predictionChart) predictionChart.resize();
+            if (modelComparisonChart) modelComparisonChart.resize();
+            if (featureCorrelationChart) featureCorrelationChart.resize();
+            if (backtestingChart) backtestingChart.resize();
+        });
+    </script>
+</body>
+</html>
