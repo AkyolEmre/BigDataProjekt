@@ -20,11 +20,11 @@
 This project implements a comprehensive Big Data Analytics solution that analyzes the relationship between social media sentiment and cryptocurrency price volatility. The solution follows all four layers of Big Data architecture and uses real data from Yahoo Finance API instead of mock data.
 
 **Key Achievements:**
-- ✅ Real-time cryptocurrency data from Yahoo Finance API
-- ✅ Machine learning models for sentiment-volatility correlation
-- ✅ Interactive web dashboard with modern UI
-- ✅ All 4 Big Data layers implemented
-- ✅ Fixed critical ML notebook errors
+- Real-time cryptocurrency data from Yahoo Finance API
+- Machine learning models for sentiment-volatility correlation
+- Interactive web dashboard with modern UI
+- All 4 Big Data layers implemented
+- Fixed critical ML notebook errors
 
 ---
 
@@ -43,6 +43,7 @@ This project implements a comprehensive Big Data Analytics solution that analyze
 
 ### 2. Data Storage Layer
 **Storage Solutions:**
+
 - **Primary**: JSON files for structured data storage
 - **File Structure**:
   ```
@@ -156,25 +157,25 @@ from sklearn.preprocessing import StandardScaler
 
 ## Key Features Implemented
 
-### ✅ Real Data Integration
+### Real Data Integration
 - Live cryptocurrency prices from Yahoo Finance
 - Real market volumes and market caps
 - Dynamic volatility calculations
 - Timestamped data updates
 
-### ✅ Machine Learning Models
+### Machine Learning Models
 - Random Forest for volatility prediction
 - Cross-validation with proper imports
 - Feature importance analysis
 - Model performance metrics
 
-### ✅ Interactive Visualizations
+### Interactive Visualizations
 - Real-time price displays
 - Sentiment gauge charts
 - Correlation scatter plots
 - Time-series analysis
 
-### ✅ Responsive Design
+### Responsive Design
 - Mobile-first approach
 - Dark theme with professional aesthetics
 - Smooth animations and transitions
@@ -233,6 +234,7 @@ pip install yfinance pandas scikit-learn numpy matplotlib seaborn
 ### Critical Bug Fix
 **Problem**: `NameError: name 'cross_val_score' is not defined`
 **Solution**: Added proper import statement:
+
 ```python
 from sklearn.model_selection import cross_val_score, train_test_split
 ```
