@@ -1,671 +1,912 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Social Media Sentiment Analysis - CryptoSentiment</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: #0f1419;
-            color: #e5e7eb;
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #00d4ff, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
-        }
-        .nav-blur {
-            backdrop-filter: blur(10px);
-            background: rgba(15, 20, 25, 0.9);
-        }
-        .sentiment-positive { color: #10b981; }
-        .sentiment-negative { color: #ef4444; }
-        .sentiment-neutral { color: #f59e0b; }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0f1419;
+        color: #e5e7eb;
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #00d4ff, #10b981);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+      }
+      .nav-blur {
+        backdrop-filter: blur(10px);
+        background: rgba(15, 20, 25, 0.9);
+      }
+      .sentiment-positive {
+        color: #10b981;
+      }
+      .sentiment-negative {
+        color: #ef4444;
+      }
+      .sentiment-neutral {
+        color: #f59e0b;
+      }
     </style>
-</head>
-<body class="bg-gray-900 text-white">
+  </head>
+  <body class="bg-gray-900 text-white">
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 nav-blur border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">CS</span>
-                    </div>
-                    <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors font-medium">Dashboard</a>
-                    <a href="sentiment.html" class="text-blue-400 hover:text-blue-300 transition-colors font-medium">Sentiment</a>
-                    <a href="correlation.html" class="text-gray-300 hover:text-white transition-colors font-medium">Correlation</a>
-                    <a href="predictions.html" class="text-gray-300 hover:text-white transition-colors font-medium">Predictions</a>
-                </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center space-x-2">
+            <div
+              class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center"
+            >
+              <span class="text-white font-bold text-sm">CS</span>
             </div>
+            <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
+          </div>
+          <div class="hidden md:flex space-x-8">
+            <a
+              href="index.html"
+              class="text-gray-300 hover:text-white transition-colors font-medium"
+              >Dashboard</a
+            >
+            <a
+              href="sentiment.html"
+              class="text-blue-400 hover:text-blue-300 transition-colors font-medium"
+              >Sentiment</a
+            >
+            <a
+              href="correlation.html"
+              class="text-gray-300 hover:text-white transition-colors font-medium"
+              >Correlation</a
+            >
+            <a
+              href="predictions.html"
+              class="text-gray-300 hover:text-white transition-colors font-medium"
+              >Predictions</a
+            >
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="pt-24 pb-12 bg-gradient-to-br from-gray-900 to-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h1 class="text-5xl font-bold mb-6">
-                    <span class="gradient-text">Social Media Sentiment</span><br>
-                    <span class="text-white">Analysis Dashboard</span>
-                </h1>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-                    Deep dive into cryptocurrency sentiment across social media platforms. 
-                    Track buzz volume, sentiment trends, and market impact in real-time.
-                </p>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h1 class="text-5xl font-bold mb-6">
+            <span class="gradient-text">Social Media Sentiment</span><br />
+            <span class="text-white">Analysis Dashboard</span>
+          </h1>
+          <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+            Deep dive into cryptocurrency sentiment across social media
+            platforms. Track buzz volume, sentiment trends, and market impact in
+            real-time.
+          </p>
         </div>
+      </div>
     </section>
 
     <!-- Sentiment Overview -->
     <section class="py-12 bg-gray-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-gray-300">Overall Sentiment</h3>
-                        <div class="w-3 h-3 bg-emerald-400 rounded-full"></div>
-                    </div>
-                    <p class="text-3xl font-bold sentiment-positive" id="overall-sentiment">+0.67</p>
-                    <p class="text-sm text-emerald-400 mt-2">↗ +0.12 (24h)</p>
-                </div>
-                
-                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-gray-300">Total Mentions</h3>
-                        <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
-                    </div>
-                    <p class="text-3xl font-bold text-white" id="total-mentions">456.8K</p>
-                    <p class="text-sm text-blue-400 mt-2">+23.4% (24h)</p>
-                </div>
-                
-                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-gray-300">Positive Mentions</h3>
-                        <div class="w-3 h-3 bg-emerald-400 rounded-full"></div>
-                    </div>
-                    <p class="text-3xl font-bold text-emerald-400" id="positive-mentions">234.6K</p>
-                    <p class="text-sm text-emerald-400 mt-2">51.4% of total</p>
-                </div>
-                
-                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-gray-300">Negative Mentions</h3>
-                        <div class="w-3 h-3 bg-red-400 rounded-full"></div>
-                    </div>
-                    <p class="text-3xl font-bold text-red-400" id="negative-mentions">123.5K</p>
-                    <p class="text-sm text-red-400 mt-2">27.0% of total</p>
-                </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div
+            class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-gray-300">
+                Overall Sentiment
+              </h3>
+              <div class="w-3 h-3 bg-emerald-400 rounded-full"></div>
             </div>
+            <p
+              class="text-3xl font-bold sentiment-positive"
+              id="overall-sentiment"
+            >
+              +0.67
+            </p>
+            <p class="text-sm text-emerald-400 mt-2">↗ +0.12 (24h)</p>
+          </div>
 
-            <!-- Sentiment Timeline -->
-            <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-12">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-bold">Sentiment Timeline</h3>
-                    <div class="flex gap-2">
-                        <button class="time-range-btn active bg-blue-500 text-white px-4 py-2 rounded-lg text-sm" data-range="24h">24H</button>
-                        <button class="time-range-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm hover:bg-gray-600" data-range="7d">7D</button>
-                        <button class="time-range-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm hover:bg-gray-600" data-range="30d">30D</button>
-                    </div>
-                </div>
-                <div id="sentiment-timeline" class="h-96"></div>
+          <div
+            class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-gray-300">
+                Total Mentions
+              </h3>
+              <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
             </div>
+            <p class="text-3xl font-bold text-white" id="total-mentions">
+              456.8K
+            </p>
+            <p class="text-sm text-blue-400 mt-2">+23.4% (24h)</p>
+          </div>
+
+          <div
+            class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-gray-300">
+                Positive Mentions
+              </h3>
+              <div class="w-3 h-3 bg-emerald-400 rounded-full"></div>
+            </div>
+            <p
+              class="text-3xl font-bold text-emerald-400"
+              id="positive-mentions"
+            >
+              234.6K
+            </p>
+            <p class="text-sm text-emerald-400 mt-2">51.4% of total</p>
+          </div>
+
+          <div
+            class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-gray-300">
+                Negative Mentions
+              </h3>
+              <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+            </div>
+            <p class="text-3xl font-bold text-red-400" id="negative-mentions">
+              123.5K
+            </p>
+            <p class="text-sm text-red-400 mt-2">27.0% of total</p>
+          </div>
         </div>
+
+        <!-- Sentiment Timeline -->
+        <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-12">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-2xl font-bold">Sentiment Timeline</h3>
+            <div class="flex gap-2">
+              <button
+                class="time-range-btn active bg-blue-500 text-white px-4 py-2 rounded-lg text-sm"
+                data-range="24h"
+              >
+                24H
+              </button>
+              <button
+                class="time-range-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm hover:bg-gray-600"
+                data-range="7d"
+              >
+                7D
+              </button>
+              <button
+                class="time-range-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm hover:bg-gray-600"
+                data-range="30d"
+              >
+                30D
+              </button>
+            </div>
+          </div>
+          <div id="sentiment-timeline" class="h-96"></div>
+        </div>
+      </div>
     </section>
 
     <!-- Platform Analysis -->
     <section class="py-12 bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Platform Analysis</h2>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-                <!-- Twitter -->
-                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold">Twitter</h3>
-                        <div class="w-4 h-4 bg-blue-400 rounded-full"></div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Sentiment Score</span>
-                            <span class="font-bold sentiment-positive">+0.72</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Mention Volume</span>
-                            <span class="font-bold">234.6K</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Influence Score</span>
-                            <span class="font-bold text-blue-400">85%</span>
-                        </div>
-                    </div>
-                    <div class="mt-6">
-                        <h4 class="text-sm font-semibold text-gray-400 mb-2">Trending Keywords</h4>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs">Bitcoin</span>
-                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs">BTC</span>
-                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs">crypto</span>
-                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs">bull run</span>
-                        </div>
-                    </div>
-                </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
+          Platform Analysis
+        </h2>
 
-                <!-- Reddit -->
-                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold">Reddit</h3>
-                        <div class="w-4 h-4 bg-orange-400 rounded-full"></div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Sentiment Score</span>
-                            <span class="font-bold sentiment-neutral">+0.58</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Mention Volume</span>
-                            <span class="font-bold">156.8K</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Influence Score</span>
-                            <span class="font-bold text-orange-400">72%</span>
-                        </div>
-                    </div>
-                    <div class="mt-6">
-                        <h4 class="text-sm font-semibold text-gray-400 mb-2">Trending Keywords</h4>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-orange-500 text-white px-2 py-1 rounded text-xs">HODL</span>
-                            <span class="bg-orange-500 text-white px-2 py-1 rounded text-xs">diamond hands</span>
-                            <span class="bg-orange-500 text-white px-2 py-1 rounded text-xs">moon</span>
-                            <span class="bg-orange-500 text-white px-2 py-1 rounded text-xs">whale</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- YouTube -->
-                <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-bold">YouTube</h3>
-                        <div class="w-4 h-4 bg-red-400 rounded-full"></div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Sentiment Score</span>
-                            <span class="font-bold sentiment-neutral">+0.45</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Mention Volume</span>
-                            <span class="font-bold">45.7K</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-400">Influence Score</span>
-                            <span class="font-bold text-red-400">63%</span>
-                        </div>
-                    </div>
-                    <div class="mt-6">
-                        <h4 class="text-sm font-semibold text-gray-400 mb-2">Trending Keywords</h4>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-red-500 text-white px-2 py-1 rounded text-xs">technical analysis</span>
-                            <span class="bg-red-500 text-white px-2 py-1 rounded text-xs">price prediction</span>
-                            <span class="bg-red-500 text-white px-2 py-1 rounded text-xs">altcoin gems</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          <!-- Twitter -->
+          <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-xl font-bold">Twitter</h3>
+              <div class="w-4 h-4 bg-blue-400 rounded-full"></div>
             </div>
-
-            <!-- Platform Comparison Chart -->
-            <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
-                <h3 class="text-2xl font-bold mb-6">Platform Sentiment Comparison</h3>
-                <div id="platform-comparison" class="h-96"></div>
+            <div class="space-y-4">
+              <div class="flex justify-between">
+                <span class="text-gray-400">Sentiment Score</span>
+                <span class="font-bold sentiment-positive">+0.72</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Mention Volume</span>
+                <span class="font-bold">234.6K</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Influence Score</span>
+                <span class="font-bold text-blue-400">85%</span>
+              </div>
             </div>
+            <div class="mt-6">
+              <h4 class="text-sm font-semibold text-gray-400 mb-2">
+                Trending Keywords
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs"
+                  >Bitcoin</span
+                >
+                <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs"
+                  >BTC</span
+                >
+                <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs"
+                  >crypto</span
+                >
+                <span class="bg-blue-500 text-white px-2 py-1 rounded text-xs"
+                  >bull run</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Reddit -->
+          <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-xl font-bold">Reddit</h3>
+              <div class="w-4 h-4 bg-orange-400 rounded-full"></div>
+            </div>
+            <div class="space-y-4">
+              <div class="flex justify-between">
+                <span class="text-gray-400">Sentiment Score</span>
+                <span class="font-bold sentiment-neutral">+0.58</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Mention Volume</span>
+                <span class="font-bold">156.8K</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Influence Score</span>
+                <span class="font-bold text-orange-400">72%</span>
+              </div>
+            </div>
+            <div class="mt-6">
+              <h4 class="text-sm font-semibold text-gray-400 mb-2">
+                Trending Keywords
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-orange-500 text-white px-2 py-1 rounded text-xs"
+                  >HODL</span
+                >
+                <span class="bg-orange-500 text-white px-2 py-1 rounded text-xs"
+                  >diamond hands</span
+                >
+                <span class="bg-orange-500 text-white px-2 py-1 rounded text-xs"
+                  >moon</span
+                >
+                <span class="bg-orange-500 text-white px-2 py-1 rounded text-xs"
+                  >whale</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- YouTube -->
+          <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-xl font-bold">YouTube</h3>
+              <div class="w-4 h-4 bg-red-400 rounded-full"></div>
+            </div>
+            <div class="space-y-4">
+              <div class="flex justify-between">
+                <span class="text-gray-400">Sentiment Score</span>
+                <span class="font-bold sentiment-neutral">+0.45</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Mention Volume</span>
+                <span class="font-bold">45.7K</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Influence Score</span>
+                <span class="font-bold text-red-400">63%</span>
+              </div>
+            </div>
+            <div class="mt-6">
+              <h4 class="text-sm font-semibold text-gray-400 mb-2">
+                Trending Keywords
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs"
+                  >technical analysis</span
+                >
+                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs"
+                  >price prediction</span
+                >
+                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs"
+                  >altcoin gems</span
+                >
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Platform Comparison Chart -->
+        <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
+          <h3 class="text-2xl font-bold mb-6">Platform Sentiment Comparison</h3>
+          <div id="platform-comparison" class="h-96"></div>
+        </div>
+      </div>
     </section>
 
     <!-- Trending Topics -->
     <section class="py-12 bg-gray-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Trending Topics</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-6">
-                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-bold">Bitcoin ETF Approval</h3>
-                            <span class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm">High Impact</span>
-                        </div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-gray-400">Sentiment Score</span>
-                            <span class="font-bold text-emerald-400">+0.89</span>
-                        </div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-gray-400">Mention Volume</span>
-                            <span class="font-bold">67.9K mentions</span>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">ETF</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">institutional</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">adoption</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">bullish</span>
-                        </div>
-                    </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
+          Trending Topics
+        </h2>
 
-                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-bold">Altcoin Season</h3>
-                            <span class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm">High Impact</span>
-                        </div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-gray-400">Sentiment Score</span>
-                            <span class="font-bold text-emerald-400">+0.78</span>
-                        </div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-gray-400">Mention Volume</span>
-                            <span class="font-bold">34.6K mentions</span>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">altcoin</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">season</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">Ethereum</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">gains</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="space-y-6">
-                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-bold">Regulatory Concerns</h3>
-                            <span class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm">Medium Impact</span>
-                        </div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-gray-400">Sentiment Score</span>
-                            <span class="font-bold text-red-400">-0.34</span>
-                        </div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-gray-400">Mention Volume</span>
-                            <span class="font-bold">45.7K mentions</span>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">regulation</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">SEC</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">compliance</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">crackdown</span>
-                        </div>
-                    </div>
-
-                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-bold">Market Correction</h3>
-                            <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm">High Impact</span>
-                        </div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-gray-400">Sentiment Score</span>
-                            <span class="font-bold text-red-400">-0.56</span>
-                        </div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-gray-400">Mention Volume</span>
-                            <span class="font-bold">23.5K mentions</span>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">correction</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">dip</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">bear</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">panic</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-6">
+            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold">Bitcoin ETF Approval</h3>
+                <span
+                  class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm"
+                  >High Impact</span
+                >
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-gray-400">Sentiment Score</span>
+                <span class="font-bold text-emerald-400">+0.89</span>
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-gray-400">Mention Volume</span>
+                <span class="font-bold">67.9K mentions</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >ETF</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >institutional</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >adoption</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >bullish</span
+                >
+              </div>
             </div>
+
+            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold">Altcoin Season</h3>
+                <span
+                  class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm"
+                  >High Impact</span
+                >
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-gray-400">Sentiment Score</span>
+                <span class="font-bold text-emerald-400">+0.78</span>
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-gray-400">Mention Volume</span>
+                <span class="font-bold">34.6K mentions</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >altcoin</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >season</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >Ethereum</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >gains</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold">Regulatory Concerns</h3>
+                <span
+                  class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm"
+                  >Medium Impact</span
+                >
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-gray-400">Sentiment Score</span>
+                <span class="font-bold text-red-400">-0.34</span>
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-gray-400">Mention Volume</span>
+                <span class="font-bold">45.7K mentions</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >regulation</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >SEC</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >compliance</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >crackdown</span
+                >
+              </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold">Market Correction</h3>
+                <span
+                  class="bg-red-500 text-white px-3 py-1 rounded-full text-sm"
+                  >High Impact</span
+                >
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-gray-400">Sentiment Score</span>
+                <span class="font-bold text-red-400">-0.56</span>
+              </div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-gray-400">Mention Volume</span>
+                <span class="font-bold">23.5K mentions</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >correction</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >dip</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >bear</span
+                >
+                <span
+                  class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs"
+                  >panic</span
+                >
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Sentiment Distribution -->
     <section class="py-12 bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Sentiment Distribution</h2>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
-                    <h3 class="text-xl font-bold mb-6">Overall Sentiment Breakdown</h3>
-                    <div id="sentiment-distribution" class="h-80"></div>
-                </div>
-                
-                <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
-                    <h3 class="text-xl font-bold mb-6">Sentiment vs Volume</h3>
-                    <div id="sentiment-volume-scatter" class="h-80"></div>
-                </div>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
+          Sentiment Distribution
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
+            <h3 class="text-xl font-bold mb-6">Overall Sentiment Breakdown</h3>
+            <div id="sentiment-distribution" class="h-80"></div>
+          </div>
+
+          <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
+            <h3 class="text-xl font-bold mb-6">Sentiment vs Volume</h3>
+            <div id="sentiment-volume-scatter" class="h-80"></div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-gray-800 py-12 border-t border-gray-700">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="flex items-center justify-center space-x-2 mb-4">
-                <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center">
-                    <span class="text-white font-bold text-sm">CS</span>
-                </div>
-                <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
-            </div>
-            <p class="text-gray-400">© 2025 Crypto Sentiment Analytics Dashboard. Advanced data analytics for cryptocurrency markets.</p>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="flex items-center justify-center space-x-2 mb-4">
+          <div
+            class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center"
+          >
+            <span class="text-white font-bold text-sm">CS</span>
+          </div>
+          <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
         </div>
+        <p class="text-gray-400">
+          © 2025 Crypto Sentiment Analytics Dashboard. Advanced data analytics
+          for cryptocurrency markets.
+        </p>
+      </div>
     </footer>
 
     <script>
-        // Sentiment Analysis Page JavaScript
-        let sentimentTimelineChart = null;
-        let platformComparisonChart = null;
-        let sentimentDistributionChart = null;
-        let sentimentVolumeChart = null;
+      // Sentiment Analysis Page JavaScript
+      let sentimentTimelineChart = null;
+      let platformComparisonChart = null;
+      let sentimentDistributionChart = null;
+      let sentimentVolumeChart = null;
 
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeCharts();
-            setupEventListeners();
-        });
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeCharts();
+        setupEventListeners();
+        startRealTimeUpdates();
+      });
 
-        function initializeCharts() {
-            initializeSentimentTimeline();
-            initializePlatformComparison();
-            initializeSentimentDistribution();
-            initializeSentimentVolumeScatter();
-        }
+      // Auto-refresh data every 10 seconds to match backend
+      function startRealTimeUpdates() {
+        setInterval(() => {
+          console.log("🔄 Sentiment: Auto-updating data...");
+          loadSentimentData();
+          updateCharts();
+        }, 10000); // 10 seconds
+      }
 
-        function initializeSentimentTimeline() {
-            const chartElement = document.getElementById('sentiment-timeline');
-            if (!chartElement) return;
-
-            sentimentTimelineChart = echarts.init(chartElement);
-
-            // Generate sample timeline data
-            const data = [];
-            const now = new Date();
-            for (let i = 23; i >= 0; i--) {
-                const time = new Date(now.getTime() - i * 3600000);
-                const sentiment = 0.5 + Math.sin(i * 0.3) * 0.3 + (Math.random() - 0.5) * 0.2;
-                data.push([time.toISOString(), Math.max(-1, Math.min(1, sentiment))]);
+      async function loadSentimentData() {
+        try {
+          const response = await fetch("resources/data/sentiment-data.json");
+          if (response.ok) {
+            const data = await response.json();
+            // Update displayed values with fresh data
+            if (data.sentimentOverview) {
+              document.getElementById("overall-sentiment").textContent =
+                (data.sentimentOverview.overallSentiment >= 0 ? "+" : "") +
+                data.sentimentOverview.overallSentiment.toFixed(2);
             }
+          }
+        } catch (error) {
+          console.error("Error loading sentiment data:", error);
+        }
+      }
 
-            const option = {
-                backgroundColor: 'transparent',
-                tooltip: {
-                    trigger: 'axis',
-                    backgroundColor: '#1f2937',
-                    borderColor: '#374151',
-                    textStyle: { color: '#e5e7eb' }
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'time',
-                    axisLine: { lineStyle: { color: '#374151' } },
-                    axisLabel: { color: '#9ca3af' }
-                },
-                yAxis: {
-                    type: 'value',
-                    min: -1,
-                    max: 1,
-                    axisLine: { lineStyle: { color: '#374151' } },
-                    axisLabel: { color: '#9ca3af' },
-                    splitLine: { lineStyle: { color: '#374151' } }
-                },
-                series: [{
-                    name: 'Sentiment',
-                    type: 'line',
-                    data: data,
-                    smooth: true,
-                    lineStyle: { color: '#00d4ff', width: 3 },
-                    areaStyle: {
-                        color: {
-                            type: 'linear',
-                            x: 0, y: 0, x2: 0, y2: 1,
-                            colorStops: [
-                                { offset: 0, color: 'rgba(0, 212, 255, 0.3)' },
-                                { offset: 1, color: 'rgba(0, 212, 255, 0.05)' }
-                            ]
-                        }
-                    },
-                    symbol: 'none'
-                }]
-            };
+      function updateCharts() {
+        // Refresh all charts with new data
+        if (sentimentTimelineChart) {
+          initializeSentimentTimeline();
+        }
+      }
 
-            sentimentTimelineChart.setOption(option);
+      function initializeCharts() {
+        initializeSentimentTimeline();
+        initializePlatformComparison();
+        initializeSentimentDistribution();
+        initializeSentimentVolumeScatter();
+      }
+
+      function initializeSentimentTimeline() {
+        const chartElement = document.getElementById("sentiment-timeline");
+        if (!chartElement) return;
+
+        sentimentTimelineChart = echarts.init(chartElement);
+
+        // Generate sample timeline data
+        const data = [];
+        const now = new Date();
+        for (let i = 23; i >= 0; i--) {
+          const time = new Date(now.getTime() - i * 3600000);
+          const sentiment =
+            0.5 + Math.sin(i * 0.3) * 0.3 + (Math.random() - 0.5) * 0.2;
+          data.push([time.toISOString(), Math.max(-1, Math.min(1, sentiment))]);
         }
 
-        function initializePlatformComparison() {
-            const chartElement = document.getElementById('platform-comparison');
-            if (!chartElement) return;
+        const option = {
+          backgroundColor: "transparent",
+          tooltip: {
+            trigger: "axis",
+            backgroundColor: "#1f2937",
+            borderColor: "#374151",
+            textStyle: { color: "#e5e7eb" },
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true,
+          },
+          xAxis: {
+            type: "time",
+            axisLine: { lineStyle: { color: "#374151" } },
+            axisLabel: { color: "#9ca3af" },
+          },
+          yAxis: {
+            type: "value",
+            min: -1,
+            max: 1,
+            axisLine: { lineStyle: { color: "#374151" } },
+            axisLabel: { color: "#9ca3af" },
+            splitLine: { lineStyle: { color: "#374151" } },
+          },
+          series: [
+            {
+              name: "Sentiment",
+              type: "line",
+              data: data,
+              smooth: true,
+              lineStyle: { color: "#00d4ff", width: 3 },
+              areaStyle: {
+                color: {
+                  type: "linear",
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [
+                    { offset: 0, color: "rgba(0, 212, 255, 0.3)" },
+                    { offset: 1, color: "rgba(0, 212, 255, 0.05)" },
+                  ],
+                },
+              },
+              symbol: "none",
+            },
+          ],
+        };
 
-            platformComparisonChart = echarts.init(chartElement);
+        sentimentTimelineChart.setOption(option);
+      }
 
-            const option = {
-                backgroundColor: 'transparent',
-                tooltip: {
-                    trigger: 'axis',
-                    backgroundColor: '#1f2937',
-                    borderColor: '#374151',
-                    textStyle: { color: '#e5e7eb' }
-                },
-                legend: {
-                    data: ['Twitter', 'Reddit', 'YouTube'],
-                    textStyle: { color: '#e5e7eb' },
-                    top: 10
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'time',
-                    axisLine: { lineStyle: { color: '#374151' } },
-                    axisLabel: { color: '#9ca3af' }
-                },
-                yAxis: {
-                    type: 'value',
-                    min: -1,
-                    max: 1,
-                    axisLine: { lineStyle: { color: '#374151' } },
-                    axisLabel: { color: '#9ca3af' },
-                    splitLine: { lineStyle: { color: '#374151' } }
-                },
-                series: [
-                    {
-                        name: 'Twitter',
-                        type: 'line',
-                        data: generatePlatformData(0.72),
-                        smooth: true,
-                        lineStyle: { color: '#3b82f6' },
-                        symbol: 'none'
-                    },
-                    {
-                        name: 'Reddit',
-                        type: 'line',
-                        data: generatePlatformData(0.58),
-                        smooth: true,
-                        lineStyle: { color: '#f97316' },
-                        symbol: 'none'
-                    },
-                    {
-                        name: 'YouTube',
-                        type: 'line',
-                        data: generatePlatformData(0.45),
-                        smooth: true,
-                        lineStyle: { color: '#ef4444' },
-                        symbol: 'none'
-                    }
-                ]
-            };
+      function initializePlatformComparison() {
+        const chartElement = document.getElementById("platform-comparison");
+        if (!chartElement) return;
 
-            platformComparisonChart.setOption(option);
+        platformComparisonChart = echarts.init(chartElement);
+
+        const option = {
+          backgroundColor: "transparent",
+          tooltip: {
+            trigger: "axis",
+            backgroundColor: "#1f2937",
+            borderColor: "#374151",
+            textStyle: { color: "#e5e7eb" },
+          },
+          legend: {
+            data: ["Twitter", "Reddit", "YouTube"],
+            textStyle: { color: "#e5e7eb" },
+            top: 10,
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true,
+          },
+          xAxis: {
+            type: "time",
+            axisLine: { lineStyle: { color: "#374151" } },
+            axisLabel: { color: "#9ca3af" },
+          },
+          yAxis: {
+            type: "value",
+            min: -1,
+            max: 1,
+            axisLine: { lineStyle: { color: "#374151" } },
+            axisLabel: { color: "#9ca3af" },
+            splitLine: { lineStyle: { color: "#374151" } },
+          },
+          series: [
+            {
+              name: "Twitter",
+              type: "line",
+              data: generatePlatformData(0.72),
+              smooth: true,
+              lineStyle: { color: "#3b82f6" },
+              symbol: "none",
+            },
+            {
+              name: "Reddit",
+              type: "line",
+              data: generatePlatformData(0.58),
+              smooth: true,
+              lineStyle: { color: "#f97316" },
+              symbol: "none",
+            },
+            {
+              name: "YouTube",
+              type: "line",
+              data: generatePlatformData(0.45),
+              smooth: true,
+              lineStyle: { color: "#ef4444" },
+              symbol: "none",
+            },
+          ],
+        };
+
+        platformComparisonChart.setOption(option);
+      }
+
+      function initializeSentimentDistribution() {
+        const chartElement = document.getElementById("sentiment-distribution");
+        if (!chartElement) return;
+
+        sentimentDistributionChart = echarts.init(chartElement);
+
+        const option = {
+          backgroundColor: "transparent",
+          tooltip: {
+            trigger: "item",
+            backgroundColor: "#1f2937",
+            borderColor: "#374151",
+            textStyle: { color: "#e5e7eb" },
+          },
+          series: [
+            {
+              name: "Sentiment",
+              type: "pie",
+              radius: ["40%", "70%"],
+              center: ["50%", "50%"],
+              data: [
+                {
+                  value: 15.6,
+                  name: "Very Positive",
+                  itemStyle: { color: "#10b981" },
+                },
+                {
+                  value: 35.2,
+                  name: "Positive",
+                  itemStyle: { color: "#34d399" },
+                },
+                {
+                  value: 21.6,
+                  name: "Neutral",
+                  itemStyle: { color: "#f59e0b" },
+                },
+                {
+                  value: 18.7,
+                  name: "Negative",
+                  itemStyle: { color: "#f87171" },
+                },
+                {
+                  value: 8.9,
+                  name: "Very Negative",
+                  itemStyle: { color: "#ef4444" },
+                },
+              ],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 0, 0, 0.5)",
+                },
+              },
+              label: {
+                color: "#e5e7eb",
+                fontSize: 12,
+              },
+            },
+          ],
+        };
+
+        sentimentDistributionChart.setOption(option);
+      }
+
+      function initializeSentimentVolumeScatter() {
+        const chartElement = document.getElementById(
+          "sentiment-volume-scatter"
+        );
+        if (!chartElement) return;
+
+        sentimentVolumeChart = echarts.init(chartElement);
+
+        // Generate sample scatter data
+        const data = [];
+        for (let i = 0; i < 100; i++) {
+          const sentiment = (Math.random() - 0.5) * 2;
+          const volume = Math.floor(Math.random() * 50000) + 1000;
+          data.push([sentiment, volume]);
         }
 
-        function initializeSentimentDistribution() {
-            const chartElement = document.getElementById('sentiment-distribution');
-            if (!chartElement) return;
+        const option = {
+          backgroundColor: "transparent",
+          tooltip: {
+            trigger: "item",
+            backgroundColor: "#1f2937",
+            borderColor: "#374151",
+            textStyle: { color: "#e5e7eb" },
+            formatter: "Sentiment: {c0}<br/>Volume: {c1}",
+          },
+          grid: {
+            left: "3%",
+            right: "7%",
+            bottom: "3%",
+            containLabel: true,
+          },
+          xAxis: {
+            type: "value",
+            min: -1,
+            max: 1,
+            name: "Sentiment Score",
+            nameTextStyle: { color: "#9ca3af" },
+            axisLine: { lineStyle: { color: "#374151" } },
+            axisLabel: { color: "#9ca3af" },
+            splitLine: { lineStyle: { color: "#374151" } },
+          },
+          yAxis: {
+            type: "value",
+            name: "Mention Volume",
+            nameTextStyle: { color: "#9ca3af" },
+            axisLine: { lineStyle: { color: "#374151" } },
+            axisLabel: { color: "#9ca3af" },
+            splitLine: { lineStyle: { color: "#374151" } },
+          },
+          series: [
+            {
+              name: "Sentiment vs Volume",
+              type: "scatter",
+              data: data,
+              symbolSize: 8,
+              itemStyle: {
+                color: "#00d4ff",
+                opacity: 0.7,
+              },
+            },
+          ],
+        };
 
-            sentimentDistributionChart = echarts.init(chartElement);
+        sentimentVolumeChart.setOption(option);
+      }
 
-            const option = {
-                backgroundColor: 'transparent',
-                tooltip: {
-                    trigger: 'item',
-                    backgroundColor: '#1f2937',
-                    borderColor: '#374151',
-                    textStyle: { color: '#e5e7eb' }
-                },
-                series: [{
-                    name: 'Sentiment',
-                    type: 'pie',
-                    radius: ['40%', '70%'],
-                    center: ['50%', '50%'],
-                    data: [
-                        { value: 15.6, name: 'Very Positive', itemStyle: { color: '#10b981' } },
-                        { value: 35.2, name: 'Positive', itemStyle: { color: '#34d399' } },
-                        { value: 21.6, name: 'Neutral', itemStyle: { color: '#f59e0b' } },
-                        { value: 18.7, name: 'Negative', itemStyle: { color: '#f87171' } },
-                        { value: 8.9, name: 'Very Negative', itemStyle: { color: '#ef4444' } }
-                    ],
-                    emphasis: {
-                        itemStyle: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    },
-                    label: {
-                        color: '#e5e7eb',
-                        fontSize: 12
-                    }
-                }]
-            };
-
-            sentimentDistributionChart.setOption(option);
+      function generatePlatformData(baseSentiment) {
+        const data = [];
+        const now = new Date();
+        for (let i = 23; i >= 0; i--) {
+          const time = new Date(now.getTime() - i * 3600000);
+          const sentiment =
+            baseSentiment +
+            Math.sin(i * 0.3) * 0.2 +
+            (Math.random() - 0.5) * 0.1;
+          data.push([time.toISOString(), Math.max(-1, Math.min(1, sentiment))]);
         }
+        return data;
+      }
 
-        function initializeSentimentVolumeScatter() {
-            const chartElement = document.getElementById('sentiment-volume-scatter');
-            if (!chartElement) return;
-
-            sentimentVolumeChart = echarts.init(chartElement);
-
-            // Generate sample scatter data
-            const data = [];
-            for (let i = 0; i < 100; i++) {
-                const sentiment = (Math.random() - 0.5) * 2;
-                const volume = Math.floor(Math.random() * 50000) + 1000;
-                data.push([sentiment, volume]);
-            }
-
-            const option = {
-                backgroundColor: 'transparent',
-                tooltip: {
-                    trigger: 'item',
-                    backgroundColor: '#1f2937',
-                    borderColor: '#374151',
-                    textStyle: { color: '#e5e7eb' },
-                    formatter: 'Sentiment: {c0}<br/>Volume: {c1}'
-                },
-                grid: {
-                    left: '3%',
-                    right: '7%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'value',
-                    min: -1,
-                    max: 1,
-                    name: 'Sentiment Score',
-                    nameTextStyle: { color: '#9ca3af' },
-                    axisLine: { lineStyle: { color: '#374151' } },
-                    axisLabel: { color: '#9ca3af' },
-                    splitLine: { lineStyle: { color: '#374151' } }
-                },
-                yAxis: {
-                    type: 'value',
-                    name: 'Mention Volume',
-                    nameTextStyle: { color: '#9ca3af' },
-                    axisLine: { lineStyle: { color: '#374151' } },
-                    axisLabel: { color: '#9ca3af' },
-                    splitLine: { lineStyle: { color: '#374151' } }
-                },
-                series: [{
-                    name: 'Sentiment vs Volume',
-                    type: 'scatter',
-                    data: data,
-                    symbolSize: 8,
-                    itemStyle: {
-                        color: '#00d4ff',
-                        opacity: 0.7
-                    }
-                }]
-            };
-
-            sentimentVolumeChart.setOption(option);
-        }
-
-        function generatePlatformData(baseSentiment) {
-            const data = [];
-            const now = new Date();
-            for (let i = 23; i >= 0; i--) {
-                const time = new Date(now.getTime() - i * 3600000);
-                const sentiment = baseSentiment + Math.sin(i * 0.3) * 0.2 + (Math.random() - 0.5) * 0.1;
-                data.push([time.toISOString(), Math.max(-1, Math.min(1, sentiment))]);
-            }
-            return data;
-        }
-
-        function setupEventListeners() {
-            // Time range buttons
-            document.querySelectorAll('.time-range-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.time-range-btn').forEach(b => {
-                        b.classList.remove('active', 'bg-blue-500', 'text-white');
-                        b.classList.add('bg-gray-700', 'text-gray-300');
-                    });
-                    
-                    this.classList.add('active', 'bg-blue-500', 'text-white');
-                    this.classList.remove('bg-gray-700', 'text-gray-300');
-                    
-                    // Update charts based on selected range
-                    const range = this.dataset.range;
-                    updateChartsForRange(range);
-                });
+      function setupEventListeners() {
+        // Time range buttons
+        document.querySelectorAll(".time-range-btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            document.querySelectorAll(".time-range-btn").forEach((b) => {
+              b.classList.remove("active", "bg-blue-500", "text-white");
+              b.classList.add("bg-gray-700", "text-gray-300");
             });
-        }
 
-        function updateChartsForRange(range) {
-            // Update charts based on selected time range
-            console.log('Updating charts for range:', range);
-            // Implementation would update chart data based on time range
-        }
+            this.classList.add("active", "bg-blue-500", "text-white");
+            this.classList.remove("bg-gray-700", "text-gray-300");
 
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (sentimentTimelineChart) sentimentTimelineChart.resize();
-            if (platformComparisonChart) platformComparisonChart.resize();
-            if (sentimentDistributionChart) sentimentDistributionChart.resize();
-            if (sentimentVolumeChart) sentimentVolumeChart.resize();
+            // Update charts based on selected range
+            const range = this.dataset.range;
+            updateChartsForRange(range);
+          });
         });
+      }
+
+      function updateChartsForRange(range) {
+        // Update charts based on selected time range
+        console.log("Updating charts for range:", range);
+        // Implementation would update chart data based on time range
+      }
+
+      // Handle window resize
+      window.addEventListener("resize", function () {
+        if (sentimentTimelineChart) sentimentTimelineChart.resize();
+        if (platformComparisonChart) platformComparisonChart.resize();
+        if (sentimentDistributionChart) sentimentDistributionChart.resize();
+        if (sentimentVolumeChart) sentimentVolumeChart.resize();
+      });
     </script>
-</body>
+  </body>
 </html>
