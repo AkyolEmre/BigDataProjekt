@@ -1,0 +1,67 @@
+[
+  {
+    "totalMarketCap": 3205293755047.559,
+    "totalVolume": 83417287705.27176,
+    "btcDominance": 56.9,
+    "ethDominance": 11.8,
+    "marketCapChange24h": 1.4765410922471283,
+    "fearGreedIndex": 25,
+    "fearGreedClassification": "Extreme Fear",
+    "socialSentiment": 0.06,
+    "activeCryptocurrencies": 18941,
+    "markets": 1444,
+    "timestamp": "2026-01-04 16:10:22.148000"
+  },
+  {
+    "totalMarketCap": 3204044036515.253,
+    "totalVolume": 83910321060.35205,
+    "btcDominance": 56.9,
+    "ethDominance": 11.8,
+    "marketCapChange24h": 1.4369761962691585,
+    "fearGreedIndex": 25,
+    "fearGreedClassification": "Extreme Fear",
+    "socialSentiment": 0.06,
+    "activeCryptocurrencies": 18941,
+    "markets": 1444,
+    "timestamp": "2026-01-04 16:22:23.066000"
+  },
+  {
+    "totalMarketCap": 3205738919631.3687,
+    "totalVolume": 83947550485.17755,
+    "btcDominance": 56.9,
+    "ethDominance": 11.8,
+    "marketCapChange24h": 1.4906345780970818,
+    "fearGreedIndex": 25,
+    "fearGreedClassification": "Extreme Fear",
+    "socialSentiment": 0.06,
+    "activeCryptocurrencies": 18941,
+    "markets": 1444,
+    "timestamp": "2026-01-04 16:32:09.656000"
+  },
+  {
+    "totalMarketCap": 3205738919631.3687,
+    "totalVolume": 83947550485.17755,
+    "btcDominance": 56.9,
+    "ethDominance": 11.8,
+    "marketCapChange24h": 1.4906345780970818,
+    "fearGreedIndex": 25,
+    "fearGreedClassification": "Extreme Fear",
+    "socialSentiment": 0.06,
+    "activeCryptocurrencies": 18941,
+    "markets": 1444,
+    "timestamp": "2026-01-04 16:36:27.604000"
+  },
+  {
+    "totalMarketCap": 3208091004292.924,
+    "totalVolume": 84083419668.6984,
+    "btcDominance": 56.8,
+    "ethDominance": 11.8,
+    "marketCapChange24h": 1.5716161643883941,
+    "fearGreedIndex": 25,
+    "fearGreedClassification": "Extreme Fear",
+    "socialSentiment": 0.07,
+    "activeCryptocurrencies": 18941,
+    "markets": 1444,
+    "timestamp": "2026-01-04 17:05:05.159000"
+  }
+]

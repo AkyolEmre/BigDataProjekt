@@ -9,42 +9,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: #0f1419;
-            color: #e5e7eb;
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #00d4ff, #10b981);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
-        }
-        .pulse-glow {
-            animation: pulse-glow 2s ease-in-out infinite alternate;
-        }
-        @keyframes pulse-glow {
-            from { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
-            to { box-shadow: 0 0 30px rgba(0, 212, 255, 0.6); }
-        }
-        .hero-bg {
-            background: linear-gradient(135deg, rgba(15, 20, 25, 0.9), rgba(26, 29, 41, 0.8)), 
-                        url('resources/hero-crypto.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        .nav-blur {
-            backdrop-filter: blur(10px);
-            background: rgba(15, 20, 25, 0.9);
-        }
+        body { font-family: 'Inter', sans-serif; background: #0f1419; color: #e5e7eb; }
+        .gradient-text { background: linear-gradient(135deg, #00d4ff, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1); }
+        .pulse-glow { animation: pulse-glow 2s ease-in-out infinite alternate; }
+        @keyframes pulse-glow { from { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); } to { box-shadow: 0 0 30px rgba(0, 212, 255, 0.6); } }
+        .hero-bg { background: linear-gradient(135deg, rgba(15, 20, 25, 0.95), rgba(26, 29, 41, 0.9)), radial-gradient(ellipse at top right, rgba(0, 212, 255, 0.15), transparent 50%), radial-gradient(ellipse at bottom left, rgba(16, 185, 129, 0.1), transparent 50%); }
+        .nav-blur { backdrop-filter: blur(10px); background: rgba(15, 20, 25, 0.9); }
+        .architecture-node { transition: all 0.3s ease; }
+        .architecture-node:hover { transform: scale(1.05); }
+        .stat-card { background: linear-gradient(135deg, rgba(31, 41, 55, 0.8), rgba(17, 24, 39, 0.9)); border: 1px solid rgba(75, 85, 99, 0.3); }
+        .team-card { background: linear-gradient(135deg, rgba(31, 41, 55, 0.6), rgba(17, 24, 39, 0.8)); }
+        .floating { animation: floating 3s ease-in-out infinite; }
+        @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        .mobile-menu { display: none; }
+        .mobile-menu.active { display: block; }
     </style>
 </head>
 <body class="bg-gray-900 text-white">
@@ -53,7 +33,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center pulse-glow">
                         <span class="text-white font-bold text-sm">CS</span>
                     </div>
                     <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
@@ -65,11 +45,19 @@
                     <a href="predictions.html" class="text-gray-300 hover:text-white transition-colors font-medium">Predictions</a>
                 </div>
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white" onclick="toggleMobileMenu()">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="mobile-menu md:hidden pb-4">
+                <div class="flex flex-col space-y-2">
+                    <a href="index.html" class="text-blue-400 py-2">Dashboard</a>
+                    <a href="sentiment.html" class="text-gray-300 py-2">Sentiment</a>
+                    <a href="correlation.html" class="text-gray-300 py-2">Correlation</a>
+                    <a href="predictions.html" class="text-gray-300 py-2">Predictions</a>
                 </div>
             </div>
         </div>
@@ -78,21 +66,28 @@
     <!-- Hero Section -->
     <section class="hero-bg min-h-screen flex items-center justify-center pt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="floating mb-8">
+                <div class="w-24 h-24 mx-auto bg-gradient-to-r from-blue-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-2xl">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                </div>
+            </div>
             <h1 class="text-5xl md:text-7xl font-bold mb-6">
                 <span class="gradient-text">Crypto Sentiment</span><br>
                 <span class="text-white">Analytics Dashboard</span>
             </h1>
-            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-                Real-time analysis of social media buzz impact on cryptocurrency volatility. 
-                Track market sentiment, predict price movements, and make informed decisions.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button onclick="scrollToSection('market-overview')" class="bg-gradient-to-r from-blue-500 to-emerald-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-emerald-600 transition-all transform hover:scale-105">
-                    Explore Dashboard
-                </button>
-                <button onclick="scrollToSection('live-prices')" class="border border-blue-400 text-blue-400 px-8 py-3 rounded-lg font-semibold hover:bg-blue-400 hover:text-white transition-all">
-                    View Live Prices
-                </button>
+            <p class="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">Real-time analysis of social media buzz impact on cryptocurrency volatility.</p>
+            <p class="text-lg text-gray-400 mb-8"><span class="text-blue-400">Big Data Analytics</span> Final Project</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <button onclick="scrollToSection('market-overview')" class="bg-gradient-to-r from-blue-500 to-emerald-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-emerald-600 transition-all transform hover:scale-105 shadow-lg">Explore Dashboard</button>
+                <button onclick="scrollToSection('architecture')" class="border border-blue-400 text-blue-400 px-8 py-3 rounded-lg font-semibold hover:bg-blue-400 hover:text-white transition-all">View Architecture</button>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                <div class="stat-card rounded-lg p-4 text-center"><p class="text-2xl font-bold text-blue-400">6</p><p class="text-sm text-gray-400">Cryptocurrencies</p></div>
+                <div class="stat-card rounded-lg p-4 text-center"><p class="text-2xl font-bold text-emerald-400">3</p><p class="text-sm text-gray-400">Data Sources</p></div>
+                <div class="stat-card rounded-lg p-4 text-center"><p class="text-2xl font-bold text-yellow-400">3</p><p class="text-sm text-gray-400">ML Models</p></div>
+                <div class="stat-card rounded-lg p-4 text-center"><p class="text-2xl font-bold text-purple-400">5</p><p class="text-sm text-gray-400">MapReduce Ops</p></div>
             </div>
         </div>
     </section>
@@ -103,50 +98,38 @@
             <div class="text-center mb-12">
                 <h2 class="text-4xl font-bold gradient-text mb-4">Market Overview</h2>
                 <p class="text-xl text-gray-400">Real-time cryptocurrency market statistics</p>
+                <div class="flex justify-center items-center mt-4 space-x-2">
+                    <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                    <span class="text-sm text-gray-500" id="data-status">Loading live data...</span>
+                </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                 <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-gray-300">Total Market Cap</h3>
-                        <div class="w-3 h-3 bg-emerald-400 rounded-full pulse-glow"></div>
-                    </div>
+                    <div class="flex items-center justify-between mb-4"><h3 class="text-lg font-semibold text-gray-300">Total Market Cap</h3><div class="w-3 h-3 bg-emerald-400 rounded-full pulse-glow"></div></div>
                     <p class="text-3xl font-bold text-white" id="total-market-cap">$2.85T</p>
-                    <p class="text-sm text-emerald-400 mt-2">+2.34% (24h)</p>
+                    <p class="text-sm text-emerald-400 mt-2" id="market-cap-change">+2.34% (24h)</p>
                 </div>
-                
                 <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-gray-300">24h Volume</h3>
-                        <div class="w-3 h-3 bg-blue-400 rounded-full pulse-glow"></div>
-                    </div>
+                    <div class="flex items-center justify-between mb-4"><h3 class="text-lg font-semibold text-gray-300">24h Volume</h3><div class="w-3 h-3 bg-blue-400 rounded-full pulse-glow"></div></div>
                     <p class="text-3xl font-bold text-white" id="total-volume">$52.3B</p>
-                    <p class="text-sm text-blue-400 mt-2">+15.6% (24h)</p>
+                    <p class="text-sm text-blue-400 mt-2">Trading volume</p>
                 </div>
-                
                 <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-gray-300">BTC Dominance</h3>
-                        <div class="w-3 h-3 bg-yellow-400 rounded-full pulse-glow"></div>
-                    </div>
+                    <div class="flex items-center justify-between mb-4"><h3 class="text-lg font-semibold text-gray-300">BTC Dominance</h3><div class="w-3 h-3 bg-yellow-400 rounded-full pulse-glow"></div></div>
                     <p class="text-3xl font-bold text-white" id="btc-dominance">68.4%</p>
-                    <p class="text-sm text-yellow-400 mt-2">-0.2% (24h)</p>
+                    <p class="text-sm text-yellow-400 mt-2">Market share</p>
                 </div>
-                
                 <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-semibold text-gray-300">Fear & Greed</h3>
-                        <div class="w-3 h-3 bg-orange-400 rounded-full pulse-glow"></div>
-                    </div>
+                    <div class="flex items-center justify-between mb-4"><h3 class="text-lg font-semibold text-gray-300">Fear & Greed</h3><div class="w-3 h-3 bg-orange-400 rounded-full pulse-glow"></div></div>
                     <p class="text-3xl font-bold text-white" id="fear-greed">72</p>
-                    <p class="text-sm text-orange-400 mt-2">Greed</p>
+                    <p class="text-sm text-orange-400 mt-2" id="fear-greed-label">Greed</p>
                 </div>
             </div>
 
-            <!-- Sentiment Gauge -->
-            <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-12">
-                <h3 class="text-2xl font-bold text-center mb-6">Overall Market Sentiment</h3>
-                <div id="sentiment-gauge" class="h-64"></div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <div class="bg-gray-800 rounded-xl p-8 border border-gray-700"><h3 class="text-2xl font-bold text-center mb-6">Overall Market Sentiment</h3><div id="sentiment-gauge" class="h-64"></div></div>
+                <div class="bg-gray-800 rounded-xl p-8 border border-gray-700"><h3 class="text-2xl font-bold text-center mb-6">Market Distribution</h3><div id="market-distribution" class="h-64"></div></div>
             </div>
         </div>
     </section>
@@ -154,12 +137,7 @@
     <!-- Live Prices -->
     <section id="live-prices" class="py-20 bg-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold gradient-text mb-4">Live Cryptocurrency Prices</h2>
-                <p class="text-xl text-gray-400">Track real-time price movements and volatility</p>
-            </div>
-
-            <!-- Crypto Selector -->
+            <div class="text-center mb-12"><h2 class="text-4xl font-bold gradient-text mb-4">Live Cryptocurrency Prices</h2><p class="text-xl text-gray-400">Track real-time price movements and volatility</p></div>
             <div class="flex flex-wrap justify-center gap-2 mb-8">
                 <button class="crypto-btn active bg-blue-500 text-white px-4 py-2 rounded-lg font-medium" data-crypto="BTC">Bitcoin</button>
                 <button class="crypto-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-600" data-crypto="ETH">Ethereum</button>
@@ -168,14 +146,9 @@
                 <button class="crypto-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-600" data-crypto="DOGE">Dogecoin</button>
                 <button class="crypto-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-600" data-crypto="ADA">Cardano</button>
             </div>
-
-            <!-- Price Chart -->
             <div class="bg-gray-900 rounded-xl p-8 border border-gray-700 mb-8">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6">
-                    <div>
-                        <h3 class="text-2xl font-bold" id="selected-crypto-name">Bitcoin</h3>
-                        <p class="text-gray-400" id="selected-crypto-symbol">BTC</p>
-                    </div>
+                    <div><h3 class="text-2xl font-bold" id="selected-crypto-name">Bitcoin</h3><p class="text-gray-400" id="selected-crypto-symbol">BTC</p></div>
                     <div class="flex gap-4 mt-4 lg:mt-0">
                         <button class="time-btn active bg-blue-500 text-white px-3 py-1 rounded text-sm" data-time="1h">1H</button>
                         <button class="time-btn bg-gray-700 text-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-600" data-time="4h">4H</button>
@@ -186,69 +159,118 @@
                 </div>
                 <div id="price-chart" class="h-96"></div>
             </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="crypto-cards"></div>
+        </div>
+    </section>
 
-            <!-- Crypto Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="crypto-cards">
-                <!-- Cards will be populated by JavaScript -->
+    <!-- Architecture Section -->
+    <section id="architecture" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12"><h2 class="text-4xl font-bold gradient-text mb-4">System Architecture</h2><p class="text-xl text-gray-400">4-Layer Big Data Analytics Pipeline</p></div>
+            <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="architecture-node bg-gradient-to-br from-blue-900 to-blue-800 rounded-xl p-6 border border-blue-600">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 mx-auto bg-blue-500 rounded-full flex items-center justify-center mb-3"><svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></div>
+                            <h3 class="text-lg font-bold text-blue-300">Layer 1</h3><p class="text-xl font-bold text-white">Data Source</p>
+                        </div>
+                        <ul class="text-sm text-gray-300 space-y-2"><li class="flex items-center"><span class="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>CoinGecko API</li><li class="flex items-center"><span class="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>Alternative.me</li><li class="flex items-center"><span class="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>CryptoPanic</li></ul>
+                    </div>
+                    <div class="architecture-node bg-gradient-to-br from-emerald-900 to-emerald-800 rounded-xl p-6 border border-emerald-600">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 mx-auto bg-emerald-500 rounded-full flex items-center justify-center mb-3"><svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg></div>
+                            <h3 class="text-lg font-bold text-emerald-300">Layer 2</h3><p class="text-xl font-bold text-white">Data Storage</p>
+                        </div>
+                        <ul class="text-sm text-gray-300 space-y-2"><li class="flex items-center"><span class="w-2 h-2 bg-emerald-400 rounded-full mr-2"></span>MongoDB NoSQL</li><li class="flex items-center"><span class="w-2 h-2 bg-emerald-400 rounded-full mr-2"></span>Schema Validation</li><li class="flex items-center"><span class="w-2 h-2 bg-emerald-400 rounded-full mr-2"></span>Optimized Indexes</li></ul>
+                    </div>
+                    <div class="architecture-node bg-gradient-to-br from-purple-900 to-purple-800 rounded-xl p-6 border border-purple-600">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 mx-auto bg-purple-500 rounded-full flex items-center justify-center mb-3"><svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg></div>
+                            <h3 class="text-lg font-bold text-purple-300">Layer 3</h3><p class="text-xl font-bold text-white">Analytics</p>
+                        </div>
+                        <ul class="text-sm text-gray-300 space-y-2"><li class="flex items-center"><span class="w-2 h-2 bg-purple-400 rounded-full mr-2"></span>Spark MapReduce</li><li class="flex items-center"><span class="w-2 h-2 bg-purple-400 rounded-full mr-2"></span>Random Forest</li><li class="flex items-center"><span class="w-2 h-2 bg-purple-400 rounded-full mr-2"></span>Gradient Boosting</li></ul>
+                    </div>
+                    <div class="architecture-node bg-gradient-to-br from-orange-900 to-orange-800 rounded-xl p-6 border border-orange-600">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 mx-auto bg-orange-500 rounded-full flex items-center justify-center mb-3"><svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div>
+                            <h3 class="text-lg font-bold text-orange-300">Layer 4</h3><p class="text-xl font-bold text-white">Output</p>
+                        </div>
+                        <ul class="text-sm text-gray-300 space-y-2"><li class="flex items-center"><span class="w-2 h-2 bg-orange-400 rounded-full mr-2"></span>Web Dashboard</li><li class="flex items-center"><span class="w-2 h-2 bg-orange-400 rounded-full mr-2"></span>ECharts Viz</li><li class="flex items-center"><span class="w-2 h-2 bg-orange-400 rounded-full mr-2"></span>Real-time Updates</li></ul>
+                    </div>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <div class="flex items-center space-x-4 text-sm text-gray-400">
+                        <span>Data Flow:</span>
+                        <div class="flex items-center"><span class="text-blue-400">API</span><svg class="w-6 h-6 mx-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg><span class="text-emerald-400">MongoDB</span><svg class="w-6 h-6 mx-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg><span class="text-purple-400">ML/Spark</span><svg class="w-6 h-6 mx-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg><span class="text-orange-400">Dashboard</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="bg-gray-800 rounded-lg p-4 text-center card-hover border border-gray-700"><p class="text-2xl mb-2">🐍</p><p class="font-semibold">Python</p><p class="text-xs text-gray-400">Backend</p></div>
+                <div class="bg-gray-800 rounded-lg p-4 text-center card-hover border border-gray-700"><p class="text-2xl mb-2">🍃</p><p class="font-semibold">MongoDB</p><p class="text-xs text-gray-400">NoSQL DB</p></div>
+                <div class="bg-gray-800 rounded-lg p-4 text-center card-hover border border-gray-700"><p class="text-2xl mb-2">⚡</p><p class="font-semibold">Spark</p><p class="text-xs text-gray-400">Big Data</p></div>
+                <div class="bg-gray-800 rounded-lg p-4 text-center card-hover border border-gray-700"><p class="text-2xl mb-2">🤖</p><p class="font-semibold">scikit-learn</p><p class="text-xs text-gray-400">ML</p></div>
+                <div class="bg-gray-800 rounded-lg p-4 text-center card-hover border border-gray-700"><p class="text-2xl mb-2">📊</p><p class="font-semibold">ECharts</p><p class="text-xs text-gray-400">Visualization</p></div>
+                <div class="bg-gray-800 rounded-lg p-4 text-center card-hover border border-gray-700"><p class="text-2xl mb-2">🎨</p><p class="font-semibold">Tailwind</p><p class="text-xs text-gray-400">CSS</p></div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="py-20 bg-gray-900">
+    <section class="py-20 bg-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold gradient-text mb-4">Advanced Analytics Features</h2>
-                <p class="text-xl text-gray-400">Powerful tools for crypto market analysis</p>
-            </div>
-            
+            <div class="text-center mb-12"><h2 class="text-4xl font-bold gradient-text mb-4">Advanced Analytics Features</h2><p class="text-xl text-gray-400">Powerful tools for crypto market analysis</p></div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700 text-center">
-                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Real-time Sentiment</h3>
-                    <p class="text-gray-400">Track social media sentiment across multiple platforms in real-time</p>
-                </div>
-                
-                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700 text-center">
-                    <div class="w-16 h-16 bg-gradient-to-r from-emerald-500 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Volatility Correlation</h3>
-                    <p class="text-gray-400">Analyze the relationship between social buzz and price volatility</p>
-                </div>
-                
-                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700 text-center">
-                    <div class="w-16 h-16 bg-gradient-to-r from-yellow-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">ML Predictions</h3>
-                    <p class="text-gray-400">Machine learning models predict price movements based on sentiment</p>
-                </div>
+                <a href="sentiment.html" class="bg-gray-900 rounded-xl p-6 card-hover border border-gray-700 text-center block">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg></div>
+                    <h3 class="text-xl font-bold mb-2">Real-time Sentiment</h3><p class="text-gray-400 mb-4">Track Fear & Greed Index and news sentiment across platforms</p><span class="text-blue-400 font-medium">Explore →</span>
+                </a>
+                <a href="correlation.html" class="bg-gray-900 rounded-xl p-6 card-hover border border-gray-700 text-center block">
+                    <div class="w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg></div>
+                    <h3 class="text-xl font-bold mb-2">Volatility Correlation</h3><p class="text-gray-400 mb-4">Analyze relationships between social buzz and price volatility</p><span class="text-emerald-400 font-medium">Explore →</span>
+                </a>
+                <a href="predictions.html" class="bg-gray-900 rounded-xl p-6 card-hover border border-gray-700 text-center block">
+                    <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg></div>
+                    <h3 class="text-xl font-bold mb-2">ML Predictions</h3><p class="text-gray-400 mb-4">Machine learning models predict price movements with backtesting</p><span class="text-purple-400 font-medium">Explore →</span>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-gray-800 py-12 border-t border-gray-700">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="flex items-center justify-center space-x-2 mb-4">
-                <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center">
-                    <span class="text-white font-bold text-sm">CS</span>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4"><div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center"><span class="text-white font-bold text-sm">CS</span></div><span class="text-xl font-bold gradient-text">CryptoSentiment</span></div>
+                    <p class="text-gray-400 text-sm">Advanced analytics for cryptocurrency markets using big data technologies.</p>
                 </div>
-                <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
+                <div><h4 class="font-bold mb-4">Data Sources</h4><ul class="text-gray-400 text-sm space-y-2"><li><a href="https://www.coingecko.com/" target="_blank" class="hover:text-white">CoinGecko API</a></li><li><a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" class="hover:text-white">Alternative.me</a></li><li><a href="https://cryptopanic.com/" target="_blank" class="hover:text-white">CryptoPanic</a></li></ul></div>
+                <div><h4 class="font-bold mb-4">Technologies</h4><ul class="text-gray-400 text-sm space-y-2"><li>Python, MongoDB, PySpark</li><li>scikit-learn, Pandas, NumPy</li><li>ECharts, Tailwind CSS</li></ul></div>
             </div>
-            <p class="text-gray-400">© 2025 Crypto Sentiment Analytics Dashboard. Advanced data analytics for cryptocurrency markets.</p>
+            <div class="text-center pt-8 border-t border-gray-700"><p class="text-gray-400 text-sm">© 2025 Crypto Sentiment Analytics Dashboard. Big Data Analytics Final Project.</p></div>
         </div>
     </footer>
 
     <script src="main.js"></script>
+    <script>
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('active'); }
+        function initMarketDistribution() {
+            const element = document.getElementById('market-distribution');
+            if (!element) return;
+            const chart = echarts.init(element);
+            const option = {
+                backgroundColor: 'transparent',
+                tooltip: { trigger: 'item', formatter: '{b}: {d}%' },
+                legend: { orient: 'vertical', right: '5%', top: 'center', textStyle: { color: '#9ca3af' } },
+                series: [{ type: 'pie', radius: ['40%', '70%'], center: ['35%', '50%'], avoidLabelOverlap: false, itemStyle: { borderRadius: 10, borderColor: '#1f2937', borderWidth: 2 }, label: { show: false },
+                    data: [{ value: 68, name: 'BTC', itemStyle: { color: '#f7931a' } },{ value: 15, name: 'ETH', itemStyle: { color: '#627eea' } },{ value: 5, name: 'XRP', itemStyle: { color: '#23292f' } },{ value: 4, name: 'SOL', itemStyle: { color: '#00ffa3' } },{ value: 3, name: 'DOGE', itemStyle: { color: '#c2a633' } },{ value: 5, name: 'Others', itemStyle: { color: '#6b7280' } }]
+                }]
+            };
+            chart.setOption(option);
+            window.addEventListener('resize', () => chart.resize());
+        }
+        document.addEventListener('DOMContentLoaded', function() { setTimeout(initMarketDistribution, 500); });
+    </script>
 </body>
 </html>

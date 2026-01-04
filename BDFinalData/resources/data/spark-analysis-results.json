@@ -1,0 +1,75 @@
+{
+  "timestamp": "2026-01-04T22:06:00.249609",
+  "engine": "Spark",
+  "results": {
+    "average_sentiment": {
+      "BTC": 0.02,
+      "ETH": 0.03,
+      "XRP": 0.08,
+      "SOL": 0.04,
+      "DOGE": 0.12,
+      "ADA": 0.06
+    },
+    "market_metrics": {
+      "total_market_cap": 2443657632215.0,
+      "total_volume": 54861395303.0,
+      "btc_dominance": 74.58211442463836
+    },
+    "volatility_classification": {
+      "Low": [
+        "BTC",
+        "ETH",
+        "SOL"
+      ],
+      "Medium": [
+        "XRP",
+        "ADA"
+      ],
+      "High": [
+        "DOGE"
+      ]
+    },
+    "price_performance": {
+      "Strong Gain": [
+        "DOGE"
+      ],
+      "Gain": [
+        "BTC",
+        "ETH",
+        "XRP",
+        "SOL",
+        "ADA"
+      ]
+    },
+    "engagement_scores": [
+      {
+        "symbol": "BTC",
+        "score": 0.6343563854600001
+      },
+      {
+        "symbol": "ETH",
+        "score": 0.41409068268
+      },
+      {
+        "symbol": "DOGE",
+        "score": 0.27355344276
+      },
+      {
+        "symbol": "XRP",
+        "score": 0.24526694192
+      },
+      {
+        "symbol": "SOL",
+        "score": 0.13428392832
+      },
+      {
+        "symbol": "ADA",
+        "score": 0.03828037614
+      }
+    ]
+  },
+  "metadata": {
+    "cryptos": 6,
+    "operations": 5
+  }
+}

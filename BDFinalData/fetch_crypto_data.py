@@ -1,182 +1,274 @@
 #!/usr/bin/env python3
 """
-Enhanced Real-Time Crypto Data Fetcher with Auto-Refresh
-Fetches live cryptocurrency data from Yahoo Finance API every 10 seconds
+Real-Time Crypto Data Fetcher - GLOBAL MARKET DATA
+Fetches actual global market cap and volume from CoinGecko
 """
 
-import yfinance as yf
+import requests
 import json
-import pandas as pd
-from datetime import datetime
-import numpy as np
-import time
-import threading
+from datetime import datetime, timedelta
 import os
+import time
+import sys
 
-class RealtimeCryptoFetcher:
-    def __init__(self, update_interval=10):
-        self.update_interval = update_interval
-        self.running = False
-        
-        self.crypto_tickers = {
-            'BTC-USD': 'Bitcoin',
-            'ETH-USD': 'Ethereum',
-            'XRP-USD': 'Ripple',
-            'SOL-USD': 'Solana',
-            'DOGE-USD': 'Dogecoin',
-            'ADA-USD': 'Cardano'
-        }
-        
+class GlobalCryptoFetcher:
+    def __init__(self):
         self.output_dir = './resources/data'
         self.output_file = os.path.join(self.output_dir, 'crypto-prices.json')
         os.makedirs(self.output_dir, exist_ok=True)
     
-    def fetch_realtime_price(self, ticker):
+    def fetch_global_market_data(self):
+        """Fetch REAL global market statistics"""
         try:
-            crypto = yf.Ticker(ticker)
-            info = crypto.info
-            hist = crypto.history(period="1d", interval="1m")
+            print("🌍 Fetching global market data...")
+            headers = {'x-cg-demo-api-key': 'CG-gTkWYTbgHKDtqFXvvpLaajBe'}
+            response = requests.get('https://api.coingecko.com/api/v3/global', headers=headers, timeout=10)
             
-            if hist.empty:
-                hist = crypto.history(period="5d", interval="1h")
-            
-            return info, hist
-        except Exception as e:
-            print(f"⚠️ Error fetching {ticker}: {e}")
-            return None, None
-    
-    def calculate_realtime_volatility(self, hist_data):
-        if hist_data is None or hist_data.empty:
-            return 0.02
-        
-        prices = hist_data['Close'].tolist()
-        if len(prices) < 2:
-            return 0.02
-        
-        returns = pd.Series(prices).pct_change().dropna()
-        volatility = returns.std() if len(returns) > 0 else 0.02
-        return abs(volatility)
-    
-    def calculate_sentiment(self, change_24h, volatility, volume_change):
-        sentiment = np.tanh(change_24h / 10)
-        volatility_factor = 1 - min(volatility * 10, 0.5)
-        volume_factor = 1 + min(abs(volume_change) / 100, 0.3)
-        
-        final_sentiment = sentiment * volatility_factor * volume_factor
-        return max(-1, min(1, final_sentiment))
-    
-    def fetch_data(self):
-        print(f"\n🔄 Fetching at {datetime.now().strftime('%H:%M:%S')}")
-        
-        cryptocurrencies = []
-        total_market_cap = 0
-        total_volume = 0
-        sentiments = []
-        
-        for ticker, name in self.crypto_tickers.items():
-            info, hist_data = self.fetch_realtime_price(ticker)
-            
-            if info and hist_data is not None and not hist_data.empty:
-                current_price = info.get('currentPrice', info.get('regularMarketPrice', 0))
-                previous_close = info.get('previousClose', current_price)
+            if response.status_code == 200:
+                data = response.json()['data']
                 
-                change_24h = ((current_price - previous_close) / previous_close * 100) if previous_close > 0 else 0
-                
-                volume_24h = info.get('volume', info.get('regularMarketVolume', 0))
-                avg_volume = info.get('averageVolume', volume_24h)
-                volume_change = ((volume_24h - avg_volume) / avg_volume * 100) if avg_volume > 0 else 0
-                
-                market_cap = info.get('marketCap', 0)
-                volatility = self.calculate_realtime_volatility(hist_data)
-                
-                sparkline = [round(p, 2) for p in hist_data['Close'].tail(20).tolist()]
-                
-                social_sentiment = self.calculate_sentiment(change_24h, volatility, volume_change)
-                buzz_volume = int(min(volume_24h / 1e9, 100) * 1000 * (1 + abs(volume_change) / 100))
-                buzz_volume = max(1000, min(buzz_volume, 100000))
-                
-                crypto_data = {
-                    "symbol": ticker.replace('-USD', ''),
-                    "name": name,
-                    "price": round(current_price, 2),
-                    "change24h": round(change_24h, 2),
-                    "volume24h": int(volume_24h),
-                    "volumeChange": round(volume_change, 2),
-                    "marketCap": int(market_cap),
-                    "volatility": round(volatility, 4),
-                    "sparkline": sparkline,
-                    "socialSentiment": round(social_sentiment, 2),
-                    "buzzVolume": buzz_volume,
-                    "lastUpdate": datetime.now().isoformat()
+                global_stats = {
+                    'totalMarketCap': data['total_market_cap']['usd'],
+                    'totalVolume': data['total_volume']['usd'],
+                    'btcDominance': round(data['market_cap_percentage'].get('btc', 0), 1),
+                    'ethDominance': round(data['market_cap_percentage'].get('eth', 0), 1),
+                    'marketCapChange24h': data['market_cap_change_percentage_24h_usd'],
+                    'activeCryptocurrencies': data['active_cryptocurrencies'],
+                    'markets': data['markets']
                 }
                 
-                cryptocurrencies.append(crypto_data)
-                total_market_cap += market_cap
-                total_volume += volume_24h
-                sentiments.append(social_sentiment)
+                print(f"   ✅ Global Market Cap: ${global_stats['totalMarketCap'] / 1e12:.2f}T")
+                print(f"   ✅ Global 24h Volume: ${global_stats['totalVolume'] / 1e9:.2f}B")
+                print(f"   ✅ BTC Dominance: {global_stats['btcDominance']}%")
                 
-                emoji = "🟢" if change_24h > 0 else "🔴"
-                print(f"{emoji} {name}: ${current_price:,.2f} ({change_24h:+.2f}%)")
+                return global_stats
+            else:
+                print(f"   ⚠️ Global API returned status {response.status_code}")
+                return None
+                
+        except Exception as e:
+            print(f"   ❌ Error fetching global data: {e}")
+            return None
+    
+    def fetch_crypto_details(self, coin_id, symbol):
+        """Fetch detailed data for a specific cryptocurrency"""
+        try:
+            url = f"https://api.coingecko.com/api/v3/coins/{coin_id}"
+            params = {
+                'localization': 'false',
+                'tickers': 'false',
+                'community_data': 'false',
+                'developer_data': 'false',
+                'sparkline': 'true'
+            }
+            headers = {'x-cg-demo-api-key': 'CG-gTkWYTbgHKDtqFXvvpLaajBe'}
+            response = requests.get(url, params=params, headers=headers, timeout=15)
+            
+            if response.status_code == 429:
+                print(f"⚠️ Rate limited!")
+                print(f"\n      Waiting 15 seconds and retrying...")
+                time.sleep(15)
+                headers = {'x-cg-demo-api-key': 'CG-gTkWYTbgHKDtqFXvvpLaajBe'}
+                response = requests.get(url, params=params, headers=headers, timeout=15)
+            
+            if response.status_code == 200:
+                data = response.json()
+                market_data = data.get('market_data', {})
+                
+                # Get sparkline data
+                sparkline = market_data.get('sparkline_7d', {}).get('price', [])
+                
+                # Generate timestamps for sparkline (7 days of hourly data)
+                now = datetime.now()
+                timestamps = [(now - timedelta(hours=len(sparkline)-i-1)).isoformat() 
+                             for i in range(len(sparkline))]
+                
+                crypto_info = {
+                    'symbol': symbol,
+                    'name': data.get('name', symbol),
+                    'price': market_data.get('current_price', {}).get('usd', 0),
+                    'marketCap': market_data.get('market_cap', {}).get('usd', 0),
+                    'volume24h': market_data.get('total_volume', {}).get('usd', 0),
+                    'change24h': market_data.get('price_change_percentage_24h', 0),
+                    'change7d': market_data.get('price_change_percentage_7d', 0),
+                    'change30d': market_data.get('price_change_percentage_30d', 0),
+                    'volatility': abs(market_data.get('price_change_percentage_24h', 0)) / 100,
+                    'socialSentiment': self._calculate_sentiment(market_data),
+                    'buzzVolume': int(market_data.get('total_volume', {}).get('usd', 0) / 1e6),
+                    'sparkline': sparkline,
+                    'sparkline_timestamps': timestamps,
+                    'high24h': market_data.get('high_24h', {}).get('usd', 0),
+                    'low24h': market_data.get('low_24h', {}).get('usd', 0),
+                    'ath': market_data.get('ath', {}).get('usd', 0),
+                    'atl': market_data.get('atl', {}).get('usd', 0),
+                    'circulatingSupply': market_data.get('circulating_supply', 0),
+                    'totalSupply': market_data.get('total_supply', 0)
+                }
+                
+                price_str = f"${crypto_info['price']:,.2f}" if crypto_info['price'] >= 1 else f"${crypto_info['price']:.6f}"
+                change_str = f"{crypto_info['change24h']:+.2f}%"
+                print(f"✅ {price_str} ({change_str})")
+                
+                return crypto_info
+            else:
+                print(f"❌ API error {response.status_code}")
+                return None
+                
+        except Exception as e:
+            print(f"❌ {str(e)[:60]}")
+            return None
+    
+    def _calculate_sentiment(self, market_data):
+        """Calculate sentiment from market metrics"""
+        change_24h = market_data.get('price_change_percentage_24h', 0)
+        change_7d = market_data.get('price_change_percentage_7d', 0)
         
-        avg_sentiment = np.mean(sentiments) if sentiments else 0
+        # Normalize to -1 to 1 range
+        sentiment = (change_24h * 0.6 + change_7d * 0.4) / 100
+        sentiment = max(-1, min(1, sentiment))
         
-        market_overview = {
-            "totalMarketCap": int(total_market_cap),
-            "totalVolume": int(total_volume),
-            "btcDominance": round((cryptocurrencies[0]['marketCap'] / total_market_cap * 100), 2),
-            "fearGreedIndex": int((avg_sentiment + 1) * 50),
-            "socialSentiment": round(avg_sentiment, 2),
-            "timestamp": datetime.now().isoformat(),
-            "lastUpdate": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        return round(sentiment, 2)
+    
+    def fetch_fear_greed_index(self):
+        """Fetch Fear & Greed Index"""
+        try:
+            response = requests.get('https://api.alternative.me/fng/?limit=1', timeout=5)
+            if response.status_code == 200:
+                data = response.json()['data'][0]
+                return {
+                    'value': int(data['value']),
+                    'classification': data['value_classification']
+                }
+        except:
+            pass
+        return {'value': 50, 'classification': 'Neutral'}
+    
+    def fetch_all_data(self):
+        """Fetch complete crypto dataset with GLOBAL market data"""
+        print("\n" + "=" * 70)
+        print("🔄 Fetching Real-Time Cryptocurrency Data")
+        print("=" * 70)
+        
+        # 1. Get GLOBAL market statistics
+        global_data = self.fetch_global_market_data()
+        
+        if not global_data:
+            print("\n⚠️ Using fallback global data")
+            global_data = {
+                'totalMarketCap': 3159226766302,  # Fallback from your screenshot
+                'totalVolume': 79390979766,
+                'btcDominance': 57.8,
+                'ethDominance': 12.5,
+                'marketCapChange24h': 0.3,
+                'activeCryptocurrencies': 15000,
+                'markets': 800
+            }
+        
+        time.sleep(0.5)
+        
+        # 2. Get individual cryptocurrency data
+        print("\n📊 Fetching individual cryptocurrencies...")
+        print("   ℹ️  Rate Limit: 5-15 calls/min (public) or 30 calls/min (demo)")
+        print("   ⏳ Using 4-second delays (safe for public API)")
+        print("   📊 Total time: ~28 seconds for 6 coins\n")
+        
+        crypto_ids = {
+            'BTC': 'bitcoin',
+            'ETH': 'ethereum',
+            'XRP': 'ripple',
+            'SOL': 'solana',
+            'DOGE': 'dogecoin',
+            'ADA': 'cardano'
         }
         
-        data = {
-            "cryptocurrencies": cryptocurrencies,
-            "marketOverview": market_overview,
-            "metadata": {
-                "updateInterval": self.update_interval,
-                "lastFetch": datetime.now().isoformat()
+        cryptocurrencies = []
+        
+        for i, (symbol, coin_id) in enumerate(crypto_ids.items(), 1):
+            print(f"   [{i}/6] Fetching {symbol}...", end=' ', flush=True)
+            
+            crypto_data = self.fetch_crypto_details(coin_id, symbol)
+            if crypto_data:
+                cryptocurrencies.append(crypto_data)
+            
+            # Wait 4 seconds between calls (60s / 15 calls = 4s minimum)
+            if i < len(crypto_ids):
+                time.sleep(4.0)
+        
+        # 3. Get Fear & Greed Index
+        print("\n📈 Fetching Fear & Greed Index...")
+        fear_greed = self.fetch_fear_greed_index()
+        print(f"   ✅ Fear & Greed: {fear_greed['value']} ({fear_greed['classification']})")
+        
+        # 4. Calculate overall social sentiment
+        if cryptocurrencies:
+            avg_sentiment = sum(c['socialSentiment'] for c in cryptocurrencies) / len(cryptocurrencies)
+        else:
+            avg_sentiment = 0
+        
+        # 5. Build complete dataset
+        complete_data = {
+            'marketOverview': {
+                'totalMarketCap': global_data['totalMarketCap'],
+                'totalVolume': global_data['totalVolume'],
+                'btcDominance': global_data['btcDominance'],
+                'ethDominance': global_data.get('ethDominance', 0),
+                'marketCapChange24h': global_data.get('marketCapChange24h', 0),
+                'fearGreedIndex': fear_greed['value'],
+                'fearGreedClassification': fear_greed['classification'],
+                'socialSentiment': round(avg_sentiment, 2),
+                'activeCryptocurrencies': global_data.get('activeCryptocurrencies', 0),
+                'markets': global_data.get('markets', 0)
+            },
+            'cryptocurrencies': cryptocurrencies,
+            'metadata': {
+                'lastUpdate': datetime.now().isoformat(),
+                'dataSource': 'CoinGecko API (Global)',
+                'updateInterval': 120,
+                'cryptoCount': len(cryptocurrencies)
             }
         }
         
+        # 6. Save to file
         with open(self.output_file, 'w') as f:
-            json.dump(data, f, indent=2)
+            json.dump(complete_data, f, indent=2)
         
-        print(f"✅ Saved to: {self.output_file}")
-        return data
+        print("\n" + "=" * 70)
+        print(f"✅ Data saved to: {self.output_file}")
+        print(f"📊 Cryptocurrencies: {len(cryptocurrencies)}")
+        print(f"💰 Global Market Cap: ${global_data['totalMarketCap'] / 1e12:.2f}T")
+        print(f"📊 Global Volume: ${global_data['totalVolume'] / 1e9:.2f}B")
+        print(f"🕐 Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print("=" * 70 + "\n")
+        
+        return complete_data
+
+def main():
+    fetcher = GlobalCryptoFetcher()
     
-    def auto_refresh(self):
-        while self.running:
-            try:
-                self.fetch_data()
-                time.sleep(self.update_interval)
-            except Exception as e:
-                print(f"❌ Error: {e}")
-                time.sleep(self.update_interval)
+    # Check if running in single-fetch mode
+    if len(sys.argv) > 1 and sys.argv[1] == '--once':
+        fetcher.fetch_all_data()
+        print("✅ Single fetch complete")
+        return
     
-    def start(self):
-        if not self.running:
-            self.running = True
-            self.thread = threading.Thread(target=self.auto_refresh, daemon=True)
-            self.thread.start()
-            print(f"🚀 Started (updating every {self.update_interval}s)")
-            print("Press Ctrl+C to stop...")
+    # Continuous mode
+    print("🚀 Starting Real-Time Crypto Data Fetcher")
+    print("🔄 Fetching data every 120 seconds")
+    print("📡 Using CoinGecko Global API")
+    print("Press Ctrl+C to stop...\n")
     
-    def stop(self):
-        self.running = False
-        print("🛑 Stopped")
+    while True:
+        try:
+            fetcher.fetch_all_data()
+            print(f"⏳ Next update in 120 seconds...")
+            time.sleep(120)
+        except KeyboardInterrupt:
+            print("\n\n👋 Shutting down...")
+            break
+        except Exception as e:
+            print(f"\n❌ Error: {e}")
+            print("⏳ Retrying in 120 seconds...")
+            time.sleep(120)
 
 if __name__ == "__main__":
-    fetcher = RealtimeCryptoFetcher(update_interval=10)
-    
-    import sys
-    if len(sys.argv) > 1 and sys.argv[1] == '--once':
-        fetcher.fetch_data()
-    else:
-        fetcher.start()
-        try:
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            print("\n👋 Shutting down...")
-            fetcher.stop()
+    main()
