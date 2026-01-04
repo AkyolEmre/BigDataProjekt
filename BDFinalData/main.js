@@ -1,574 +1,229 @@
-// Crypto Sentiment Analytics Dashboard - Main JavaScript
+// CryptoSentiment Analytics Dashboard - Enhanced Main.js
+// Big Data Analytics Final Project
 
-// Global variables
 let cryptoData = {};
-let sentimentData = {};
-let correlationData = {};
 let currentCrypto = "BTC";
-let currentTimeframe = "1h";
+let currentTimeframe = "24h";
 let priceChart = null;
 let sentimentGauge = null;
+let lastUpdateTime = null;
 
-// Initialize dashboard
+const CRYPTO_COLORS = { BTC: '#f7931a', ETH: '#627eea', XRP: '#23292f', SOL: '#00ffa3', DOGE: '#c2a633', ADA: '#0033ad' };
+
 document.addEventListener("DOMContentLoaded", function () {
+  showLoadingIndicator();
   loadData();
   initializeCharts();
   setupEventListeners();
   startRealTimeUpdates();
 });
 
-// Load data from JSON files
+function showLoadingIndicator() {
+  const indicator = document.createElement('div');
+  indicator.id = 'update-indicator';
+  indicator.className = 'fixed top-20 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg z-50 flex items-center space-x-2';
+  indicator.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div><span>Loading live data...</span>';
+  document.body.appendChild(indicator);
+}
+
+function updateIndicator(status, message) {
+  const indicator = document.getElementById('update-indicator');
+  if (!indicator) return;
+  const configs = {
+    success: { bg: 'bg-emerald-600', icon: '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>' },
+    loading: { bg: 'bg-blue-600', icon: '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>' },
+    error: { bg: 'bg-red-600', icon: '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>' }
+  };
+  const config = configs[status] || configs.loading;
+  indicator.className = `fixed top-20 right-4 ${config.bg} text-white px-4 py-2 rounded-lg shadow-lg z-50 flex items-center space-x-2`;
+  indicator.innerHTML = `${config.icon}<span>${message}</span>`;
+  if (status === 'success') setTimeout(() => { indicator.style.opacity = '0.7'; }, 3000);
+  else indicator.style.opacity = '1';
+}
+
 async function loadData() {
   try {
-    const [cryptoResponse, sentimentResponse, correlationResponse] =
-      await Promise.all([
-        fetch("resources/data/crypto-prices.json"),
-        fetch("resources/data/sentiment-data.json"),
-        fetch("resources/data/correlation-data.json"),
-      ]);
-
-    cryptoData = await cryptoResponse.json();
-    sentimentData = await sentimentResponse.json();
-    correlationData = await correlationResponse.json();
-
+    updateIndicator('loading', 'Fetching live data...');
+    const response = await fetch(`resources/data/crypto-prices.json?t=${Date.now()}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    cryptoData = await response.json();
+    lastUpdateTime = new Date(cryptoData.metadata?.lastUpdate || Date.now());
     populateCryptoCards();
     updateMarketOverview();
-    console.log("✅ Data loaded successfully");
+    updateCharts();
+    updateDataStatus();
+    updateIndicator('success', `Updated ${getTimeAgo(lastUpdateTime)}`);
   } catch (error) {
-    console.error("❌ Error loading data:", error);
-    // Use fallback data
-    loadFallbackData();
+    console.error("Error loading data:", error);
+    updateIndicator('error', 'Failed to load data');
   }
 }
 
-// Fallback data in case files can't be loaded
-function loadFallbackData() {
-  cryptoData = {
-    cryptocurrencies: [
-      {
-        symbol: "BTC",
-        name: "Bitcoin",
-        price: 98750.32,
-        change24h: 2.34,
-        volume24h: 28500000000,
-        marketCap: 1950000000000,
-        volatility: 0.0234,
-        sparkline: [
-          98123, 98345, 98750, 98567, 98923, 98750, 99123, 98750, 98543, 98750,
-        ],
-        socialSentiment: 0.67,
-        buzzVolume: 89432,
-      },
-      {
-        symbol: "ETH",
-        name: "Ethereum",
-        price: 3456.78,
-        change24h: -1.23,
-        volume24h: 15600000000,
-        marketCap: 415000000000,
-        volatility: 0.0312,
-        sparkline: [3456, 3423, 3456, 3489, 3456, 3434, 3456, 3478, 3456, 3456],
-        socialSentiment: 0.45,
-        buzzVolume: 56789,
-      },
-    ],
-    marketOverview: {
-      totalMarketCap: 2850000000000,
-      totalVolume: 52300000000,
-      btcDominance: 68.4,
-      fearGreedIndex: 72,
-      socialSentiment: 0.56,
-    },
-  };
-
-  populateCryptoCards();
-  updateMarketOverview();
+function getTimeAgo(date) {
+  const seconds = Math.floor((new Date() - date) / 1000);
+  if (seconds < 10) return "just now";
+  if (seconds < 60) return `${seconds}s ago`;
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  return date.toLocaleDateString();
 }
 
-// Initialize charts
+function formatPrice(price) {
+  if (!price) return '$0.00';
+  if (price >= 1000) return `$${price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+  if (price >= 1) return `$${price.toFixed(2)}`;
+  if (price >= 0.01) return `$${price.toFixed(4)}`;
+  return `$${price.toFixed(6)}`;
+}
+
+function updateDataStatus() {
+  const statusEl = document.getElementById('data-status');
+  if (statusEl && lastUpdateTime) statusEl.textContent = `Last updated: ${getTimeAgo(lastUpdateTime)}`;
+}
+
 function initializeCharts() {
-  initializeSentimentGauge();
-  initializePriceChart();
+  const gaugeEl = document.getElementById("sentiment-gauge");
+  if (gaugeEl) { sentimentGauge = echarts.init(gaugeEl); window.addEventListener("resize", () => sentimentGauge?.resize()); }
+  const chartEl = document.getElementById("price-chart");
+  if (chartEl) { priceChart = echarts.init(chartEl); window.addEventListener("resize", () => priceChart?.resize()); }
 }
 
-// Initialize sentiment gauge
-function initializeSentimentGauge() {
-  const gaugeElement = document.getElementById("sentiment-gauge");
-  if (!gaugeElement) return;
+function updateCharts() { updateSentimentGauge(); updatePriceChart(); }
 
-  sentimentGauge = echarts.init(gaugeElement);
-
-  const option = {
-    backgroundColor: "transparent",
-    series: [
-      {
-        name: "Sentiment",
-        type: "gauge",
-        min: -1,
-        max: 1,
-        splitNumber: 10,
-        radius: "80%",
-        center: ["50%", "60%"],
-        axisLine: {
-          lineStyle: {
-            width: 30,
-            color: [
-              [0.3, "#ef4444"],
-              [0.7, "#f59e0b"],
-              [1, "#10b981"],
-            ],
-          },
-        },
-        pointer: {
-          itemStyle: {
-            color: "#00d4ff",
-          },
-        },
-        axisTick: {
-          distance: -30,
-          length: 8,
-          lineStyle: {
-            color: "#fff",
-            width: 2,
-          },
-        },
-        splitLine: {
-          distance: -30,
-          length: 30,
-          lineStyle: {
-            color: "#fff",
-            width: 4,
-          },
-        },
-        axisLabel: {
-          color: "#e5e7eb",
-          distance: 40,
-          fontSize: 12,
-          formatter: function (value) {
-            if (value === -1) return "Very Negative";
-            if (value === -0.5) return "Negative";
-            if (value === 0) return "Neutral";
-            if (value === 0.5) return "Positive";
-            if (value === 1) return "Very Positive";
-            return "";
-          },
-        },
-        detail: {
-          valueAnimation: true,
-          formatter: "{value}",
-          color: "#00d4ff",
-          fontSize: 24,
-          offsetCenter: [0, "70%"],
-        },
-        data: [
-          {
-            value: sentimentData.sentimentOverview
-              ? sentimentData.sentimentOverview.overallSentiment
-              : 0.67,
-            name: "Market Sentiment",
-          },
-        ],
-      },
-    ],
-  };
-
-  sentimentGauge.setOption(option);
+function updateSentimentGauge() {
+  if (!sentimentGauge || !cryptoData.marketOverview) return;
+  const value = cryptoData.marketOverview.socialSentiment || 0;
+  sentimentGauge.setOption({
+    backgroundColor: 'transparent',
+    series: [{
+      type: "gauge", min: -1, max: 1, splitNumber: 4, radius: "85%",
+      axisLine: { lineStyle: { width: 20, color: [[0.2, "#ef4444"], [0.4, "#f97316"], [0.6, "#fbbf24"], [0.8, "#84cc16"], [1, "#10b981"]] } },
+      pointer: { width: 6, length: '60%', itemStyle: { color: '#fff' } },
+      axisTick: { show: false },
+      splitLine: { length: 15, lineStyle: { color: '#374151', width: 2 } },
+      axisLabel: { distance: 25, color: "#9ca3af", fontSize: 11, formatter: (v) => ({ '-1': 'Fear', '0': 'Neutral', '1': 'Greed' }[v.toString()] || '') },
+      detail: { valueAnimation: true, formatter: (v) => v.toFixed(2), color: "#fff", fontSize: 28, fontWeight: 'bold', offsetCenter: [0, '75%'] },
+      data: [{ value }]
+    }]
+  });
 }
 
-// Initialize price chart
-function initializePriceChart() {
-  const chartElement = document.getElementById("price-chart");
-  if (!chartElement) return;
-
-  priceChart = echarts.init(chartElement);
-  updatePriceChart();
-}
-
-// Update price chart based on selected crypto
 function updatePriceChart() {
   if (!priceChart || !cryptoData.cryptocurrencies) return;
-
-  const crypto = cryptoData.cryptocurrencies.find(
-    (c) => c.symbol === currentCrypto
-  );
-  if (!crypto) return;
-
-  // Generate sample price data
-  const basePrice = crypto.price;
-  const data = [];
-  const now = new Date();
-
-  for (let i = 99; i >= 0; i--) {
-    const time = new Date(now.getTime() - i * 60000); // 1 minute intervals
-    const variation = (Math.random() - 0.5) * crypto.volatility * basePrice;
-    const price = basePrice + variation;
-    data.push([time.toISOString(), price.toFixed(2)]);
-  }
-
-  const option = {
+  const crypto = cryptoData.cryptocurrencies.find(c => c.symbol === currentCrypto);
+  if (!crypto || !crypto.sparkline?.length) return;
+  
+  const hours = { '1h': 12, '4h': 4, '24h': 24, '7d': 168, '30d': 720 };
+  let hoursToShow = Math.min(hours[currentTimeframe] || 24, crypto.sparkline.length);
+  const prices = crypto.sparkline.slice(-hoursToShow);
+  const times = (crypto.sparkline_timestamps || []).slice(-hoursToShow);
+  const data = prices.map((p, i) => [times[i] || new Date(Date.now() - (hoursToShow - i) * 3600000).toISOString(), p]);
+  
+  const min = Math.min(...prices), max = Math.max(...prices);
+  const pad = (max - min) === 0 ? max * 0.01 : (max - min) * 0.1;
+  const color = CRYPTO_COLORS[currentCrypto] || '#00d4ff';
+  
+  priceChart.setOption({
     backgroundColor: "transparent",
-    title: {
-      text: `${crypto.name} Price Chart`,
-      textStyle: {
-        color: "#e5e7eb",
-        fontSize: 18,
-      },
-    },
-    tooltip: {
-      trigger: "axis",
-      backgroundColor: "#1f2937",
-      borderColor: "#374151",
-      textStyle: {
-        color: "#e5e7eb",
-      },
-      formatter: function (params) {
-        const date = new Date(params[0].value[0]);
-        const price = parseFloat(params[0].value[1]);
-        return `${date.toLocaleString()}<br/>Price: $${price.toLocaleString()}`;
-      },
-    },
-    grid: {
-      left: "3%",
-      right: "4%",
-      bottom: "3%",
-      containLabel: true,
-    },
-    xAxis: {
-      type: "time",
-      axisLine: {
-        lineStyle: {
-          color: "#374151",
-        },
-      },
-      axisLabel: {
-        color: "#9ca3af",
-      },
-    },
-    yAxis: {
-      type: "value",
-      axisLine: {
-        lineStyle: {
-          color: "#374151",
-        },
-      },
-      axisLabel: {
-        color: "#9ca3af",
-        formatter: "${value}",
-      },
-      splitLine: {
-        lineStyle: {
-          color: "#374151",
-        },
-      },
-    },
-    series: [
-      {
-        name: "Price",
-        type: "line",
-        data: data,
-        smooth: true,
-        lineStyle: {
-          color: "#00d4ff",
-          width: 2,
-        },
-        areaStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: "rgba(0, 212, 255, 0.3)",
-              },
-              {
-                offset: 1,
-                color: "rgba(0, 212, 255, 0.05)",
-              },
-            ],
-          },
-        },
-        symbol: "none",
-      },
-    ],
-  };
-
-  priceChart.setOption(option);
+    tooltip: { trigger: "axis", backgroundColor: "#1f2937", borderColor: "#374151", textStyle: { color: "#fff" }, formatter: (p) => `<b>${new Date(p[0].value[0]).toLocaleString()}</b><br/>Price: ${formatPrice(p[0].value[1])}` },
+    grid: { left: "12%", right: "5%", top: "10%", bottom: "15%" },
+    xAxis: { type: "time", axisLabel: { color: "#9ca3af", fontSize: 11 }, splitLine: { show: false }, axisLine: { lineStyle: { color: '#374151' } } },
+    yAxis: { type: "value", min: min - pad, max: max + pad, axisLabel: { color: "#9ca3af", fontSize: 11, formatter: (v) => formatPrice(v).replace('$', '') }, splitLine: { lineStyle: { color: "#374151", type: 'dashed' } }, axisLine: { show: false } },
+    series: [{ data, type: "line", smooth: true, showSymbol: hoursToShow <= 24, symbolSize: 6, lineStyle: { width: 3, color }, itemStyle: { color }, areaStyle: { color: { type: "linear", x: 0, y: 0, x2: 0, y2: 1, colorStops: [{ offset: 0, color: color + '40' }, { offset: 1, color: color + '05' }] } } }]
+  }, { notMerge: true });
 }
 
-// Populate cryptocurrency cards
 function populateCryptoCards() {
   const container = document.getElementById("crypto-cards");
   if (!container || !cryptoData.cryptocurrencies) return;
-
   container.innerHTML = "";
-
+  
   cryptoData.cryptocurrencies.forEach((crypto) => {
-    const changeColor =
-      crypto.change24h >= 0 ? "text-emerald-400" : "text-red-400";
-    const changeIcon = crypto.change24h >= 0 ? "↗" : "↘";
-
     const card = document.createElement("div");
-    card.className =
-      "bg-gray-900 rounded-xl p-6 card-hover border border-gray-700 cursor-pointer";
+    const isSelected = crypto.symbol === currentCrypto;
+    const color = CRYPTO_COLORS[crypto.symbol] || '#6b7280';
+    const changeColor = crypto.change24h >= 0 ? "text-emerald-400" : "text-red-400";
+    
+    card.className = `bg-gray-900 rounded-xl p-6 card-hover border cursor-pointer transition-all ${isSelected ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-gray-700 hover:border-gray-600'}`;
     card.onclick = () => selectCrypto(crypto.symbol);
-
+    
     card.innerHTML = `
-            <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">${
-                          crypto.symbol
-                        }</span>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg">${crypto.name}</h3>
-                        <p class="text-gray-400 text-sm">${crypto.symbol}</p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <p class="text-2xl font-bold">$${crypto.price.toLocaleString()}</p>
-                    <p class="${changeColor} text-sm">${changeIcon} ${Math.abs(
-      crypto.change24h
-    )}%</p>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                    <p class="text-gray-400 text-sm">Market Cap</p>
-                    <p class="font-semibold">$${(
-                      crypto.marketCap / 1000000000
-                    ).toFixed(2)}B</p>
-                </div>
-                <div>
-                    <p class="text-gray-400 text-sm">24h Volume</p>
-                    <p class="font-semibold">$${(
-                      crypto.volume24h / 1000000000
-                    ).toFixed(2)}B</p>
-                </div>
-            </div>
-            
-            <div class="mb-4">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-gray-400 text-sm">Volatility</span>
-                    <span class="text-sm">${(crypto.volatility * 100).toFixed(
-                      2
-                    )}%</span>
-                </div>
-                <div class="w-full bg-gray-700 rounded-full h-2">
-                    <div class="bg-gradient-to-r from-blue-400 to-emerald-400 h-2 rounded-full" style="width: ${Math.min(
-                      crypto.volatility * 1000,
-                      100
-                    )}%"></div>
-                </div>
-            </div>
-            
-            <div class="flex justify-between items-center">
-                <div>
-                    <p class="text-gray-400 text-sm">Social Sentiment</p>
-                    <p class="font-semibold ${
-                      crypto.socialSentiment >= 0
-                        ? "text-emerald-400"
-                        : "text-red-400"
-                    }">
-                        ${
-                          crypto.socialSentiment >= 0 ? "+" : ""
-                        }${crypto.socialSentiment.toFixed(2)}
-                    </p>
-                </div>
-                <div>
-                    <p class="text-gray-400 text-sm">Buzz Volume</p>
-                    <p class="font-semibold text-blue-400">${crypto.buzzVolume.toLocaleString()}</p>
-                </div>
-            </div>
-        `;
-
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: ${color}20; border: 2px solid ${color}">
+            <span class="font-bold text-sm" style="color: ${color}">${crypto.symbol.charAt(0)}</span>
+          </div>
+          <div><h3 class="font-bold text-lg text-white">${crypto.name}</h3><span class="text-gray-400 text-sm">${crypto.symbol}</span></div>
+        </div>
+      </div>
+      <div class="flex justify-between items-end">
+        <div>
+          <p class="text-2xl font-bold text-white">${formatPrice(crypto.price)}</p>
+          <p class="${changeColor} text-sm font-medium mt-1">${crypto.change24h >= 0 ? '↑' : '↓'} ${crypto.change24h >= 0 ? '+' : ''}${crypto.change24h.toFixed(2)}%</p>
+        </div>
+        <div class="text-right"><p class="text-xs text-gray-500">Volatility</p><p class="text-sm font-medium text-yellow-400">${(crypto.volatility * 100).toFixed(2)}%</p></div>
+      </div>
+      <div class="mt-4">
+        <div class="flex justify-between text-xs text-gray-500 mb-1"><span>Sentiment</span><span>${(crypto.socialSentiment * 100).toFixed(0)}%</span></div>
+        <div class="w-full bg-gray-700 rounded-full h-2"><div class="h-2 rounded-full" style="width: ${Math.min(Math.abs(crypto.socialSentiment * 100), 100)}%; background: ${crypto.socialSentiment >= 0 ? '#10b981' : '#ef4444'}"></div></div>
+      </div>`;
     container.appendChild(card);
   });
 }
 
-// Update market overview
-function updateMarketOverview() {
-  if (!cryptoData.marketOverview) return;
-
-  const overview = cryptoData.marketOverview;
-
-  document.getElementById("total-market-cap").textContent = `$${(
-    overview.totalMarketCap / 1000000000000
-  ).toFixed(2)}T`;
-  document.getElementById("total-volume").textContent = `$${(
-    overview.totalVolume / 1000000000
-  ).toFixed(1)}B`;
-  document.getElementById(
-    "btc-dominance"
-  ).textContent = `${overview.btcDominance}%`;
-  document.getElementById("fear-greed").textContent = overview.fearGreedIndex;
-}
-
-// Setup event listeners
-function setupEventListeners() {
-  // Crypto selector buttons
-  document.querySelectorAll(".crypto-btn").forEach((btn) => {
-    btn.addEventListener("click", function () {
-      document.querySelectorAll(".crypto-btn").forEach((b) => {
-        b.classList.remove("active", "bg-blue-500", "text-white");
-        b.classList.add("bg-gray-700", "text-gray-300");
-      });
-
-      this.classList.add("active", "bg-blue-500", "text-white");
-      this.classList.remove("bg-gray-700", "text-gray-300");
-
-      currentCrypto = this.dataset.crypto;
-      updateSelectedCrypto();
-      updatePriceChart();
-    });
-  });
-
-  // Timeframe buttons
-  document.querySelectorAll(".time-btn").forEach((btn) => {
-    btn.addEventListener("click", function () {
-      document.querySelectorAll(".time-btn").forEach((b) => {
-        b.classList.remove("active", "bg-blue-500", "text-white");
-        b.classList.add("bg-gray-700", "text-gray-300");
-      });
-
-      this.classList.add("active", "bg-blue-500", "text-white");
-      this.classList.remove("bg-gray-700", "text-gray-300");
-
-      currentTimeframe = this.dataset.time;
-      updatePriceChart();
-    });
-  });
-
-  // Mobile menu
-  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-  if (mobileMenuBtn) {
-    mobileMenuBtn.addEventListener("click", function () {
-      // Toggle mobile menu (implement if needed)
-      console.log("Mobile menu clicked");
-    });
-  }
-}
-
-// Select cryptocurrency
 function selectCrypto(symbol) {
   currentCrypto = symbol;
-
-  // Update active button
-  document.querySelectorAll(".crypto-btn").forEach((btn) => {
-    btn.classList.remove("active", "bg-blue-500", "text-white");
-    btn.classList.add("bg-gray-700", "text-gray-300");
-    if (btn.dataset.crypto === symbol) {
-      btn.classList.add("active", "bg-blue-500", "text-white");
-      btn.classList.remove("bg-gray-700", "text-gray-300");
-    }
+  const crypto = cryptoData.cryptocurrencies?.find(c => c.symbol === symbol);
+  if (crypto) {
+    const nameEl = document.getElementById("selected-crypto-name");
+    const symbolEl = document.getElementById("selected-crypto-symbol");
+    if (nameEl) nameEl.textContent = crypto.name;
+    if (symbolEl) symbolEl.textContent = crypto.symbol;
+  }
+  document.querySelectorAll(".crypto-btn").forEach(btn => {
+    const isActive = btn.dataset.crypto === symbol;
+    btn.className = `crypto-btn ${isActive ? 'active bg-blue-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'} px-4 py-2 rounded-lg font-medium`;
   });
-
-  updateSelectedCrypto();
   updatePriceChart();
-}
-
-// Update selected crypto display
-function updateSelectedCrypto() {
-  if (!cryptoData.cryptocurrencies) return;
-
-  const crypto = cryptoData.cryptocurrencies.find(
-    (c) => c.symbol === currentCrypto
-  );
-  if (!crypto) return;
-
-  document.getElementById("selected-crypto-name").textContent = crypto.name;
-  document.getElementById("selected-crypto-symbol").textContent = crypto.symbol;
-}
-
-// Start real-time updates
-function startRealTimeUpdates() {
-  // Update all data every 10 seconds to match backend update frequency
-  setInterval(() => {
-    console.log("🔄 Auto-updating with real data...");
-    loadData(); // Reload all JSON data files for real updates
-    updatePrices(); // Update price displays
-    updateSentiment(); // Update sentiment gauge
-  }, 10000); // Changed from 120000ms (120s) to 10000ms (10s)
-}
-
-// Update prices with real data changes
-function updatePrices() {
-  if (!cryptoData.cryptocurrencies) return;
-
-  // Real data is already updated by loadData()
   populateCryptoCards();
-  updatePriceChart();
 }
 
-// Update sentiment with real data changes
-function updateSentiment() {
-  if (!sentimentData.sentimentOverview) return;
-
-  // Real sentiment data is already updated by loadData()
-  // Update gauge with current sentiment
-  if (sentimentGauge) {
-    sentimentGauge.setOption({
-      series: [
-        {
-          data: [
-            {
-              value: sentimentData.sentimentOverview.overallSentiment,
-              name: "Market Sentiment",
-            },
-          ],
-        },
-      ],
-    });
+function updateMarketOverview() {
+  if (!cryptoData.marketOverview) return;
+  const mo = cryptoData.marketOverview;
+  const els = { 'total-market-cap': `$${(mo.totalMarketCap / 1e12).toFixed(2)}T`, 'total-volume': `$${(mo.totalVolume / 1e9).toFixed(1)}B`, 'btc-dominance': `${mo.btcDominance}%`, 'fear-greed': mo.fearGreedIndex };
+  Object.entries(els).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.textContent = val; });
+  const fgLabel = document.getElementById("fear-greed-label");
+  if (fgLabel) {
+    const fg = mo.fearGreedIndex;
+    fgLabel.textContent = fg <= 25 ? "Extreme Fear" : fg <= 45 ? "Fear" : fg <= 55 ? "Neutral" : fg <= 75 ? "Greed" : "Extreme Greed";
   }
 }
 
-// Utility functions
-function scrollToSection(sectionId) {
-  const element = document.getElementById(sectionId);
-  if (element) {
-    element.scrollIntoView({ behavior: "smooth" });
-  }
+function setupEventListeners() {
+  document.querySelectorAll(".crypto-btn").forEach(btn => btn.addEventListener("click", (e) => selectCrypto(e.target.dataset.crypto)));
+  document.querySelectorAll(".time-btn").forEach(btn => btn.addEventListener("click", (e) => {
+    document.querySelectorAll(".time-btn").forEach(b => b.className = 'time-btn bg-gray-700 text-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-600');
+    e.target.className = 'time-btn active bg-blue-500 text-white px-3 py-1 rounded text-sm';
+    currentTimeframe = e.target.dataset.time.toLowerCase();
+    updatePriceChart();
+  }));
 }
 
-// Handle window resize
-window.addEventListener("resize", function () {
-  if (priceChart) {
-    priceChart.resize();
-  }
-  if (sentimentGauge) {
-    sentimentGauge.resize();
-  }
-});
-
-// Animation utilities
-function animateValue(element, start, end, duration) {
-  const startTime = performance.now();
-
-  function update(currentTime) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-
-    const current = start + (end - start) * progress;
-    element.textContent = Math.round(current).toLocaleString();
-
-    if (progress < 1) {
-      requestAnimationFrame(update);
+function startRealTimeUpdates() {
+  setInterval(() => loadData(), 120000);
+  setInterval(() => {
+    updateDataStatus();
+    const indicator = document.getElementById('update-indicator');
+    if (indicator && lastUpdateTime && indicator.classList.contains('bg-emerald-600')) {
+      const span = indicator.querySelector('span');
+      if (span) span.textContent = `Updated ${getTimeAgo(lastUpdateTime)}`;
     }
-  }
-
-  requestAnimationFrame(update);
+  }, 10000);
 }
 
-// Export functions for other pages
-window.CryptoDashboard = {
-  loadData,
-  updatePrices,
-  updateSentiment,
-  cryptoData,
-  sentimentData,
-  correlationData,
-};
+function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); }
+
+window.CryptoDashboard = { loadData, selectCrypto, cryptoData: () => cryptoData, formatPrice, getTimeAgo };

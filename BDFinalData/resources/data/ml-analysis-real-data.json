@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-01-04T22:04:04.683499",
+  "data_summary": {
+    "crypto_count": 5,
+    "features": [
+      "fearGreedIndex",
+      "volume_normalized",
+      "price_normalized",
+      "sentiment_normalized"
+    ],
+    "fear_greed_index": 25
+  },
+  "analysis_results": {
+    "volatility_prediction": {
+      "Random Forest": {
+        "R2": 0.9449367506459103,
+        "RMSE": 0.004306582880240609,
+        "MAE": 0.0033273838000000117,
+        "CV_R2_mean": NaN,
+        "CV_R2_std": NaN
+      },
+      "Gradient Boosting": {
+        "R2": 0.9999999992944921,
+        "RMSE": 4.874755472714374e-07,
+        "MAE": 4.6395794145483173e-07,
+        "CV_R2_mean": NaN,
+        "CV_R2_std": NaN
+      },
+      "Linear Regression": {
+        "R2": 0.9999948641291139,
+        "RMSE": 4.159191723261475e-05,
+        "MAE": 2.987458720696036e-05,
+        "CV_R2_mean": NaN,
+        "CV_R2_std": NaN
+      }
+    },
+    "price_change_prediction": {
+      "models": {
+        "Random Forest": {
+          "R2": 0.9546257730024199,
+          "RMSE": 0.3909367617852399
+        },
+        "Gradient Boosting": {
+          "R2": 0.9999999992944921,
+          "RMSE": 4.874755472701888e-05
+        },
+        "Linear Regression": {
+          "R2": 0.9999948641291139,
+          "RMSE": 0.004159191723261485
+        }
+      },
+      "feature_importance": {
+        "fearGreedIndex": 0.0,
+        "volume_normalized": 0.2967775299503381,
+        "price_normalized": 0.22286794080781339,
+        "sentiment_normalized": 0.48035452924184857
+      }
+    }
+  },
+  "correlations": {
+    "volatility_vs_sentiment": 0.9998545448399329,
+    "volatility_vs_volume": -0.6358463865154382,
+    "change_vs_sentiment": 0.9998545448399326
+  }
+}

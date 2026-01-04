@@ -1,0 +1,54 @@
+# CryptoSentiment Analytics - Docker Compose
+# Big Data Analytics Final Project
+# 
+# Usage:
+#   docker-compose up -d        # Start all services
+#   docker-compose down         # Stop all services
+#   docker-compose logs -f      # View logs
+
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: crypto-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=crypto_sentiment
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Python Application (Dashboard + Data Collection)
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crypto-dashboard
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./resources/data:/app/resources/data
+    command: python start_dashboard.py --no-browser
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  default:
+    name: crypto-network

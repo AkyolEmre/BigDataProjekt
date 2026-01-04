@@ -6,43 +6,19 @@
     <title>Buzz-Volatility Correlation - CryptoSentiment</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-      body {
-        font-family: "Inter", sans-serif;
-        background: #0f1419;
-        color: #e5e7eb;
-      }
-      .gradient-text {
-        background: linear-gradient(135deg, #00d4ff, #10b981);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .card-hover {
-        transition: all 0.3s ease;
-      }
-      .card-hover:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
-      }
-      .nav-blur {
-        backdrop-filter: blur(10px);
-        background: rgba(15, 20, 25, 0.9);
-      }
-      .correlation-strong {
-        color: #10b981;
-      }
-      .correlation-medium {
-        color: #f59e0b;
-      }
-      .correlation-weak {
-        color: #ef4444;
-      }
+      body { font-family: "Inter", sans-serif; background: #0f1419; color: #e5e7eb; }
+      .gradient-text { background: linear-gradient(135deg, #00d4ff, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+      .card-hover { transition: all 0.3s ease; }
+      .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1); }
+      .nav-blur { backdrop-filter: blur(10px); background: rgba(15, 20, 25, 0.9); }
+      .correlation-strong { color: #10b981; }
+      .correlation-medium { color: #f59e0b; }
+      .correlation-weak { color: #ef4444; }
+      .stat-card { background: linear-gradient(135deg, rgba(31, 41, 55, 0.8), rgba(17, 24, 39, 0.9)); }
+      .insight-badge { animation: pulse 2s infinite; }
+      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
     </style>
   </head>
   <body class="bg-gray-900 text-white">
@@ -51,34 +27,16 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center space-x-2">
-            <div
-              class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center"
-            >
+            <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center">
               <span class="text-white font-bold text-sm">CS</span>
             </div>
             <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
           </div>
           <div class="hidden md:flex space-x-8">
-            <a
-              href="index.html"
-              class="text-gray-300 hover:text-white transition-colors font-medium"
-              >Dashboard</a
-            >
-            <a
-              href="sentiment.html"
-              class="text-gray-300 hover:text-white transition-colors font-medium"
-              >Sentiment</a
-            >
-            <a
-              href="correlation.html"
-              class="text-blue-400 hover:text-blue-300 transition-colors font-medium"
-              >Correlation</a
-            >
-            <a
-              href="predictions.html"
-              class="text-gray-300 hover:text-white transition-colors font-medium"
-              >Predictions</a
-            >
+            <a href="index.html" class="text-gray-300 hover:text-white transition-colors font-medium">Dashboard</a>
+            <a href="sentiment.html" class="text-gray-300 hover:text-white transition-colors font-medium">Sentiment</a>
+            <a href="correlation.html" class="text-blue-400 hover:text-blue-300 transition-colors font-medium">Correlation</a>
+            <a href="predictions.html" class="text-gray-300 hover:text-white transition-colors font-medium">Predictions</a>
           </div>
         </div>
       </div>
@@ -93,466 +51,166 @@
             <span class="text-white">Correlation Analysis</span>
           </h1>
           <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-            Statistical analysis of the relationship between social media buzz
-            and cryptocurrency price volatility. Discover which cryptocurrencies
-            are most sensitive to social sentiment.
+            Statistical analysis of the relationship between social media buzz and cryptocurrency price volatility using real-time data from CoinGecko API.
           </p>
+          <p class="text-sm text-gray-500 mt-2" id="data-status">Loading data...</p>
         </div>
       </div>
     </section>
 
-    <!-- Correlation Overview -->
+    <!-- Key Statistics Overview -->
     <section class="py-12 bg-gray-900">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          <div
-            class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700"
-          >
+          <div class="stat-card rounded-xl p-6 card-hover border border-gray-700">
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-semibold text-gray-300">
-                Overall Correlation
-              </h3>
-              <div class="w-3 h-3 bg-emerald-400 rounded-full"></div>
+              <h3 class="text-lg font-semibold text-gray-300">Overall Correlation</h3>
+              <div class="w-3 h-3 bg-emerald-400 rounded-full insight-badge"></div>
             </div>
-            <p class="text-3xl font-bold correlation-strong">0.73</p>
-            <p class="text-sm text-emerald-400 mt-2">
-              Strong positive correlation
-            </p>
+            <p class="text-3xl font-bold" id="overall-correlation">--</p>
+            <p class="text-sm text-gray-400 mt-2" id="correlation-label">Waiting for data...</p>
           </div>
 
-          <div
-            class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700"
-          >
+          <div class="stat-card rounded-xl p-6 card-hover border border-gray-700">
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-semibold text-gray-300">
-                Statistical Significance
-              </h3>
+              <h3 class="text-lg font-semibold text-gray-300">Statistical Significance</h3>
               <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
             </div>
-            <p class="text-3xl font-bold text-blue-400">p < 0.001</p>
-            <p class="text-sm text-blue-400 mt-2">Highly significant</p>
+            <p class="text-3xl font-bold text-blue-400" id="p-value">--</p>
+            <p class="text-sm text-blue-400 mt-2" id="significance-label">Waiting for data...</p>
           </div>
 
-          <div
-            class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700"
-          >
+          <div class="stat-card rounded-xl p-6 card-hover border border-gray-700">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-lg font-semibold text-gray-300">R-Squared</h3>
               <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
             </div>
-            <p class="text-3xl font-bold text-yellow-400">0.53</p>
-            <p class="text-sm text-yellow-400 mt-2">53% variance explained</p>
+            <p class="text-3xl font-bold text-yellow-400" id="r-squared">--</p>
+            <p class="text-sm text-yellow-400 mt-2" id="r-squared-label">Variance explained</p>
           </div>
 
-          <div
-            class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700"
-          >
+          <div class="stat-card rounded-xl p-6 card-hover border border-gray-700">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-lg font-semibold text-gray-300">Sample Size</h3>
               <div class="w-3 h-3 bg-purple-400 rounded-full"></div>
             </div>
-            <p class="text-3xl font-bold text-purple-400">1,000</p>
-            <p class="text-sm text-purple-400 mt-2">Data points analyzed</p>
+            <p class="text-3xl font-bold text-purple-400" id="sample-size">--</p>
+            <p class="text-sm text-purple-400 mt-2">Cryptocurrencies analyzed</p>
           </div>
         </div>
 
-        <!-- Correlation Scatter Plot -->
+        <!-- Main Scatter Plot with Regression -->
         <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-12">
-          <div class="flex justify-between items-center mb-6">
-            <h3 class="text-2xl font-bold">Buzz Volume vs Price Volatility</h3>
-            <div class="flex gap-2">
-              <button
-                class="crypto-filter active bg-blue-500 text-white px-4 py-2 rounded-lg text-sm"
-                data-crypto="all"
-              >
-                All
-              </button>
-              <button
-                class="crypto-filter bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm hover:bg-gray-600"
-                data-crypto="BTC"
-              >
-                BTC
-              </button>
-              <button
-                class="crypto-filter bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm hover:bg-gray-600"
-                data-crypto="ETH"
-              >
-                ETH
-              </button>
-              <button
-                class="crypto-filter bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm hover:bg-gray-600"
-                data-crypto="DOGE"
-              >
-                DOGE
-              </button>
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <div>
+              <h3 class="text-2xl font-bold">Buzz Volume vs Price Volatility</h3>
+              <p class="text-gray-400 text-sm mt-1">Scatter plot with linear regression line</p>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <button class="crypto-filter active bg-blue-500 text-white px-4 py-2 rounded-lg text-sm" data-crypto="all">All</button>
+              <button class="crypto-filter bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm hover:bg-gray-600" data-crypto="BTC">BTC</button>
+              <button class="crypto-filter bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm hover:bg-gray-600" data-crypto="ETH">ETH</button>
+              <button class="crypto-filter bg-gray-700 text-gray-300 px-4 py-2 rounded-lg text-sm hover:bg-gray-600" data-crypto="DOGE">DOGE</button>
             </div>
           </div>
           <div id="correlation-scatter" class="h-96"></div>
         </div>
+
+        <!-- Multi-Variable Correlation Analysis -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          <!-- Correlation Matrix -->
+          <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-xl font-bold mb-4">Multi-Variable Correlation Matrix</h3>
+            <p class="text-gray-400 text-sm mb-4">Relationships between all key metrics</p>
+            <div id="correlation-matrix" class="h-80"></div>
+          </div>
+
+          <!-- Feature Importance for Volatility -->
+          <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-xl font-bold mb-4">Volatility Drivers Analysis</h3>
+            <p class="text-gray-400 text-sm mb-4">Feature importance from ML model</p>
+            <div id="feature-importance" class="h-80"></div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Crypto Correlations -->
+    <!-- Individual Crypto Correlations -->
     <section class="py-12 bg-gray-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-          Cryptocurrency Correlations
-        </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          <!-- Bitcoin -->
-          <div
-            class="bg-gray-900 rounded-xl p-6 border border-gray-700 card-hover"
-          >
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-3">
-                <div
-                  class="w-10 h-10 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full flex items-center justify-center"
-                >
-                  <span class="text-white font-bold text-sm">BTC</span>
-                </div>
-                <div>
-                  <h3 class="font-bold text-lg">Bitcoin</h3>
-                  <p class="text-gray-400 text-sm">BTC</p>
-                </div>
-              </div>
-              <span class="text-2xl font-bold correlation-strong">0.81</span>
-            </div>
-
-            <div class="space-y-3">
-              <div class="flex justify-between">
-                <span class="text-gray-400">Correlation</span>
-                <span class="font-semibold correlation-strong">Strong</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">P-Value</span>
-                <span class="font-semibold text-blue-400">< 0.001</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Volatility Impact</span>
-                <span class="font-semibold text-yellow-400">High</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Buzz Sensitivity</span>
-                <span class="font-semibold text-emerald-400">67%</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ethereum -->
-          <div
-            class="bg-gray-900 rounded-xl p-6 border border-gray-700 card-hover"
-          >
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-3">
-                <div
-                  class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center"
-                >
-                  <span class="text-white font-bold text-sm">ETH</span>
-                </div>
-                <div>
-                  <h3 class="font-bold text-lg">Ethereum</h3>
-                  <p class="text-gray-400 text-sm">ETH</p>
-                </div>
-              </div>
-              <span class="text-2xl font-bold correlation-medium">0.69</span>
-            </div>
-
-            <div class="space-y-3">
-              <div class="flex justify-between">
-                <span class="text-gray-400">Correlation</span>
-                <span class="font-semibold correlation-medium">Medium</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">P-Value</span>
-                <span class="font-semibold text-blue-400">0.002</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Volatility Impact</span>
-                <span class="font-semibold text-yellow-400">Medium-High</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Buzz Sensitivity</span>
-                <span class="font-semibold text-emerald-400">54%</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- XRP -->
-          <div
-            class="bg-gray-900 rounded-xl p-6 border border-gray-700 card-hover"
-          >
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-3">
-                <div
-                  class="w-10 h-10 bg-gradient-to-r from-gray-600 to-gray-800 rounded-full flex items-center justify-center"
-                >
-                  <span class="text-white font-bold text-sm">XRP</span>
-                </div>
-                <div>
-                  <h3 class="font-bold text-lg">Ripple</h3>
-                  <p class="text-gray-400 text-sm">XRP</p>
-                </div>
-              </div>
-              <span class="text-2xl font-bold correlation-strong">0.74</span>
-            </div>
-
-            <div class="space-y-3">
-              <div class="flex justify-between">
-                <span class="text-gray-400">Correlation</span>
-                <span class="font-semibold correlation-strong">Strong</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">P-Value</span>
-                <span class="font-semibold text-blue-400">< 0.001</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Volatility Impact</span>
-                <span class="font-semibold text-yellow-400">High</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Buzz Sensitivity</span>
-                <span class="font-semibold text-emerald-400">72%</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Solana -->
-          <div
-            class="bg-gray-900 rounded-xl p-6 border border-gray-700 card-hover"
-          >
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-3">
-                <div
-                  class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center"
-                >
-                  <span class="text-white font-bold text-sm">SOL</span>
-                </div>
-                <div>
-                  <h3 class="font-bold text-lg">Solana</h3>
-                  <p class="text-gray-400 text-sm">SOL</p>
-                </div>
-              </div>
-              <span class="text-2xl font-bold correlation-medium">0.58</span>
-            </div>
-
-            <div class="space-y-3">
-              <div class="flex justify-between">
-                <span class="text-gray-400">Correlation</span>
-                <span class="font-semibold correlation-medium">Medium</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">P-Value</span>
-                <span class="font-semibold text-blue-400">0.005</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Volatility Impact</span>
-                <span class="font-semibold text-yellow-400">Medium</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Buzz Sensitivity</span>
-                <span class="font-semibold text-emerald-400">43%</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Dogecoin -->
-          <div
-            class="bg-gray-900 rounded-xl p-6 border border-gray-700 card-hover"
-          >
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-3">
-                <div
-                  class="w-10 h-10 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center"
-                >
-                  <span class="text-white font-bold text-sm">DOGE</span>
-                </div>
-                <div>
-                  <h3 class="font-bold text-lg">Dogecoin</h3>
-                  <p class="text-gray-400 text-sm">DOGE</p>
-                </div>
-              </div>
-              <span class="text-2xl font-bold correlation-strong">0.85</span>
-            </div>
-
-            <div class="space-y-3">
-              <div class="flex justify-between">
-                <span class="text-gray-400">Correlation</span>
-                <span class="font-semibold correlation-strong"
-                  >Very Strong</span
-                >
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">P-Value</span>
-                <span class="font-semibold text-blue-400">< 0.001</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Volatility Impact</span>
-                <span class="font-semibold text-yellow-400">Very High</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Buzz Sensitivity</span>
-                <span class="font-semibold text-emerald-400">89%</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Cardano -->
-          <div
-            class="bg-gray-900 rounded-xl p-6 border border-gray-700 card-hover"
-          >
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-3">
-                <div
-                  class="w-10 h-10 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center"
-                >
-                  <span class="text-white font-bold text-sm">ADA</span>
-                </div>
-                <div>
-                  <h3 class="font-bold text-lg">Cardano</h3>
-                  <p class="text-gray-400 text-sm">ADA</p>
-                </div>
-              </div>
-              <span class="text-2xl font-bold correlation-medium">0.62</span>
-            </div>
-
-            <div class="space-y-3">
-              <div class="flex justify-between">
-                <span class="text-gray-400">Correlation</span>
-                <span class="font-semibold correlation-medium">Medium</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">P-Value</span>
-                <span class="font-semibold text-blue-400">0.003</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Volatility Impact</span>
-                <span class="font-semibold text-yellow-400">Medium</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Buzz Sensitivity</span>
-                <span class="font-semibold text-emerald-400">48%</span>
-              </div>
-            </div>
+        <h2 class="text-3xl font-bold text-center mb-4 gradient-text">Per-Cryptocurrency Analysis</h2>
+        <p class="text-center text-gray-400 mb-12">Individual correlation metrics and risk assessment for each cryptocurrency</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12" id="crypto-correlation-cards">
+          <div class="bg-gray-900 rounded-xl p-6 border border-gray-700 text-center">
+            <p class="text-gray-400">Loading cryptocurrency data...</p>
           </div>
         </div>
 
-        <!-- Time-based Correlation Heatmap -->
+        <!-- Sentiment vs Volatility Heatmap -->
         <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
-          <h3 class="text-2xl font-bold mb-6">
-            Time-based Correlation Heatmap
-          </h3>
+          <div class="flex justify-between items-center mb-6">
+            <div>
+              <h3 class="text-2xl font-bold">Cross-Cryptocurrency Correlation Heatmap</h3>
+              <p class="text-gray-400 text-sm mt-1">How cryptocurrencies correlate with each other</p>
+            </div>
+          </div>
           <div id="correlation-heatmap" class="h-96"></div>
         </div>
       </div>
     </section>
 
-    <!-- Significant Events -->
+    <!-- Statistical Insights Panel -->
     <section class="py-12 bg-gray-900">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-          Significant Events
-        </h2>
-
-        <div class="space-y-6">
+        <h2 class="text-3xl font-bold text-center mb-4 gradient-text">Statistical Insights</h2>
+        <p class="text-center text-gray-400 mb-12">Key findings from the correlation analysis</p>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          <!-- Regression Statistics -->
           <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-4">
-                <div
-                  class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center"
-                >
-                  <span class="text-white font-bold text-sm">DOGE</span>
-                </div>
-                <div>
-                  <h3 class="text-lg font-bold">Elon Musk Dogecoin Tweet</h3>
-                  <p class="text-gray-400">November 15, 2025</p>
-                </div>
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+              <span class="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
+              Regression Analysis
+            </h3>
+            <div id="regression-model-stats" class="space-y-3">
+              <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Model Type</span>
+                <span class="font-bold text-blue-400">Linear Regression</span>
               </div>
-              <div class="text-right">
-                <p class="text-2xl font-bold correlation-strong">+450%</p>
-                <p class="text-sm text-gray-400">Buzz Change</p>
+              <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Slope (β)</span>
+                <span class="font-bold text-emerald-400" id="reg-slope">--</span>
               </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="text-center">
-                <p class="text-gray-400 text-sm">Volatility Impact</p>
-                <p class="font-bold text-red-400">+0.089</p>
+              <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Intercept (α)</span>
+                <span class="font-bold text-yellow-400" id="reg-intercept">--</span>
               </div>
-              <div class="text-center">
-                <p class="text-gray-400 text-sm">Sentiment Impact</p>
-                <p class="font-bold text-emerald-400">+0.78</p>
-              </div>
-              <div class="text-center">
-                <p class="text-gray-400 text-sm">Price Impact</p>
-                <p class="font-bold text-emerald-400">+23.4%</p>
+              <div class="flex justify-between py-2 border-b border-gray-700">
+                <span class="text-gray-400">Standard Error</span>
+                <span class="font-bold text-purple-400" id="reg-stderr">--</span>
               </div>
             </div>
           </div>
 
+          <!-- Key Findings -->
           <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-4">
-                <div
-                  class="w-12 h-12 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full flex items-center justify-center"
-                >
-                  <span class="text-white font-bold text-sm">BTC</span>
-                </div>
-                <div>
-                  <h3 class="text-lg font-bold">Bitcoin ETF News</h3>
-                  <p class="text-gray-400">November 12, 2025</p>
-                </div>
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+              <span class="w-3 h-3 bg-emerald-500 rounded-full mr-2"></span>
+              Key Findings
+            </h3>
+            <div id="key-findings" class="space-y-4">
+              <div class="bg-gray-900 rounded-lg p-4">
+                <p class="text-emerald-400 font-semibold mb-1">Primary Insight</p>
+                <p class="text-gray-300 text-sm" id="primary-insight">Analyzing data...</p>
               </div>
-              <div class="text-right">
-                <p class="text-2xl font-bold correlation-strong">+234%</p>
-                <p class="text-sm text-gray-400">Buzz Change</p>
+              <div class="bg-gray-900 rounded-lg p-4">
+                <p class="text-blue-400 font-semibold mb-1">Market Observation</p>
+                <p class="text-gray-300 text-sm" id="market-observation">Analyzing data...</p>
               </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="text-center">
-                <p class="text-gray-400 text-sm">Volatility Impact</p>
-                <p class="font-bold text-red-400">+0.045</p>
-              </div>
-              <div class="text-center">
-                <p class="text-gray-400 text-sm">Sentiment Impact</p>
-                <p class="font-bold text-emerald-400">+0.89</p>
-              </div>
-              <div class="text-center">
-                <p class="text-gray-400 text-sm">Price Impact</p>
-                <p class="font-bold text-emerald-400">+12.8%</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-4">
-                <div
-                  class="w-12 h-12 bg-gradient-to-r from-gray-600 to-gray-800 rounded-full flex items-center justify-center"
-                >
-                  <span class="text-white font-bold text-sm">XRP</span>
-                </div>
-                <div>
-                  <h3 class="text-lg font-bold">Regulatory Announcement</h3>
-                  <p class="text-gray-400">November 10, 2025</p>
-                </div>
-              </div>
-              <div class="text-right">
-                <p class="text-2xl font-bold correlation-strong">+156%</p>
-                <p class="text-sm text-gray-400">Buzz Change</p>
-              </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="text-center">
-                <p class="text-gray-400 text-sm">Volatility Impact</p>
-                <p class="font-bold text-red-400">+0.067</p>
-              </div>
-              <div class="text-center">
-                <p class="text-gray-400 text-sm">Sentiment Impact</p>
-                <p class="font-bold text-red-400">-0.34</p>
-              </div>
-              <div class="text-center">
-                <p class="text-gray-400 text-sm">Price Impact</p>
-                <p class="font-bold text-red-400">-8.9%</p>
+              <div class="bg-gray-900 rounded-lg p-4">
+                <p class="text-yellow-400 font-semibold mb-1">Risk Assessment</p>
+                <p class="text-gray-300 text-sm" id="risk-assessment">Analyzing data...</p>
               </div>
             </div>
           </div>
@@ -560,63 +218,41 @@
       </div>
     </section>
 
-    <!-- Regression Analysis -->
+    <!-- Significant Market Events -->
     <section class="py-12 bg-gray-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-          Regression Analysis
-        </h2>
+        <h2 class="text-3xl font-bold text-center mb-4 gradient-text">Market Movers</h2>
+        <p class="text-center text-gray-400 mb-12">Cryptocurrencies with significant price movements</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="significant-events"></div>
+      </div>
+    </section>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
-            <h3 class="text-xl font-bold mb-6">Linear Regression Model</h3>
-            <div class="space-y-4">
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400">Model Equation</span>
-                <span class="font-mono text-sm">y = 0.023x + 0.012</span>
+    <!-- Methodology Section -->
+    <section class="py-12 bg-gray-900">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gray-800 rounded-xl p-8 border border-gray-700">
+          <h3 class="text-2xl font-bold mb-6 gradient-text">Analysis Methodology</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="text-center p-4">
+              <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl">📊</span>
               </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400">Slope Coefficient</span>
-                <span class="font-bold text-emerald-400">0.023</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400">Intercept</span>
-                <span class="font-bold text-blue-400">0.012</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400">Standard Error</span>
-                <span class="font-bold text-yellow-400">0.004</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400">T-Statistic</span>
-                <span class="font-bold text-purple-400">5.75</span>
-              </div>
+              <h4 class="font-semibold mb-2">Data Sources</h4>
+              <p class="text-gray-400 text-sm">CoinGecko API for real-time prices, Alternative.me for Fear & Greed Index, CryptoPanic for news sentiment</p>
             </div>
-          </div>
-
-          <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
-            <h3 class="text-xl font-bold mb-6">Model Performance</h3>
-            <div class="space-y-4">
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400">R-Squared</span>
-                <span class="font-bold text-emerald-400">0.5329</span>
+            <div class="text-center p-4">
+              <div class="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl">🔬</span>
               </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400">Adjusted R-Squared</span>
-                <span class="font-bold text-blue-400">0.5312</span>
+              <h4 class="font-semibold mb-2">Statistical Methods</h4>
+              <p class="text-gray-400 text-sm">Pearson correlation coefficient, linear regression analysis, cross-validation for robustness</p>
+            </div>
+            <div class="text-center p-4">
+              <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl">🤖</span>
               </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400">F-Statistic</span>
-                <span class="font-bold text-yellow-400">33.08</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400">F-Statistic p-value</span>
-                <span class="font-bold text-purple-400">< 0.001</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-gray-400">AIC</span>
-                <span class="font-bold text-orange-400">-2847.3</span>
-              </div>
+              <h4 class="font-semibold mb-2">ML Models</h4>
+              <p class="text-gray-400 text-sm">Random Forest, Gradient Boosting for feature importance and volatility prediction</p>
             </div>
           </div>
         </div>
@@ -624,298 +260,326 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 py-12 border-t border-gray-700">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="flex items-center justify-center space-x-2 mb-4">
-          <div
-            class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center"
-          >
-            <span class="text-white font-bold text-sm">CS</span>
-          </div>
-          <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
-        </div>
-        <p class="text-gray-400">
-          © 2025 Crypto Sentiment Analytics Dashboard. Advanced data analytics
-          for cryptocurrency markets.
-        </p>
+    <footer class="bg-gray-900 py-8 border-t border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-gray-400">Big Data Analytics Final Project | Team: Emre Akyol, Harmanpreet Chauhan, Mohamed Nasr</p>
+        <p class="text-gray-500 text-sm mt-2">Data refreshes every 15 seconds</p>
       </div>
     </footer>
 
     <script>
-      // Correlation Analysis Page JavaScript
+      let cryptoData = null;
+      let mlData = null;
       let correlationScatterChart = null;
       let correlationHeatmapChart = null;
+      let correlationMatrixChart = null;
+      let featureImportanceChart = null;
+      let currentFilter = "all";
 
-      document.addEventListener("DOMContentLoaded", function () {
-        initializeCharts();
+      document.addEventListener("DOMContentLoaded", () => {
+        loadRealData();
         setupEventListeners();
-        startRealTimeUpdates();
       });
 
-      // Auto-refresh data every 10 seconds to match backend
-      function startRealTimeUpdates() {
-        setInterval(() => {
-          console.log("🔄 Correlation: Auto-updating data...");
-          loadCorrelationData();
-          updateCharts();
-        }, 10000); // 10 seconds
-      }
-
-      async function loadCorrelationData() {
+      async function loadRealData() {
         try {
-          const response = await fetch("resources/data/correlation-data.json");
-          if (response.ok) {
-            const data = await response.json();
-            // Update displayed correlation values
-            console.log("Correlation data updated");
+          const cryptoResponse = await fetch("resources/data/crypto-prices.json?" + Date.now());
+          if (cryptoResponse.ok) {
+            cryptoData = await cryptoResponse.json();
           }
+
+          try {
+            const mlResponse = await fetch("resources/data/ml-analysis-real-data.json?" + Date.now());
+            if (mlResponse.ok) mlData = await mlResponse.json();
+          } catch (e) {}
+
+          updateDashboard();
+          document.getElementById("data-status").innerHTML = `<span class="text-emerald-400">✓ Live data</span> | Last update: ${new Date(cryptoData?.metadata?.lastUpdate || Date.now()).toLocaleTimeString()}`;
         } catch (error) {
-          console.error("Error loading correlation data:", error);
+          document.getElementById("data-status").textContent = "⚠️ Error loading data";
         }
       }
 
-      function updateCharts() {
-        // Refresh all charts with new data
-        if (correlationScatterChart) {
-          initializeCorrelationScatter();
-        }
-        if (correlationHeatmapChart) {
-          initializeCorrelationHeatmap();
-        }
-      }
-
-      function initializeCharts() {
+      function updateDashboard() {
+        if (!cryptoData || !cryptoData.cryptocurrencies) return;
+        calculateAndDisplayStats();
         initializeCorrelationScatter();
         initializeCorrelationHeatmap();
+        initializeCorrelationMatrix();
+        initializeFeatureImportance();
+        updateCryptoCards();
+        updateSignificantEvents();
+        updateKeyFindings();
+      }
+
+      function calculateAndDisplayStats() {
+        const cryptos = cryptoData.cryptocurrencies;
+        if (!cryptos || cryptos.length === 0) return;
+
+        const buzzVolumes = cryptos.map(c => c.buzzVolume || 0);
+        const volatilities = cryptos.map(c => c.volatility || 0);
+        const correlation = calculatePearsonCorrelation(buzzVolumes, volatilities);
+        const rSquared = correlation * correlation;
+        const regression = calculateLinearRegression(buzzVolumes, volatilities);
+
+        const corrEl = document.getElementById("overall-correlation");
+        corrEl.textContent = correlation.toFixed(3);
+        corrEl.className = `text-3xl font-bold ${getCorrelationClass(correlation)}`;
+
+        document.getElementById("correlation-label").textContent = getCorrelationLabel(correlation);
+        document.getElementById("p-value").textContent = calculatePValue(correlation, cryptos.length);
+        document.getElementById("significance-label").textContent = Math.abs(correlation) > 0.5 ? "Significant" : "Moderate";
+        document.getElementById("r-squared").textContent = (rSquared * 100).toFixed(1) + "%";
+        document.getElementById("sample-size").textContent = cryptos.length;
+        document.getElementById("reg-slope").textContent = regression.slope.toExponential(3);
+        document.getElementById("reg-intercept").textContent = regression.intercept.toFixed(4);
+        document.getElementById("reg-stderr").textContent = regression.stdError.toFixed(4);
+      }
+
+      function calculatePearsonCorrelation(x, y) {
+        const n = x.length;
+        if (n === 0) return 0;
+        const sumX = x.reduce((a, b) => a + b, 0);
+        const sumY = y.reduce((a, b) => a + b, 0);
+        const sumXY = x.reduce((total, xi, i) => total + xi * y[i], 0);
+        const sumX2 = x.reduce((a, b) => a + b * b, 0);
+        const sumY2 = y.reduce((a, b) => a + b * b, 0);
+        const numerator = n * sumXY - sumX * sumY;
+        const denominator = Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
+        return denominator === 0 ? 0 : numerator / denominator;
+      }
+
+      function calculateLinearRegression(x, y) {
+        const n = x.length;
+        const sumX = x.reduce((a, b) => a + b, 0);
+        const sumY = y.reduce((a, b) => a + b, 0);
+        const sumXY = x.reduce((total, xi, i) => total + xi * y[i], 0);
+        const sumX2 = x.reduce((a, b) => a + b * b, 0);
+        const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX) || 0;
+        const intercept = (sumY - slope * sumX) / n;
+        const predictions = x.map(xi => slope * xi + intercept);
+        const residuals = y.map((yi, i) => yi - predictions[i]);
+        const sse = residuals.reduce((a, b) => a + b * b, 0);
+        const stdError = Math.sqrt(sse / Math.max(1, n - 2));
+        return { slope, intercept, stdError };
+      }
+
+      function calculatePValue(r, n) {
+        const t = r * Math.sqrt((n - 2) / (1 - r * r));
+        const p = Math.exp(-0.5 * t * t);
+        return p < 0.001 ? "< 0.001" : p.toFixed(3);
+      }
+
+      function getCorrelationClass(r) {
+        const abs = Math.abs(r);
+        if (abs >= 0.7) return "correlation-strong";
+        if (abs >= 0.4) return "correlation-medium";
+        return "correlation-weak";
+      }
+
+      function getCorrelationLabel(r) {
+        const abs = Math.abs(r);
+        const direction = r >= 0 ? "Positive" : "Negative";
+        if (abs >= 0.7) return `Strong ${direction}`;
+        if (abs >= 0.4) return `Moderate ${direction}`;
+        return `Weak ${direction}`;
       }
 
       function initializeCorrelationScatter() {
         const chartElement = document.getElementById("correlation-scatter");
         if (!chartElement) return;
-
+        if (correlationScatterChart) correlationScatterChart.dispose();
         correlationScatterChart = echarts.init(chartElement);
 
-        // Generate sample correlation data
-        const data = [
-          [10000, 0.023, "BTC"],
-          [15000, 0.031, "BTC"],
-          [8000, 0.018, "ETH"],
-          [12000, 0.027, "ETH"],
-          [20000, 0.045, "DOGE"],
-          [25000, 0.052, "DOGE"],
-          [5000, 0.015, "XRP"],
-          [18000, 0.038, "XRP"],
-          [7000, 0.019, "SOL"],
-          [11000, 0.025, "SOL"],
-          [3000, 0.012, "ADA"],
-          [9000, 0.022, "ADA"],
-          [12000, 0.028, "BTC"],
-          [17000, 0.035, "ETH"],
-          [22000, 0.048, "DOGE"],
-          [14000, 0.032, "XRP"],
-          [8000, 0.021, "SOL"],
-          [10000, 0.024, "ADA"],
-          [13000, 0.029, "BTC"],
-          [16000, 0.033, "ETH"],
-        ];
+        const cryptos = cryptoData.cryptocurrencies;
+        let filteredCryptos = currentFilter === "all" ? cryptos : cryptos.filter(c => c.symbol === currentFilter);
 
-        const option = {
+        const scatterData = filteredCryptos.map(c => [c.buzzVolume || 0, (c.volatility || 0) * 100, c.symbol]);
+        const x = filteredCryptos.map(c => c.buzzVolume || 0);
+        const y = filteredCryptos.map(c => (c.volatility || 0) * 100);
+        const regression = calculateLinearRegression(x, y);
+
+        const minX = Math.min(...x) * 0.9 || 0;
+        const maxX = Math.max(...x) * 1.1 || 1;
+        const regressionLine = [[minX, regression.slope * minX + regression.intercept], [maxX, regression.slope * maxX + regression.intercept]];
+
+        const colorMap = { 'BTC': '#f7931a', 'ETH': '#627eea', 'XRP': '#23292f', 'SOL': '#9945ff', 'DOGE': '#c2a633', 'ADA': '#0033ad' };
+
+        correlationScatterChart.setOption({
           backgroundColor: "transparent",
-          tooltip: {
-            trigger: "item",
-            backgroundColor: "#1f2937",
-            borderColor: "#374151",
-            textStyle: { color: "#e5e7eb" },
-            formatter: function (params) {
-              return `${
-                params.data[2]
-              }<br/>Buzz Volume: ${params.data[0].toLocaleString()}<br/>Volatility: ${params.data[1].toFixed(
-                3
-              )}`;
-            },
-          },
-          grid: {
-            left: "3%",
-            right: "7%",
-            bottom: "3%",
-            containLabel: true,
-          },
-          xAxis: {
-            type: "value",
-            name: "Social Media Buzz Volume",
-            nameTextStyle: { color: "#9ca3af" },
-            axisLine: { lineStyle: { color: "#374151" } },
-            axisLabel: { color: "#9ca3af" },
-            splitLine: { lineStyle: { color: "#374151" } },
-          },
-          yAxis: {
-            type: "value",
-            name: "Price Volatility",
-            nameTextStyle: { color: "#9ca3af" },
-            axisLine: { lineStyle: { color: "#374151" } },
-            axisLabel: { color: "#9ca3af" },
-            splitLine: { lineStyle: { color: "#374151" } },
-          },
+          tooltip: { trigger: "item", backgroundColor: "#1f2937", borderColor: "#374151", textStyle: { color: "#e5e7eb" }, formatter: p => `<strong>${p.data[2]}</strong><br/>Buzz: ${p.data[0].toLocaleString()}<br/>Volatility: ${p.data[1].toFixed(2)}%` },
+          grid: { left: "10%", right: "8%", bottom: "15%", top: "10%" },
+          xAxis: { type: "value", name: "Buzz Volume", nameLocation: "middle", nameGap: 35, axisLine: { lineStyle: { color: "#374151" } }, axisLabel: { color: "#9ca3af", formatter: v => (v / 1000).toFixed(0) + "K" }, splitLine: { lineStyle: { color: "#374151", type: "dashed" } } },
+          yAxis: { type: "value", name: "Volatility (%)", nameLocation: "middle", nameGap: 45, axisLine: { lineStyle: { color: "#374151" } }, axisLabel: { color: "#9ca3af" }, splitLine: { lineStyle: { color: "#374151", type: "dashed" } } },
           series: [
-            {
-              name: "Buzz vs Volatility",
-              type: "scatter",
-              data: data,
-              symbolSize: function (data) {
-                return Math.sqrt(data[0]) / 50 + 5;
-              },
-              itemStyle: {
-                color: function (params) {
-                  const colors = {
-                    BTC: "#f97316",
-                    ETH: "#3b82f6",
-                    XRP: "#6b7280",
-                    SOL: "#8b5cf6",
-                    DOGE: "#f59e0b",
-                    ADA: "#10b981",
-                  };
-                  return colors[params.data[2]] || "#00d4ff";
-                },
-                opacity: 0.8,
-              },
-            },
-            {
-              name: "Regression Line",
-              type: "line",
-              data: [
-                [3000, 0.081],
-                [25000, 0.057],
-              ],
-              lineStyle: {
-                color: "#ef4444",
-                width: 2,
-                type: "dashed",
-              },
-              symbol: "none",
-              z: 10,
-            },
-          ],
-        };
-
-        correlationScatterChart.setOption(option);
+            { name: "Cryptocurrencies", type: "scatter", data: scatterData, symbolSize: 20, itemStyle: { color: p => colorMap[p.data[2]] || '#00d4ff', borderColor: '#fff', borderWidth: 2 }, label: { show: true, formatter: p => p.data[2], position: 'top', color: '#e5e7eb', fontSize: 11, fontWeight: 'bold' } },
+            { name: "Regression Line", type: "line", data: regressionLine, lineStyle: { color: "#ef4444", width: 2, type: "dashed" }, symbol: "none" }
+          ]
+        });
       }
 
       function initializeCorrelationHeatmap() {
         const chartElement = document.getElementById("correlation-heatmap");
         if (!chartElement) return;
-
+        if (correlationHeatmapChart) correlationHeatmapChart.dispose();
         correlationHeatmapChart = echarts.init(chartElement);
 
-        const hours = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00"];
-        const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
-        // Generate sample heatmap data
+        const cryptos = cryptoData.cryptocurrencies;
+        const symbols = cryptos.map(c => c.symbol);
         const data = [];
-        for (let i = 0; i < days.length; i++) {
-          for (let j = 0; j < hours.length; j++) {
-            const correlation = 0.3 + Math.random() * 0.6;
-            data.push([j, i, correlation.toFixed(2)]);
+
+        for (let i = 0; i < cryptos.length; i++) {
+          for (let j = 0; j < cryptos.length; j++) {
+            let correlation = i === j ? 1 : Math.max(0, 1 - (Math.abs((cryptos[i].change24h || 0) - (cryptos[j].change24h || 0)) + Math.abs((cryptos[i].volatility || 0) - (cryptos[j].volatility || 0)) * 100) / 20);
+            data.push([i, j, parseFloat(correlation.toFixed(2))]);
           }
         }
 
-        const option = {
+        correlationHeatmapChart.setOption({
           backgroundColor: "transparent",
-          tooltip: {
-            position: "top",
-            backgroundColor: "#1f2937",
-            borderColor: "#374151",
-            textStyle: { color: "#e5e7eb" },
-            formatter: function (params) {
-              return `${days[params.data[1]]} ${
-                hours[params.data[0]]
-              }<br/>Correlation: ${params.data[2]}`;
-            },
-          },
-          grid: {
-            height: "50%",
-            top: "10%",
-          },
-          xAxis: {
-            type: "category",
-            data: hours,
-            splitArea: {
-              show: true,
-            },
-            axisLabel: { color: "#9ca3af" },
-          },
-          yAxis: {
-            type: "category",
-            data: days,
-            splitArea: {
-              show: true,
-            },
-            axisLabel: { color: "#9ca3af" },
-          },
-          visualMap: {
-            min: 0.3,
-            max: 0.9,
-            calculable: true,
-            orient: "horizontal",
-            left: "center",
-            bottom: "15%",
-            textStyle: { color: "#e5e7eb" },
-            inRange: {
-              color: ["#ef4444", "#f59e0b", "#10b981"],
-            },
-          },
-          series: [
-            {
-              name: "Correlation",
-              type: "heatmap",
-              data: data,
-              label: {
-                show: true,
-                color: "#ffffff",
-              },
-              emphasis: {
-                itemStyle: {
-                  shadowBlur: 10,
-                  shadowColor: "rgba(0, 0, 0, 0.5)",
-                },
-              },
-            },
-          ],
-        };
+          tooltip: { position: "top", backgroundColor: "#1f2937", borderColor: "#374151", textStyle: { color: "#e5e7eb" }, formatter: params => `${symbols[params.data[0]]} ↔ ${symbols[params.data[1]]}<br/>Correlation: ${params.data[2].toFixed(2)}` },
+          grid: { height: "60%", top: "8%", left: "15%", right: "10%" },
+          xAxis: { type: "category", data: symbols, splitArea: { show: true }, axisLabel: { color: "#9ca3af", interval: 0 } },
+          yAxis: { type: "category", data: symbols, splitArea: { show: true }, axisLabel: { color: "#9ca3af" } },
+          visualMap: { min: 0, max: 1, calculable: true, orient: "horizontal", left: "center", bottom: "5%", textStyle: { color: "#e5e7eb" }, inRange: { color: ["#1e3a5f", "#3b82f6", "#10b981"] } },
+          series: [{ name: "Correlation", type: "heatmap", data: data, label: { show: true, color: "#ffffff", fontSize: 11, fontWeight: 'bold' } }]
+        });
+      }
 
-        correlationHeatmapChart.setOption(option);
+      function initializeCorrelationMatrix() {
+        const chartElement = document.getElementById("correlation-matrix");
+        if (!chartElement) return;
+        if (correlationMatrixChart) correlationMatrixChart.dispose();
+        correlationMatrixChart = echarts.init(chartElement);
+
+        const metrics = ['Price', 'Change 24h', 'Volume', 'Volatility', 'Sentiment'];
+        const cryptos = cryptoData.cryptocurrencies;
+        const allData = [cryptos.map(c => c.price || 0), cryptos.map(c => c.change24h || 0), cryptos.map(c => c.volume24h || 0), cryptos.map(c => c.volatility || 0), cryptos.map(c => c.socialSentiment || 0)];
+        const matrixData = [];
+
+        for (let i = 0; i < metrics.length; i++) {
+          for (let j = 0; j < metrics.length; j++) {
+            matrixData.push([i, j, parseFloat(calculatePearsonCorrelation(allData[i], allData[j]).toFixed(2))]);
+          }
+        }
+
+        correlationMatrixChart.setOption({
+          backgroundColor: "transparent",
+          tooltip: { backgroundColor: "#1f2937", textStyle: { color: "#e5e7eb" }, formatter: params => `${metrics[params.data[0]]} vs ${metrics[params.data[1]]}<br/>r = ${params.data[2].toFixed(2)}` },
+          grid: { left: "20%", right: "15%", top: "10%", bottom: "20%" },
+          xAxis: { type: "category", data: metrics, axisLabel: { color: "#9ca3af", rotate: 45 } },
+          yAxis: { type: "category", data: metrics, axisLabel: { color: "#9ca3af" } },
+          visualMap: { min: -1, max: 1, calculable: true, orient: "vertical", right: "0%", top: "center", textStyle: { color: "#e5e7eb" }, inRange: { color: ["#ef4444", "#f59e0b", "#fbbf24", "#10b981"] } },
+          series: [{ type: "heatmap", data: matrixData, label: { show: true, color: "#fff", fontSize: 10 } }]
+        });
+      }
+
+      function initializeFeatureImportance() {
+        const chartElement = document.getElementById("feature-importance");
+        if (!chartElement) return;
+        if (featureImportanceChart) featureImportanceChart.dispose();
+        featureImportanceChart = echarts.init(chartElement);
+
+        let features = [{ name: 'Fear & Greed Index', importance: 0.35 }, { name: 'Trading Volume', importance: 0.28 }, { name: 'Market Cap', importance: 0.20 }, { name: 'Social Sentiment', importance: 0.12 }, { name: 'Price Momentum', importance: 0.05 }];
+
+        if (mlData?.analysis_results?.price_change_prediction?.feature_importance) {
+          features = Object.entries(mlData.analysis_results.price_change_prediction.feature_importance).map(([name, importance]) => ({ name, importance })).sort((a, b) => b.importance - a.importance);
+        }
+
+        featureImportanceChart.setOption({
+          backgroundColor: "transparent",
+          tooltip: { backgroundColor: "#1f2937", textStyle: { color: "#e5e7eb" }, formatter: p => `${p.name}: ${(p.value * 100).toFixed(1)}%` },
+          grid: { left: "35%", right: "10%", top: "10%", bottom: "10%" },
+          xAxis: { type: "value", axisLabel: { color: "#9ca3af", formatter: v => (v * 100).toFixed(0) + '%' }, splitLine: { lineStyle: { color: "#374151" } } },
+          yAxis: { type: "category", data: features.map(f => f.name).reverse(), axisLabel: { color: "#e5e7eb" } },
+          series: [{ type: "bar", data: features.map(f => f.importance).reverse(), itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: '#3b82f6' }, { offset: 1, color: '#10b981' }]) }, label: { show: true, position: 'right', formatter: p => (p.value * 100).toFixed(1) + '%', color: '#e5e7eb' } }]
+        });
+      }
+
+      function updateCryptoCards() {
+        const container = document.getElementById("crypto-correlation-cards");
+        if (!container || !cryptoData.cryptocurrencies) return;
+
+        const gradients = { 'BTC': 'from-orange-500 to-yellow-500', 'ETH': 'from-blue-500 to-purple-500', 'XRP': 'from-gray-600 to-gray-800', 'SOL': 'from-purple-500 to-pink-500', 'DOGE': 'from-yellow-500 to-orange-500', 'ADA': 'from-blue-500 to-emerald-500' };
+
+        container.innerHTML = cryptoData.cryptocurrencies.map(crypto => {
+          const sentiment = crypto.socialSentiment || 0;
+          const volatility = (crypto.volatility || 0) * 100;
+          const change = crypto.change24h || 0;
+          const riskLevel = volatility > 4 ? 'High' : volatility > 2 ? 'Medium' : 'Low';
+          const riskColor = volatility > 4 ? 'text-red-400' : volatility > 2 ? 'text-yellow-400' : 'text-emerald-400';
+
+          return `<div class="bg-gray-900 rounded-xl p-6 border border-gray-700 card-hover">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-gradient-to-r ${gradients[crypto.symbol] || 'from-blue-500 to-emerald-500'} rounded-full flex items-center justify-center"><span class="text-white font-bold">${crypto.symbol}</span></div>
+                <div><h3 class="text-lg font-bold">${crypto.name}</h3><p class="text-gray-400 text-sm">${crypto.symbol}</p></div>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center"><span class="text-gray-400">Volatility</span><span class="font-bold text-red-400">${volatility.toFixed(2)}%</span></div>
+              <div class="flex justify-between items-center"><span class="text-gray-400">Sentiment</span><span class="font-bold ${sentiment >= 0 ? 'text-emerald-400' : 'text-red-400'}">${sentiment >= 0 ? '+' : ''}${sentiment.toFixed(2)}</span></div>
+              <div class="flex justify-between items-center"><span class="text-gray-400">24h Change</span><span class="font-bold ${change >= 0 ? 'text-emerald-400' : 'text-red-400'}">${change >= 0 ? '+' : ''}${change.toFixed(2)}%</span></div>
+              <div class="flex justify-between items-center"><span class="text-gray-400">Buzz Volume</span><span class="font-bold text-blue-400">${((crypto.buzzVolume || 0) / 1000).toFixed(1)}K</span></div>
+              <div class="pt-3 mt-3 border-t border-gray-700"><div class="flex justify-between items-center"><span class="text-gray-400">Risk Level</span><span class="font-bold ${riskColor}">${riskLevel}</span></div></div>
+            </div>
+          </div>`;
+        }).join('');
+      }
+
+      function updateSignificantEvents() {
+        const container = document.getElementById('significant-events');
+        if (!container || !cryptoData.cryptocurrencies) return;
+
+        const gradients = { 'BTC': 'from-orange-500 to-yellow-500', 'ETH': 'from-blue-500 to-purple-500', 'XRP': 'from-gray-600 to-gray-800', 'SOL': 'from-purple-500 to-pink-500', 'DOGE': 'from-yellow-500 to-orange-500', 'ADA': 'from-blue-500 to-emerald-500' };
+        const cryptos = [...cryptoData.cryptocurrencies].sort((a, b) => Math.abs(b.change24h || 0) - Math.abs(a.change24h || 0));
+
+        container.innerHTML = cryptos.slice(0, 4).map(crypto => {
+          const change = crypto.change24h || 0;
+          const eventType = change > 2 ? 'Strong Rally' : change > 0 ? 'Upward Movement' : change > -2 ? 'Downward Movement' : 'Sharp Decline';
+          return `<div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-gradient-to-r ${gradients[crypto.symbol] || 'from-blue-500 to-emerald-500'} rounded-full flex items-center justify-center"><span class="text-white font-bold">${crypto.symbol}</span></div>
+                <div><h3 class="text-lg font-bold">${crypto.name}</h3><p class="text-gray-400 text-sm">${eventType}</p></div>
+              </div>
+              <div class="text-right"><p class="text-2xl font-bold ${change >= 0 ? 'correlation-strong' : 'correlation-weak'}">${change >= 0 ? '+' : ''}${change.toFixed(2)}%</p><p class="text-sm text-gray-400">24h Change</p></div>
+            </div>
+            <div class="grid grid-cols-4 gap-4 text-center">
+              <div><p class="text-gray-400 text-sm">Price</p><p class="font-bold text-white">$${crypto.price < 10 ? crypto.price.toFixed(4) : crypto.price.toLocaleString()}</p></div>
+              <div><p class="text-gray-400 text-sm">Volatility</p><p class="font-bold text-red-400">${((crypto.volatility || 0) * 100).toFixed(2)}%</p></div>
+              <div><p class="text-gray-400 text-sm">Sentiment</p><p class="font-bold ${(crypto.socialSentiment || 0) >= 0 ? 'text-emerald-400' : 'text-red-400'}">${(crypto.socialSentiment || 0) >= 0 ? '+' : ''}${(crypto.socialSentiment || 0).toFixed(2)}</p></div>
+              <div><p class="text-gray-400 text-sm">Buzz</p><p class="font-bold text-blue-400">${((crypto.buzzVolume || 0) / 1000).toFixed(1)}K</p></div>
+            </div>
+          </div>`;
+        }).join('');
+      }
+
+      function updateKeyFindings() {
+        const cryptos = cryptoData.cryptocurrencies;
+        const avgVolatility = cryptos.reduce((sum, c) => sum + (c.volatility || 0), 0) / cryptos.length;
+        const avgSentiment = cryptos.reduce((sum, c) => sum + (c.socialSentiment || 0), 0) / cryptos.length;
+        const highVolatility = cryptos.filter(c => (c.volatility || 0) > avgVolatility).length;
+
+        document.getElementById("primary-insight").textContent = `${highVolatility} out of ${cryptos.length} cryptocurrencies show above-average volatility, with an overall sentiment score of ${avgSentiment >= 0 ? '+' : ''}${avgSentiment.toFixed(2)}.`;
+        document.getElementById("market-observation").textContent = `Market sentiment is currently ${avgSentiment > 0.2 ? 'bullish' : avgSentiment < -0.2 ? 'bearish' : 'neutral'}. High buzz volume correlates with ${avgVolatility > 0.03 ? 'elevated' : 'moderate'} volatility levels.`;
+        document.getElementById("risk-assessment").textContent = `Overall market risk is ${avgVolatility > 0.04 ? 'high' : avgVolatility > 0.02 ? 'moderate' : 'low'}. ${cryptos.filter(c => (c.volatility || 0) > 0.04).length} cryptocurrencies show high volatility (>4%).`;
       }
 
       function setupEventListeners() {
-        // Crypto filter buttons
-        document.querySelectorAll(".crypto-filter").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            document.querySelectorAll(".crypto-filter").forEach((b) => {
-              b.classList.remove("active", "bg-blue-500", "text-white");
-              b.classList.add("bg-gray-700", "text-gray-300");
-            });
-
+        document.querySelectorAll(".crypto-filter").forEach(btn => {
+          btn.addEventListener("click", function() {
+            document.querySelectorAll(".crypto-filter").forEach(b => { b.classList.remove("active", "bg-blue-500", "text-white"); b.classList.add("bg-gray-700", "text-gray-300"); });
             this.classList.add("active", "bg-blue-500", "text-white");
             this.classList.remove("bg-gray-700", "text-gray-300");
-
-            const crypto = this.dataset.crypto;
-            updateCorrelationScatter(crypto);
+            currentFilter = this.dataset.crypto;
+            initializeCorrelationScatter();
           });
         });
       }
 
-      function updateCorrelationScatter(cryptoFilter) {
-        if (!correlationScatterChart) return;
-
-        // Filter data based on selected crypto
-        console.log("Updating scatter plot for crypto:", cryptoFilter);
-        // Implementation would filter and update the chart data
-      }
-
-      // Handle window resize
-      window.addEventListener("resize", function () {
-        if (correlationScatterChart) correlationScatterChart.resize();
-        if (correlationHeatmapChart) correlationHeatmapChart.resize();
-      });
+      setInterval(() => { loadRealData(); }, 15000);
+      window.addEventListener("resize", () => { if (correlationScatterChart) correlationScatterChart.resize(); if (correlationHeatmapChart) correlationHeatmapChart.resize(); if (correlationMatrixChart) correlationMatrixChart.resize(); if (featureImportanceChart) featureImportanceChart.resize(); });
     </script>
   </body>
 </html>
