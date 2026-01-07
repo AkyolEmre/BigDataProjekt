@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Sentiment Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #0f1419;
+            color: #e5e7eb;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #00d4ff, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+        }
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+            to { box-shadow: 0 0 30px rgba(0, 212, 255, 0.6); }
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(15, 20, 25, 0.9), rgba(26, 29, 41, 0.8)), 
+                        url('resources/hero-crypto.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 20, 25, 0.9);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-blur border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">CS</span>
+                    </div>
+                    <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-blue-400 hover:text-blue-300 transition-colors font-medium">Dashboard</a>
+                    <a href="sentiment.html" class="text-gray-300 hover:text-white transition-colors font-medium">Sentiment</a>
+                    <a href="correlation.html" class="text-gray-300 hover:text-white transition-colors font-medium">Correlation</a>
+                    <a href="predictions.html" class="text-gray-300 hover:text-white transition-colors font-medium">Predictions</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                <span class="gradient-text">Crypto Sentiment</span><br>
+                <span class="text-white">Analytics Dashboard</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                Real-time analysis of social media buzz impact on cryptocurrency volatility. 
+                Track market sentiment, predict price movements, and make informed decisions.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="scrollToSection('market-overview')" class="bg-gradient-to-r from-blue-500 to-emerald-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-emerald-600 transition-all transform hover:scale-105">
+                    Explore Dashboard
+                </button>
+                <button onclick="scrollToSection('live-prices')" class="border border-blue-400 text-blue-400 px-8 py-3 rounded-lg font-semibold hover:bg-blue-400 hover:text-white transition-all">
+                    View Live Prices
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Overview -->
+    <section id="market-overview" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Market Overview</h2>
+                <p class="text-xl text-gray-400">Real-time cryptocurrency market statistics</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">Total Market Cap</h3>
+                        <div class="w-3 h-3 bg-emerald-400 rounded-full pulse-glow"></div>
+                    </div>
+                    <p class="text-3xl font-bold text-white" id="total-market-cap">$2.85T</p>
+                    <p class="text-sm text-emerald-400 mt-2">+2.34% (24h)</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">24h Volume</h3>
+                        <div class="w-3 h-3 bg-blue-400 rounded-full pulse-glow"></div>
+                    </div>
+                    <p class="text-3xl font-bold text-white" id="total-volume">$52.3B</p>
+                    <p class="text-sm text-blue-400 mt-2">+15.6% (24h)</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">BTC Dominance</h3>
+                        <div class="w-3 h-3 bg-yellow-400 rounded-full pulse-glow"></div>
+                    </div>
+                    <p class="text-3xl font-bold text-white" id="btc-dominance">68.4%</p>
+                    <p class="text-sm text-yellow-400 mt-2">-0.2% (24h)</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-300">Fear & Greed</h3>
+                        <div class="w-3 h-3 bg-orange-400 rounded-full pulse-glow"></div>
+                    </div>
+                    <p class="text-3xl font-bold text-white" id="fear-greed">72</p>
+                    <p class="text-sm text-orange-400 mt-2">Greed</p>
+                </div>
+            </div>
+
+            <!-- Sentiment Gauge -->
+            <div class="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-12">
+                <h3 class="text-2xl font-bold text-center mb-6">Overall Market Sentiment</h3>
+                <div id="sentiment-gauge" class="h-64"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Prices -->
+    <section id="live-prices" class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Live Cryptocurrency Prices</h2>
+                <p class="text-xl text-gray-400">Track real-time price movements and volatility</p>
+            </div>
+
+            <!-- Crypto Selector -->
+            <div class="flex flex-wrap justify-center gap-2 mb-8">
+                <button class="crypto-btn active bg-blue-500 text-white px-4 py-2 rounded-lg font-medium" data-crypto="BTC">Bitcoin</button>
+                <button class="crypto-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-600" data-crypto="ETH">Ethereum</button>
+                <button class="crypto-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-600" data-crypto="XRP">Ripple</button>
+                <button class="crypto-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-600" data-crypto="SOL">Solana</button>
+                <button class="crypto-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-600" data-crypto="DOGE">Dogecoin</button>
+                <button class="crypto-btn bg-gray-700 text-gray-300 px-4 py-2 rounded-lg font-medium hover:bg-gray-600" data-crypto="ADA">Cardano</button>
+            </div>
+
+            <!-- Price Chart -->
+            <div class="bg-gray-900 rounded-xl p-8 border border-gray-700 mb-8">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6">
+                    <div>
+                        <h3 class="text-2xl font-bold" id="selected-crypto-name">Bitcoin</h3>
+                        <p class="text-gray-400" id="selected-crypto-symbol">BTC</p>
+                    </div>
+                    <div class="flex gap-4 mt-4 lg:mt-0">
+                        <button class="time-btn active bg-blue-500 text-white px-3 py-1 rounded text-sm" data-time="1h">1H</button>
+                        <button class="time-btn bg-gray-700 text-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-600" data-time="4h">4H</button>
+                        <button class="time-btn bg-gray-700 text-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-600" data-time="24h">24H</button>
+                        <button class="time-btn bg-gray-700 text-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-600" data-time="7d">7D</button>
+                        <button class="time-btn bg-gray-700 text-gray-300 px-3 py-1 rounded text-sm hover:bg-gray-600" data-time="30d">30D</button>
+                    </div>
+                </div>
+                <div id="price-chart" class="h-96"></div>
+            </div>
+
+            <!-- Crypto Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="crypto-cards">
+                <!-- Cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Advanced Analytics Features</h2>
+                <p class="text-xl text-gray-400">Powerful tools for crypto market analysis</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Real-time Sentiment</h3>
+                    <p class="text-gray-400">Track social media sentiment across multiple platforms in real-time</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-r from-emerald-500 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Volatility Correlation</h3>
+                    <p class="text-gray-400">Analyze the relationship between social buzz and price volatility</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-r from-yellow-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">ML Predictions</h3>
+                    <p class="text-gray-400">Machine learning models predict price movements based on sentiment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-12 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center space-x-2 mb-4">
+                <div class="w-8 h-8 bg-gradient-to-r from-blue-400 to-emerald-400 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">CS</span>
+                </div>
+                <span class="text-xl font-bold gradient-text">CryptoSentiment</span>
+            </div>
+            <p class="text-gray-400">© 2025 Crypto Sentiment Analytics Dashboard. Advanced data analytics for cryptocurrency markets.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

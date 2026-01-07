@@ -68,13 +68,13 @@ class EnhancedCryptoStorage:
             # Create optimized indexes
             self._create_indexes()
             
-            print("✅ Connected to MongoDB with enhanced configuration")
+            print("[SUCCESS] Connected to MongoDB with enhanced configuration")
             print(f"   Database: crypto_sentiment_db")
             print(f"   Collections: {', '.join(self.db.list_collection_names())}")
             
         except Exception as e:
-            print(f"❌ MongoDB connection failed: {e}")
-            print("\n💡 To start MongoDB:")
+            print(f"[ERROR] MongoDB connection failed: {e}")
+            print("\n[INFO] To start MongoDB:")
             print("   docker run -d -p 27017:27017 --name crypto-mongodb mongo")
             raise
     
@@ -90,7 +90,7 @@ class EnhancedCryptoStorage:
         # Try to create crypto_prices with validation (ignore if exists)
         try:
             self.db.create_collection("crypto_prices", validator=self.CRYPTO_SCHEMA)
-            print("   ✅ Created crypto_prices collection with schema validation")
+            print("   [SUCCESS] Created crypto_prices collection with schema validation")
         except CollectionInvalid:
             pass  # Collection already exists
         except OperationFailure:
@@ -98,7 +98,7 @@ class EnhancedCryptoStorage:
     
     def _create_indexes(self):
         """Create optimized indexes for common queries"""
-        print("\n📊 Creating optimized indexes...")
+        print("\n[INFO] Creating optimized indexes...")
         
         # Crypto prices indexes
         self.crypto_prices.create_index([("symbol", ASCENDING)], unique=True)
@@ -139,7 +139,7 @@ class EnhancedCryptoStorage:
         except:
             pass  # Index might already exist
         
-        print("   ✅ Indexes created successfully")
+        print("   [SUCCESS] Indexes created successfully")
     
     def store_crypto_data(self, data):
         """Store cryptocurrency data with timestamp tracking"""
@@ -194,11 +194,11 @@ class EnhancedCryptoStorage:
             market_data['timestamp'] = timestamp
             self.market_overview.insert_one(market_data)
             
-            print(f"✅ Stored {stored_count} cryptocurrencies + market overview")
+            print(f"[SUCCESS] Stored {stored_count} cryptocurrencies + market overview")
             return True
             
         except Exception as e:
-            print(f"❌ Error storing crypto data: {e}")
+            print(f"[ERROR] Error storing crypto data: {e}")
             return False
     
     def store_sentiment_data(self, data):
@@ -206,10 +206,10 @@ class EnhancedCryptoStorage:
         try:
             data['timestamp'] = datetime.now()
             self.sentiment_data.insert_one(data)
-            print("✅ Stored sentiment data")
+            print("[SUCCESS] Stored sentiment data")
             return True
         except Exception as e:
-            print(f"❌ Error storing sentiment data: {e}")
+            print(f"[ERROR] Error storing sentiment data: {e}")
             return False
     
     def store_analysis_results(self, results):
@@ -217,10 +217,10 @@ class EnhancedCryptoStorage:
         try:
             results['timestamp'] = datetime.now()
             self.analysis_results.insert_one(results)
-            print("✅ Stored analysis results")
+            print("[SUCCESS] Stored analysis results")
             return True
         except Exception as e:
-            print(f"❌ Error storing analysis results: {e}")
+            print(f"[ERROR] Error storing analysis results: {e}")
             return False
     
     # ==================== QUERY METHODS ====================
@@ -368,17 +368,17 @@ class EnhancedCryptoStorage:
                 
                 with open(f'{output_dir}/crypto-prices.json', 'w') as f:
                     json.dump(crypto_data, f, indent=2, default=str)
-                print(f"✅ Exported crypto data to {output_dir}/crypto-prices.json")
+                print(f"[SUCCESS] Exported crypto data to {output_dir}/crypto-prices.json")
             
             if sentiment:
                 with open(f'{output_dir}/sentiment-data.json', 'w') as f:
                     json.dump(sentiment, f, indent=2, default=str)
-                print(f"✅ Exported sentiment data to {output_dir}/sentiment-data.json")
+                print(f"[SUCCESS] Exported sentiment data to {output_dir}/sentiment-data.json")
             
             return True
             
         except Exception as e:
-            print(f"❌ Error exporting to JSON: {e}")
+            print(f"[ERROR] Error exporting to JSON: {e}")
             return False
     
     def create_backup(self, backup_dir='./resources/backups'):
@@ -399,11 +399,11 @@ class EnhancedCryptoStorage:
             with open(backup_file, 'w') as f:
                 json.dump(backup_data, f, indent=2, default=str)
             
-            print(f"✅ Backup created: {backup_file}")
+            print(f"[SUCCESS] Backup created: {backup_file}")
             return backup_file
             
         except Exception as e:
-            print(f"❌ Error creating backup: {e}")
+            print(f"[ERROR] Error creating backup: {e}")
             return None
     
     def get_statistics(self):
@@ -424,7 +424,7 @@ class EnhancedCryptoStorage:
             stats['index_count'] = db_stats['indexes']
             stats['index_size_kb'] = db_stats['indexSize'] / 1024
             
-            print("\n📊 MongoDB Database Statistics:")
+            print("\n[INFO] MongoDB Database Statistics:")
             print(f"   Cryptocurrencies: {stats['crypto_prices_count']}")
             print(f"   Sentiment Records: {stats['sentiment_records']}")
             print(f"   Market Overview Records: {stats['market_overview_records']}")
@@ -436,13 +436,13 @@ class EnhancedCryptoStorage:
             return stats
             
         except Exception as e:
-            print(f"❌ Error getting statistics: {e}")
+            print(f"[ERROR] Error getting statistics: {e}")
             return {}
     
     def close(self):
         """Close MongoDB connection"""
         self.client.close()
-        print("✅ MongoDB connection closed")
+        print("[SUCCESS] MongoDB connection closed")
 
 
 def main():
@@ -463,14 +463,14 @@ def main():
                 crypto_data = json.load(f)
             storage.store_crypto_data(crypto_data)
         except FileNotFoundError:
-            print("⚠️ crypto-prices.json not found, generate it first")
+            print("[WARNING] crypto-prices.json not found, generate it first")
         
         try:
             with open('./resources/data/sentiment-data.json', 'r') as f:
                 sentiment_data = json.load(f)
             storage.store_sentiment_data(sentiment_data)
         except FileNotFoundError:
-            print("⚠️ sentiment-data.json not found")
+            print("[WARNING] sentiment-data.json not found")
         
         # Get statistics
         print("\n2. Database Statistics:")
@@ -499,14 +499,14 @@ def main():
         storage.create_backup()
         
         print("\n" + "=" * 70)
-        print("✅ Enhanced MongoDB Storage Layer Test Complete!")
+        print("[SUCCESS] Enhanced MongoDB Storage Layer Test Complete!")
         print("=" * 70)
         
         storage.close()
         
     except Exception as e:
-        print(f"\n❌ Test failed: {e}")
-        print("\n💡 Make sure MongoDB is running:")
+        print(f"\n[ERROR] Test failed: {e}")
+        print("\n[INFO] Make sure MongoDB is running:")
         print("   docker run -d -p 27017:27017 --name crypto-mongodb mongo")
 
 

@@ -37,9 +37,9 @@ class GlobalCryptoFetcher:
                     'markets': data['markets']
                 }
                 
-                print(f"   ✅ Global Market Cap: ${global_stats['totalMarketCap'] / 1e12:.2f}T")
-                print(f"   ✅ Global 24h Volume: ${global_stats['totalVolume'] / 1e9:.2f}B")
-                print(f"   ✅ BTC Dominance: {global_stats['btcDominance']}%")
+                print(f"    Global Market Cap: ${global_stats['totalMarketCap'] / 1e12:.2f}T")
+                print(f"    Global 24h Volume: ${global_stats['totalVolume'] / 1e9:.2f}B")
+                print(f"    BTC Dominance: {global_stats['btcDominance']}%")
                 
                 return global_stats
             else:
@@ -47,7 +47,7 @@ class GlobalCryptoFetcher:
                 return None
                 
         except Exception as e:
-            print(f"   ❌ Error fetching global data: {e}")
+            print(f"    Error fetching global data: {e}")
             return None
     
     def fetch_crypto_details(self, coin_id, symbol):
@@ -65,7 +65,7 @@ class GlobalCryptoFetcher:
             response = requests.get(url, params=params, headers=headers, timeout=15)
             
             if response.status_code == 429:
-                print(f"⚠️ Rate limited!")
+                print(f" Rate limited!")
                 print(f"\n      Waiting 15 seconds and retrying...")
                 time.sleep(15)
                 headers = {'x-cg-demo-api-key': 'CG-gTkWYTbgHKDtqFXvvpLaajBe'}
@@ -107,15 +107,15 @@ class GlobalCryptoFetcher:
                 
                 price_str = f"${crypto_info['price']:,.2f}" if crypto_info['price'] >= 1 else f"${crypto_info['price']:.6f}"
                 change_str = f"{crypto_info['change24h']:+.2f}%"
-                print(f"✅ {price_str} ({change_str})")
+                print(f" {price_str} ({change_str})")
                 
                 return crypto_info
             else:
-                print(f"❌ API error {response.status_code}")
+                print(f" API error {response.status_code}")
                 return None
                 
         except Exception as e:
-            print(f"❌ {str(e)[:60]}")
+            print(f" {str(e)[:60]}")
             return None
     
     def _calculate_sentiment(self, market_data):
@@ -146,14 +146,14 @@ class GlobalCryptoFetcher:
     def fetch_all_data(self):
         """Fetch complete crypto dataset with GLOBAL market data"""
         print("\n" + "=" * 70)
-        print("🔄 Fetching Real-Time Cryptocurrency Data")
+        print(" Fetching Real-Time Cryptocurrency Data")
         print("=" * 70)
         
         # 1. Get GLOBAL market statistics
         global_data = self.fetch_global_market_data()
         
         if not global_data:
-            print("\n⚠️ Using fallback global data")
+            print("\n Using fallback global data")
             global_data = {
                 'totalMarketCap': 3159226766302,  # Fallback from your screenshot
                 'totalVolume': 79390979766,
@@ -167,10 +167,10 @@ class GlobalCryptoFetcher:
         time.sleep(0.5)
         
         # 2. Get individual cryptocurrency data
-        print("\n📊 Fetching individual cryptocurrencies...")
-        print("   ℹ️  Rate Limit: 5-15 calls/min (public) or 30 calls/min (demo)")
-        print("   ⏳ Using 4-second delays (safe for public API)")
-        print("   📊 Total time: ~28 seconds for 6 coins\n")
+        print("\n Fetching individual cryptocurrencies...")
+        print("    Rate Limit: 5-15 calls/min (public) or 30 calls/min (demo)")
+        print("    Using 4-second delays (safe for public API)")
+        print("    Total time: ~28 seconds for 6 coins\n")
         
         crypto_ids = {
             'BTC': 'bitcoin',
@@ -195,9 +195,9 @@ class GlobalCryptoFetcher:
                 time.sleep(4.0)
         
         # 3. Get Fear & Greed Index
-        print("\n📈 Fetching Fear & Greed Index...")
+        print("\n Fetching Fear & Greed Index...")
         fear_greed = self.fetch_fear_greed_index()
-        print(f"   ✅ Fear & Greed: {fear_greed['value']} ({fear_greed['classification']})")
+        print(f"    Fear & Greed: {fear_greed['value']} ({fear_greed['classification']})")
         
         # 4. Calculate overall social sentiment
         if cryptocurrencies:
@@ -233,11 +233,11 @@ class GlobalCryptoFetcher:
             json.dump(complete_data, f, indent=2)
         
         print("\n" + "=" * 70)
-        print(f"✅ Data saved to: {self.output_file}")
-        print(f"📊 Cryptocurrencies: {len(cryptocurrencies)}")
-        print(f"💰 Global Market Cap: ${global_data['totalMarketCap'] / 1e12:.2f}T")
-        print(f"📊 Global Volume: ${global_data['totalVolume'] / 1e9:.2f}B")
-        print(f"🕐 Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f" Data saved to: {self.output_file}")
+        print(f" Cryptocurrencies: {len(cryptocurrencies)}")
+        print(f" Global Market Cap: ${global_data['totalMarketCap'] / 1e12:.2f}T")
+        print(f" Global Volume: ${global_data['totalVolume'] / 1e9:.2f}B")
+        print(f" Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print("=" * 70 + "\n")
         
         return complete_data
@@ -248,26 +248,26 @@ def main():
     # Check if running in single-fetch mode
     if len(sys.argv) > 1 and sys.argv[1] == '--once':
         fetcher.fetch_all_data()
-        print("✅ Single fetch complete")
+        print(" Single fetch complete")
         return
     
     # Continuous mode
-    print("🚀 Starting Real-Time Crypto Data Fetcher")
-    print("🔄 Fetching data every 120 seconds")
-    print("📡 Using CoinGecko Global API")
+    print(" Starting Real-Time Crypto Data Fetcher")
+    print(" Fetching data every 120 seconds")
+    print(" Using CoinGecko Global API")
     print("Press Ctrl+C to stop...\n")
     
     while True:
         try:
             fetcher.fetch_all_data()
-            print(f"⏳ Next update in 120 seconds...")
+            print(f" Next update in 120 seconds...")
             time.sleep(120)
         except KeyboardInterrupt:
-            print("\n\n👋 Shutting down...")
+            print("\n\n Shutting down...")
             break
         except Exception as e:
-            print(f"\n❌ Error: {e}")
-            print("⏳ Retrying in 120 seconds...")
+            print(f"\n Error: {e}")
+            print(" Retrying in 120 seconds...")
             time.sleep(120)
 
 if __name__ == "__main__":

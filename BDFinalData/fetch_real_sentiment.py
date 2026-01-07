@@ -87,12 +87,12 @@ class EnhancedSentimentFetcher:
                     'api_url': 'https://api.alternative.me/fng/'
                 }
                 
-                print(f"   ✅ Fear & Greed: {current_value} ({current['value_classification']})")
-                print(f"   ✅ Change from yesterday: {result['change']:+d}")
+                print(f"    Fear & Greed: {current_value} ({current['value_classification']})")
+                print(f"    Change from yesterday: {result['change']:+d}")
                 return result
                 
         except Exception as e:
-            print(f"   ⚠️ Fear & Greed error: {e}")
+            print(f"    Fear & Greed error: {e}")
         return None
     
     def fetch_cryptopanic_news(self):
@@ -105,7 +105,7 @@ class EnhancedSentimentFetcher:
         The free public API provides real crypto news with vote-based sentiment.
         """
         try:
-            print("📰 Fetching news from CryptoPanic...")
+            print(" Fetching news from CryptoPanic...")
             
             # CryptoPanic free public API
             url = "https://cryptopanic.com/api/developer/v2/posts/"
@@ -121,7 +121,7 @@ class EnhancedSentimentFetcher:
                 posts = data.get('results', [])[:30]  # Get up to 30 news items
                 
                 if not posts:
-                    print("   ⚠️ No news posts returned")
+                    print("   No news posts returned")
                     return None
                 
                 news_items = []
@@ -205,14 +205,14 @@ class EnhancedSentimentFetcher:
                     'api_url': 'https://cryptopanic.com/api/free/v1/posts/'
                 }
                 
-                print(f"   ✅ Retrieved {len(news_items)} news articles")
-                print(f"   ✅ Average sentiment: {avg_sentiment:.3f}")
-                print(f"   ✅ Trending topics: {len(trending_topics)}")
-                
+                print(f"    Retrieved {len(news_items)} news articles")
+                print(f"    Average sentiment: {avg_sentiment:.3f}")
+                print(f"    Trending topics: {len(trending_topics)}")
+
                 return result
                 
         except Exception as e:
-            print(f"   ⚠️ CryptoPanic error: {e}")
+            print(f"    CryptoPanic error: {e}")
         return None
     
     def _analyze_text_sentiment(self, text):
@@ -322,7 +322,7 @@ class EnhancedSentimentFetcher:
         API Documentation: https://www.coingecko.com/en/api/documentation
         """
         try:
-            print("📈 Fetching trending coins from CoinGecko...")
+            print(" Fetching trending coins from CoinGecko...")
             response = requests.get(
                 'https://api.coingecko.com/api/v3/search/trending',
                 timeout=10
@@ -344,7 +344,7 @@ class EnhancedSentimentFetcher:
                         'thumb': coin.get('thumb', '')
                     })
                 
-                print(f"   ✅ Found {len(trending)} trending coins")
+                print(f"    Found {len(trending)} trending coins")
                 return {
                     'coins': trending,
                     'data_source': 'CoinGecko Trending API',
@@ -352,7 +352,7 @@ class EnhancedSentimentFetcher:
                 }
                 
         except Exception as e:
-            print(f"   ⚠️ CoinGecko error: {e}")
+            print(f"    CoinGecko error: {e}")
         return None
     
     def fetch_global_market_sentiment(self):
@@ -360,7 +360,7 @@ class EnhancedSentimentFetcher:
         Calculate market sentiment from global metrics
         """
         try:
-            print("🌍 Fetching global market data...")
+            print(" Fetching global market data...")
             response = requests.get(
                 'https://api.coingecko.com/api/v3/global',
                 timeout=10
@@ -395,11 +395,11 @@ class EnhancedSentimentFetcher:
                     'derived_sentiment': round(market_sentiment, 2)
                 }
                 
-                print(f"   ✅ Market cap change: {market_cap_change:.2f}%")
+                print(f"    Market cap change: {market_cap_change:.2f}%")
                 return result
                 
         except Exception as e:
-            print(f"   ⚠️ Global market error: {e}")
+            print(f"    Global market error: {e}")
         return None
     
     def generate_sentiment_timeline(self, fear_greed_data, news_sentiment):
@@ -460,8 +460,8 @@ class EnhancedSentimentFetcher:
     def fetch_all_data(self):
         """Fetch and compile all sentiment data from real sources"""
         print(f"\n{'='*70}")
-        print(f"📊 Enhanced Sentiment Data Collection")
-        print(f"⏰ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f" Enhanced Sentiment Data Collection")
+        print(f" {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"{'='*70}\n")
         
         # 1. Fetch Fear & Greed Index (REAL)
@@ -569,9 +569,9 @@ class EnhancedSentimentFetcher:
                 json.dump(news_data, f, indent=2)
         
         print(f"\n{'='*70}")
-        print(f"✅ Sentiment data saved to: {self.output_file}")
-        print(f"✅ News data saved to: {self.news_file}")
-        print(f"\n📊 Summary:")
+        print(f" Sentiment data saved to: {self.output_file}")
+        print(f" News data saved to: {self.news_file}")
+        print(f"\n Summary:")
         print(f"   Overall Sentiment: {overall_sentiment:.2f}")
         print(f"   Fear & Greed: {fear_greed['current'] if fear_greed else 'N/A'}")
         print(f"   News Articles: {len(news_data['news_items']) if news_data else 0}")
@@ -586,7 +586,7 @@ def main():
     
     if len(sys.argv) > 1 and sys.argv[1] == '--once':
         fetcher.fetch_all_data()
-        print("✅ Single fetch complete")
+        print(" Single fetch complete")
     else:
         print("""
 ╔═══════════════════════════════════════════════════════════════════════╗
@@ -606,14 +606,14 @@ def main():
         while True:
             try:
                 fetcher.fetch_all_data()
-                print(f"⏳ Next update in 60 seconds...")
+                print(f" Next update in 60 seconds...")
                 time.sleep(60)
             except KeyboardInterrupt:
-                print("\n\n👋 Shutting down...")
+                print("\n\n Shutting down...")
                 break
             except Exception as e:
-                print(f"❌ Error: {e}")
-                print("⏳ Retrying in 60 seconds...")
+                print(f" Error: {e}")
+                print(" Retrying in 60 seconds...")
                 time.sleep(60)
 
 

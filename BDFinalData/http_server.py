@@ -45,7 +45,7 @@ class RobustHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             pass
         except Exception as e:
             if 'WinError 10054' not in str(e):  # Ignore Windows connection reset
-                print(f"⚠️ Request error: {e}")
+                print(f"Request error: {e}")
 
 class KeepAliveHTTPServer(socketserver.TCPServer):
     """HTTP Server that doesn't crash on connection errors"""
@@ -82,7 +82,7 @@ class KeepAliveHTTPServer(socketserver.TCPServer):
             return  # Silently ignore
         
         # Log other errors
-        print(f"⚠️ Server error from {client_address}:")
+        print(f"Server error from {client_address}:")
         traceback.print_exc()
 
 def run_server(port=8000):
@@ -95,14 +95,14 @@ def run_server(port=8000):
     
     try:
         with KeepAliveHTTPServer(("", port), handler) as httpd:
-            print(f"🌐 Robust HTTP Server running on http://localhost:{port}")
-            print(f"📂 Serving files from: {os.getcwd()}")
-            print(f"🔄 Auto-restart enabled (survives connection errors)")
-            print(f"⌨️  Press Ctrl+C to stop\n")
+            print(f"Robust HTTP Server running on http://localhost:{port}")
+            print(f"Serving files from: {os.getcwd()}")
+            print(f"Auto-restart enabled (survives connection errors)")
+            print(f"Press Ctrl+C to stop\n")
             
             # Handle Ctrl+C gracefully
             def signal_handler(sig, frame):
-                print("\n\n👋 Shutting down server...")
+                print("\n\nShutting down server...")
                 httpd.shutdown()
                 sys.exit(0)
             
@@ -113,8 +113,8 @@ def run_server(port=8000):
             
     except OSError as e:
         if 'Address already in use' in str(e):
-            print(f"❌ Port {port} is already in use!")
-            print(f"💡 Try:")
+            print(f"Port {port} is already in use!")
+            print(f"Try:")
             print(f"   1. Kill existing process: taskkill /F /IM python.exe")
             print(f"   2. Use different port: python http_server.py 8001")
         else:
