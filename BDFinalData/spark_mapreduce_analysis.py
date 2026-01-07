@@ -85,14 +85,14 @@ class RealTimeSparkAnalyzer:
                 
                 atexit.register(self.silent_cleanup)
                 
-                print("✅ Spark initialized (Real-Time Mode)")
+                print("Spark initialized (Real-Time Mode)")
                 print(f"   Version: {self.sc.version}")
             except Exception as e:
-                print(f"⚠️ Spark init failed, using Python MapReduce")
+                print(f" Spark init failed, using Python MapReduce")
                 self.use_spark = False
         
         if not self.use_spark:
-            print("✅ Using Python MapReduce (Real-Time Mode)")
+            print(" Using Python MapReduce (Real-Time Mode)")
     
     def _redirect_java_output(self):
         """Redirect Java System.out/err to null"""
@@ -125,28 +125,28 @@ class RealTimeSparkAnalyzer:
                     'btc_dominance': round(data['market_cap_percentage'].get('btc', 0), 1)
                 }
         except Exception as e:
-            print(f"⚠️ Could not fetch global data: {e}")
+            print(f" Could not fetch global data: {e}")
         return None
     
     def fetch_realtime_crypto_data(self):
         """Fetch LIVE data from CoinGecko API - Optimized for rate limits"""
-        print("\n🔄 Fetching REAL-TIME data from CoinGecko API...")
-        print("   ℹ️  Rate Limit: 5-15 calls/min (public) or 30 calls/min (demo account)")
+        print("\n Fetching REAL-TIME data from CoinGecko API...")
+        print(" Rate Limit: 5-15 calls/min (public) or 30 calls/min (demo account)")
         
         # First, get global market data (1 call)
         global_data = self.fetch_global_market_data()
         if global_data:
-            print(f"\n🌍 Global Market Data:")
-            print(f"   💰 Total Market Cap: ${global_data['total_market_cap'] / 1e12:.2f}T")
-            print(f"   📊 Total 24h Volume: ${global_data['total_volume'] / 1e9:.2f}B")
-            print(f"   📈 BTC Dominance: {global_data['btc_dominance']}%")
+            print(f"\n Global Market Data:")
+            print(f" Total Market Cap: ${global_data['total_market_cap'] / 1e12:.2f}T")
+            print(f" Total 24h Volume: ${global_data['total_volume'] / 1e9:.2f}B")
+            print(f" BTC Dominance: {global_data['btc_dominance']}%")
         
         # Wait after global call
         time.sleep(4)  # Safe: 60s / 15 calls = 4s per call minimum
         
-        print(f"\n📊 Fetching individual cryptocurrencies...")
-        print(f"   ⏳ Using 4-second delays (safe for public API)")
-        print(f"   📊 Total time: ~28 seconds for 6 coins\n")
+        print(f"\n Fetching individual cryptocurrencies...")
+        print(f" Using 4-second delays (safe for public API)")
+        print(f" Total time: ~28 seconds for 6 coins\n")
         
         crypto_ids = {
             'BTC': 'bitcoin',
@@ -194,10 +194,10 @@ class RealTimeSparkAnalyzer:
                     
                     all_data.append(crypto_info)
                     price_str = f"${crypto_info['price']:,.2f}" if crypto_info['price'] >= 1 else f"${crypto_info['price']:.6f}"
-                    print(f"✅ {price_str} ({crypto_info['change24h']:+.2f}%)")
+                    print(f" {price_str} ({crypto_info['change24h']:+.2f}%)")
                     
                 elif response.status_code == 429:
-                    print(f"⚠️ Rate limited!")
+                    print(f" Rate limited!")
                     print(f"      Waiting 10 seconds and retrying...")
                     time.sleep(10)
                     
@@ -220,24 +220,24 @@ class RealTimeSparkAnalyzer:
                             'timestamp': datetime.now().isoformat()
                         }
                         all_data.append(crypto_info)
-                        print(f"      ✅ Retry succeeded!")
+                        print(f" Retry succeeded!")
                     else:
-                        print(f"      ❌ Still rate limited (status {response.status_code})")
+                        print(f" Still rate limited (status {response.status_code})")
                 else:
-                    print(f"❌ API error {response.status_code}")
+                    print(f" API error {response.status_code}")
                 
                 # Wait 4 seconds between calls (safe for 15 calls/min limit)
                 if i < len(crypto_ids):  # Don't wait after last coin
                     time.sleep(4)
                 
             except Exception as e:
-                print(f"❌ Error: {str(e)[:50]}")
+                print(f" Error: {str(e)[:50]}")
         
-        print(f"\n✅ Fetched {len(all_data)}/{len(crypto_ids)} cryptocurrencies (LIVE DATA)")
+        print(f"\n Fetched {len(all_data)}/{len(crypto_ids)} cryptocurrencies (LIVE DATA)")
         
         if len(all_data) < len(crypto_ids):
-            print(f"⚠️  Only {len(all_data)} coins fetched due to rate limiting")
-            print(f"💡 Tip: Register for free Demo account at coingecko.com/en/api/pricing")
+            print(f"  Only {len(all_data)} coins fetched due to rate limiting")
+            print(f" Tip: Register for free Demo account at coingecko.com/en/api/pricing")
             print(f"    for stable 30 calls/min instead of 5-15 calls/min")
         
         return all_data
@@ -260,25 +260,25 @@ class RealTimeSparkAnalyzer:
             cryptos = self.fetch_realtime_crypto_data()
             
             if len(cryptos) == 0:
-                print("⚠️ No live data available, using cached file...")
+                print(" No live data available, using cached file...")
                 with open('./resources/data/crypto-prices.json', 'r') as f:
                     data = json.load(f)
                     cryptos = data.get('cryptocurrencies', [])
             
             if self.use_spark:
                 crypto_rdd = self.sc.parallelize(cryptos)
-                print(f"✅ Loaded {crypto_rdd.count()} cryptocurrencies into Spark RDD")
+                print(f" Loaded {crypto_rdd.count()} cryptocurrencies into Spark RDD")
                 return crypto_rdd
             else:
-                print(f"✅ Loaded {len(cryptos)} cryptocurrencies")
+                print(f" Loaded {len(cryptos)} cryptocurrencies")
                 return cryptos
         except Exception as e:
-            print(f"❌ Error loading crypto data: {e}")
+            print(f" Error loading crypto data: {e}")
             return None
     
     def mapreduce_average_sentiment(self, data):
         """MapReduce: Calculate average sentiment"""
-        print("\n📊 MapReduce Analysis 1: Average Sentiment")
+        print("\n MapReduce Analysis 1: Average Sentiment")
         print("=" * 60)
         
         try:
@@ -292,17 +292,16 @@ class RealTimeSparkAnalyzer:
             
             print("\nResults:")
             for symbol, sentiment in results:
-                emoji = "📈" if sentiment > 0 else "📉"
-                print(f"   {emoji} {symbol}: {sentiment:.2f}")
+                print(f" {symbol}: {sentiment:.2f}")
             
             return results
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             return []
     
     def mapreduce_total_market_metrics(self, data):
         """MapReduce: Calculate LIVE total market metrics"""
-        print("\n📊 MapReduce Analysis 2: Total Market Metrics (LIVE)")
+        print("\n MapReduce Analysis 2: Total Market Metrics (LIVE)")
         print("=" * 60)
         
         try:
@@ -312,11 +311,11 @@ class RealTimeSparkAnalyzer:
                 total_volume = self.global_market_data['total_volume']
                 btc_dominance = self.global_market_data['btc_dominance']
                 
-                print(f"\n🌍 Global Market Results (Real-Time from CoinGecko):")
-                print(f"   💰 Total Market Cap: ${total_market_cap / 1e12:.2f}T")
-                print(f"   📊 Total 24h Volume: ${total_volume / 1e9:.2f}B")
-                print(f"   📈 BTC Dominance: {btc_dominance}%")
-                print(f"   🕐 Updated: {datetime.now().strftime('%H:%M:%S')}")
+                print(f"\n Global Market Results (Real-Time from CoinGecko):")
+                print(f" Total Market Cap: ${total_market_cap / 1e12:.2f}T")
+                print(f" Total 24h Volume: ${total_volume / 1e9:.2f}B")
+                print(f" BTC Dominance: {btc_dominance}%")
+                print(f" Updated: {datetime.now().strftime('%H:%M:%S')}")
             else:
                 # Fallback: sum only the 6 coins we're tracking
                 if self.use_spark:
@@ -332,10 +331,10 @@ class RealTimeSparkAnalyzer:
                 
                 btc_dominance = 0
                 
-                print(f"\n⚠️ Using Sum of 6 Tracked Coins (Not Global):")
-                print(f"   💰 Combined Market Cap: ${total_market_cap / 1e12:.2f}T")
-                print(f"   📊 Combined 24h Volume: ${total_volume / 1e9:.2f}B")
-                print(f"   ℹ️  Note: This is NOT the global market cap")
+                print(f"\n Using Sum of 6 Tracked Coins (Not Global):")
+                print(f" Combined Market Cap: ${total_market_cap / 1e12:.2f}T")
+                print(f" Combined 24h Volume: ${total_volume / 1e9:.2f}B")
+                print(f"  Note: This is NOT the global market cap")
             
             return {
                 'total_market_cap': total_market_cap,
@@ -345,12 +344,12 @@ class RealTimeSparkAnalyzer:
                 'is_global': hasattr(self, 'global_market_data') and self.global_market_data is not None
             }
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             return {}
     
     def mapreduce_volatility_classification(self, data):
         """MapReduce: Classify by volatility"""
-        print("\n📊 MapReduce Analysis 3: Volatility Classification")
+        print("\n MapReduce Analysis 3: Volatility Classification")
         print("=" * 60)
         
         try:
@@ -384,12 +383,12 @@ class RealTimeSparkAnalyzer:
             
             return results
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             return []
     
     def mapreduce_price_performance(self, data):
         """MapReduce: Analyze 24h price performance"""
-        print("\n📊 MapReduce Analysis 4: Price Performance (24h)")
+        print("\n MapReduce Analysis 4: Price Performance (24h)")
         print("=" * 60)
         
         try:
@@ -428,12 +427,12 @@ class RealTimeSparkAnalyzer:
             
             return results
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             return []
     
     def mapreduce_sentiment_volume_correlation(self, data):
         """MapReduce: Analyze sentiment vs buzz volume"""
-        print("\n📊 MapReduce Analysis 5: Sentiment-Volume Correlation")
+        print("\n MapReduce Analysis 5: Sentiment-Volume Correlation")
         print("=" * 60)
         
         try:
@@ -467,7 +466,7 @@ class RealTimeSparkAnalyzer:
             
             return sorted_results
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             return []
     
     def save_results(self, results, output_file='./resources/data/spark-analysis-results.json'):
@@ -489,9 +488,9 @@ class RealTimeSparkAnalyzer:
             with open(output_file, 'w') as f:
                 json.dump(output, f, indent=2, default=str)
             
-            print(f"\n✅ Results saved to {output_file}")
+            print(f"\n Results saved to {output_file}")
         except Exception as e:
-            print(f"❌ Error saving: {e}")
+            print(f" Error saving: {e}")
     
     def stop(self):
         """Silent stop"""
@@ -505,19 +504,19 @@ class RealTimeSparkAnalyzer:
                 self.sc.stop()
                 
                 sys.stderr = old_stderr
-                print("\n✅ Spark stopped")
+                print("\n Spark stopped")
             except:
                 sys.stderr = old_stderr
-                print("\n✅ Spark stopped")
+                print("\n Spark stopped")
         else:
-            print("\n✅ Complete")
+            print("\n Complete")
 
 def main():
     """Run real-time Spark MapReduce analysis"""
     
     # DON'T clear screen - keep previous output visible
     print("\n" + "=" * 60)
-    print("🔴 LIVE MapReduce Analysis - Real-Time Data")
+    print(" LIVE MapReduce Analysis - Real-Time Data")
     print("=" * 60)
     
     analyzer = None
@@ -543,18 +542,18 @@ def main():
             analyzer.save_results(all_results)
             
             print("\n" + "=" * 60)
-            print("✅ Real-Time MapReduce Analysis Complete!")
+            print(" Real-Time MapReduce Analysis Complete!")
             print("=" * 60)
         
         if analyzer:
             analyzer.stop()
         
     except KeyboardInterrupt:
-        print("\n\n⚠️ Interrupted by user")
+        print("\n\n Interrupted by user")
         if analyzer:
             analyzer.stop()
     except Exception as e:
-        print(f"\n❌ Analysis failed: {e}")
+        print(f"\n Analysis failed: {e}")
         import traceback
         traceback.print_exc()
     finally:

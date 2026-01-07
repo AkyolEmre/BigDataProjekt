@@ -296,7 +296,7 @@
           updateDashboard();
           document.getElementById("data-status").innerHTML = `<span class="text-emerald-400">✓ Live data</span> | Last update: ${new Date(cryptoData?.metadata?.lastUpdate || Date.now()).toLocaleTimeString()}`;
         } catch (error) {
-          document.getElementById("data-status").textContent = "⚠️ Error loading data";
+          document.getElementById("data-status").textContent = "Error loading data";
         }
       }
 

@@ -204,8 +204,8 @@
           mlData = await tryFetchFromPaths('ml-analysis-real-data.json');
 
           if (cryptoData && cryptoData.cryptocurrencies) {
-            console.log("✅ Data loaded:", cryptoData.cryptocurrencies.length, "cryptos");
-            statusEl.textContent = `✅ Loaded ${cryptoData.cryptocurrencies.length} cryptocurrencies`;
+            console.log("Data loaded:", cryptoData.cryptocurrencies.length, "cryptos");
+            statusEl.textContent = `Loaded ${cryptoData.cryptocurrencies.length} cryptocurrencies`;
             statusEl.className = "text-sm text-emerald-400 mt-2";
             updatePredictionDisplay();
             initializeCharts();
@@ -216,8 +216,8 @@
             throw new Error("Could not load crypto data");
           }
         } catch (error) {
-          console.error("❌ Error:", error);
-          statusEl.textContent = `❌ ${error.message}`;
+          console.error("Error:", error);
+          statusEl.textContent = `${error.message}`;
           statusEl.className = "text-sm text-red-400 mt-2";
         }
       }
@@ -326,7 +326,7 @@
             { name: "Prediction", type: "line", data: predictionData, lineStyle: { color: "#10b981", width: 3 }, symbol: "circle", symbolSize: 6 }
           ]
         });
-        console.log("✅ Prediction chart initialized");
+        console.log("Prediction chart initialized");
       }
 
       function initializeModelComparison() {
@@ -356,7 +356,7 @@
             { name: "RMSE", type: "bar", data: models.map(m => (modelData[m].RMSE * 1000).toFixed(2)), itemStyle: { color: "#3b82f6" } }
           ]
         });
-        console.log("✅ Model comparison chart initialized");
+        console.log("Model comparison chart initialized");
       }
 
       function updatePerformanceCards() {

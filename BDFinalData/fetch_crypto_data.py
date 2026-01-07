@@ -20,7 +20,7 @@ class GlobalCryptoFetcher:
     def fetch_global_market_data(self):
         """Fetch REAL global market statistics"""
         try:
-            print("🌍 Fetching global market data...")
+            print("Fetching global market data...")
             headers = {'x-cg-demo-api-key': 'CG-gTkWYTbgHKDtqFXvvpLaajBe'}
             response = requests.get('https://api.coingecko.com/api/v3/global', headers=headers, timeout=10)
             
@@ -43,7 +43,7 @@ class GlobalCryptoFetcher:
                 
                 return global_stats
             else:
-                print(f"   ⚠️ Global API returned status {response.status_code}")
+                print(f" Global API returned status {response.status_code}")
                 return None
                 
         except Exception as e:

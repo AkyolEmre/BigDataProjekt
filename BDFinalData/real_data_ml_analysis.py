@@ -30,7 +30,7 @@ class RealDataMLAnalyzer:
     
     def load_real_data(self):
         """Load ONLY real data from APIs"""
-        print("📊 Loading Real Data Only")
+        print("Loading Real Data Only")
         print("=" * 60)
         
         try:
@@ -61,8 +61,8 @@ class RealDataMLAnalyzer:
             df = pd.DataFrame(real_data)
             df['fear_greed_index'] = fear_greed
             
-            print(f"✅ Loaded {len(df)} cryptocurrencies with REAL data")
-            print(f"✅ Fear & Greed Index: {fear_greed}")
+            print(f"Loaded {len(df)} cryptocurrencies with REAL data")
+            print(f"Fear & Greed Index: {fear_greed}")
             print("\nData Sources:")
             print("   - Prices, Volume, Market Cap: Yahoo Finance API")
             print("   - Volatility: Calculated from historical prices")
@@ -72,12 +72,12 @@ class RealDataMLAnalyzer:
             return df, fear_greed
         
         except Exception as e:
-            print(f"❌ Error loading data: {e}")
+            print(f"Error loading data: {e}")
             return None, None
     
     def analyze_correlations(self, df):
         """Analyze correlations between REAL metrics"""
-        print("\n📊 Correlation Analysis (Real Data Only)")
+        print("\n Correlation Analysis (Real Data Only)")
         print("=" * 60)
         
         # Select only numeric columns for correlation
@@ -121,12 +121,12 @@ class RealDataMLAnalyzer:
     
     def predict_volatility(self, df):
         """Predict volatility from Fear & Greed and Volume (REAL DATA)"""
-        print("\n📊 ML Model 1: Volatility Prediction")
+        print("\n ML Model 1: Volatility Prediction")
         print("=" * 60)
         
         # Check if we have enough data
         if len(df) < 3:
-            print(f"⚠️ Not enough data for ML analysis (need 3+, have {len(df)})")
+            print(f" Not enough data for ML analysis (need 3+, have {len(df)})")
             print("   Skipping volatility prediction...")
             return {}
         
@@ -147,7 +147,7 @@ class RealDataMLAnalyzer:
             # Not enough data to split, use all for training
             X_train = X_test = X_scaled
             y_train = y_test = y
-            print("⚠️ Using all data for training (dataset too small to split)")
+            print("Using all data for training (dataset too small to split)")
         
         
         # Train multiple models
@@ -197,7 +197,7 @@ class RealDataMLAnalyzer:
         self.models['volatility'] = models[best_model_name]
         self.scalers['volatility'] = scaler
         
-        print(f"\n✅ Best Model: {best_model_name}")
+        print(f"\n Best Model: {best_model_name}")
         
         self.results['volatility_prediction'] = results
         
@@ -205,12 +205,12 @@ class RealDataMLAnalyzer:
     
     def predict_price_change(self, df):
         """Predict 24h price change from Fear & Greed (REAL DATA)"""
-        print("\n📊 ML Model 2: Price Change Prediction")
+        print("\n ML Model 2: Price Change Prediction")
         print("=" * 60)
         
         # Check if we have enough data
         if len(df) < 3:
-            print(f"⚠️ Not enough data for ML analysis (need 3+, have {len(df)})")
+            print(f" Not enough data for ML analysis (need 3+, have {len(df)})")
             print("   Skipping price change prediction...")
             return None, None
         
@@ -230,7 +230,7 @@ class RealDataMLAnalyzer:
         else:
             X_train = X_test = X_scaled
             y_train = y_test = y
-            print("⚠️ Using all data for training (dataset too small to split)")
+            print("Using all data for training (dataset too small to split)")
         
         
         # Train Random Forest
@@ -282,7 +282,7 @@ class RealDataMLAnalyzer:
     
     def analyze_fear_greed_impact(self, df, fear_greed):
         """Analyze impact of Fear & Greed on market"""
-        print("\n📊 Fear & Greed Impact Analysis")
+        print("\n Fear & Greed Impact Analysis")
         print("=" * 60)
         
         # Calculate average metrics
@@ -312,7 +312,7 @@ class RealDataMLAnalyzer:
             correlation = df['fear_greed_index'].corr(df['change_24h'])
         
         if np.isnan(correlation):
-            print(f"\n   ⚠️ Correlation cannot be calculated (all Fear & Greed values are the same)")
+            print(f"\n Correlation cannot be calculated (all Fear & Greed values are the same)")
             correlation = 0.0
         else:
             print(f"\n   Correlation (Fear & Greed ↔ Price Change): {correlation:.3f}")
@@ -348,9 +348,9 @@ class RealDataMLAnalyzer:
             with open(output_file, 'w') as f:
                 json.dump(output, f, indent=2, default=str)
             
-            print(f"\n✅ Results saved to {output_file}")
+            print(f"\n Results saved to {output_file}")
         except Exception as e:
-            print(f"❌ Error saving results: {e}")
+            print(f" Error saving results: {e}")
 
 def main():
     """Run ML analysis on real data"""
@@ -379,19 +379,19 @@ def main():
             analyzer.save_results()
             
             print("\n" + "=" * 60)
-            print("✅ ML Analysis Complete!")
+            print(" ML Analysis Complete!")
             print("=" * 60)
-            print("\n📌 Note: Small dataset (6 cryptos) limits ML accuracy")
+            print("\n Note: Small dataset (6 cryptos) limits ML accuracy")
             print("   For better results, collect data over multiple days")
-            print("\nKey Findings:")
+            print("\n Key Findings:")
             print("   - Models trained on 100% real market data")
             print("   - Fear & Greed Index: Single snapshot (all same value)")
             print("   - Volume and volatility show some predictive patterns")
             print("   - All results based on verified API data sources")
         
     except Exception as e:
-        print(f"\n❌ Analysis failed: {e}")
-        print("\n💡 Make sure data files exist:")
+        print(f"\n Analysis failed: {e}")
+        print("\n Make sure data files exist:")
         print("   python3 fetch_crypto_data.py --once")
         print("   python3 fetch_real_sentiment.py --once")
 

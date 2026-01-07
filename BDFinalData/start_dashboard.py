@@ -39,33 +39,11 @@ class DashboardOrchestrator:
     
     def print_banner(self):
         """Print startup banner"""
-        print("""
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                                                                              ║
-║   ██████╗██████╗ ██╗   ██╗██████╗ ████████╗ ██████╗                          ║
-║  ██╔════╝██╔══██╗╚██╗ ██╔╝██╔══██╗╚══██╔══╝██╔═══██╗                         ║
-║  ██║     ██████╔╝ ╚████╔╝ ██████╔╝   ██║   ██║   ██║                         ║
-║  ██║     ██╔══██╗  ╚██╔╝  ██╔═══╝    ██║   ██║   ██║                         ║
-║  ╚██████╗██║  ██║   ██║   ██║        ██║   ╚██████╔╝                         ║
-║   ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝        ╚═╝    ╚═════╝                          ║
-║                                                                              ║
-║  ███████╗███████╗███╗   ██╗████████╗██╗███╗   ███╗███████╗███╗   ██╗████████╗║
-║  ██╔════╝██╔════╝████╗  ██║╚══██╔══╝██║████╗ ████║██╔════╝████╗  ██║╚══██╔══╝║
-║  ███████╗█████╗  ██╔██╗ ██║   ██║   ██║██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ║
-║  ╚════██║██╔══╝  ██║╚██╗██║   ██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ║
-║  ███████║███████╗██║ ╚████║   ██║   ██║██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ║
-║  ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ║
-║                                                                              ║
-║                      Big Data Analytics Final Project                        ║
-║          Team: Emre Akyol, Harmanpreet Chauhan, Mohamed Nasr                 ║
-╚══════════════════════════════════════════════════════════════════════════════╝
-        """)
+        print("Crypto Sentiment")
     
     def step(self, number, title, status="running"):
         """Print step status"""
-        icons = {"running": "🔄", "done": "✅", "skip": "⏭️", "error": "❌", "wait": "⏳"}
-        icon = icons.get(status, "•")
-        print(f"\n{icon} Step {number}: {title}")
+        print(f"\n Step {number}: {title}")
         print("=" * 60)
     
     def run_data_collection(self):
@@ -79,18 +57,18 @@ class DashboardOrchestrator:
             data = fetcher.fetch_all_data()
             
             if data and 'cryptocurrencies' in data:
-                print(f"   ✅ Fetched {len(data['cryptocurrencies'])} cryptocurrencies")
-                print(f"   ✅ Market cap: ${data['marketOverview'].get('totalMarketCap', 0)/1e12:.2f}T")
+                print(f" Fetched {len(data['cryptocurrencies'])} cryptocurrencies")
+                print(f" Market cap: ${data['marketOverview'].get('totalMarketCap', 0)/1e12:.2f}T")
                 return True
         except ImportError as e:
-            print(f"   ⚠️ Import Error: {e}")
-            print("   ℹ️  Checking for cached data...")
+            print(f" Import Error: {e}")
+            print("  Checking for cached data...")
         except Exception as e:
-            print(f"   ⚠️ Error: {e}")
-            print("   ℹ️  Checking for cached data...")
+            print(f" Error: {e}")
+            print("   Checking for cached data...")
             
         if os.path.exists(f"{DATA_DIR}/crypto-prices.json"):
-            print("   ✅ Using cached crypto-prices.json")
+            print(" Using cached crypto-prices.json")
             return True
         
         return False
@@ -107,15 +85,15 @@ class DashboardOrchestrator:
             
             if data:
                 fg = data.get('sentimentOverview', {}).get('fearGreedIndex', 'N/A')
-                print(f"   ✅ Fear & Greed Index: {fg}")
+                print(f" Fear & Greed Index: {fg}")
                 return True
         except ImportError as e:
-            print(f"   ⚠️ Import Error: {e}")
+            print(f" Import Error: {e}")
         except Exception as e:
-            print(f"   ⚠️ Error: {e}")
+            print(f" Error: {e}")
             
         if os.path.exists(f"{DATA_DIR}/sentiment-data.json"):
-            print("   ✅ Using cached sentiment-data.json")
+            print(" Using cached sentiment-data.json")
             return True
         
         return False
@@ -150,13 +128,13 @@ class DashboardOrchestrator:
             return True
             
         except ImportError:
-            print(f"   ⚠️ pymongo not installed")
-            print("   ℹ️  Data will be served from JSON files")
+            print(f" pymongo not installed")
+            print("  Data will be served from JSON files")
             return False
         except Exception as e:
-            print(f"   ⚠️ MongoDB not available: {e}")
-            print("   ℹ️  Data will be served from JSON files")
-            print("\n   💡 To enable MongoDB:")
+            print(f" MongoDB not available: {e}")
+            print("  Data will be served from JSON files")
+            print("\n  To enable MongoDB:")
             print("      docker run -d -p 27017:27017 --name crypto-mongodb mongo")
             return False
     
@@ -177,11 +155,11 @@ class DashboardOrchestrator:
                 analyzer.save_results()
                 return True
         except ImportError as e:
-            print(f"   ⚠️ Import Error: {e}")
-            print("   ℹ️  Dashboard will work without ML predictions")
+            print(f" Import Error: {e}")
+            print("   Dashboard will work without ML predictions")
         except Exception as e:
-            print(f"   ⚠️ ML analysis error: {e}")
-            print("   ℹ️  Dashboard will work without ML predictions")
+            print(f" ML analysis error: {e}")
+            print("  Dashboard will work without ML predictions")
         
         return False
     
@@ -214,11 +192,11 @@ class DashboardOrchestrator:
                 return True
                 
         except ImportError as e:
-            print(f"   ⚠️ Import Error: {e}")
-            print("   ℹ️  Dashboard will work without Spark analysis")
+            print(f" Import Error: {e}")
+            print("  Dashboard will work without Spark analysis")
         except Exception as e:
-            print(f"   ⚠️ Spark error: {e}")
-            print("   ℹ️  Dashboard will work without Spark analysis")
+            print(f" Spark error: {e}")
+            print("  Dashboard will work without Spark analysis")
         
         return False
     
@@ -238,23 +216,23 @@ class DashboardOrchestrator:
             server_thread.daemon = True
             server_thread.start()
             
-            print(f"   ✅ HTTP server running on port {HTTP_PORT}")
+            print(f" HTTP server running on port {HTTP_PORT}")
             return True
             
         except Exception as e:
-            print(f"   ❌ Failed to start HTTP server: {e}")
+            print(f" Failed to start HTTP server: {e}")
             return False
     
     def print_dashboard_urls(self):
         """Print dashboard URLs"""
         print("\n" + "=" * 60)
-        print("📊 DASHBOARD READY!")
+        print(" DASHBOARD READY!")
         print("=" * 60)
         print(f"""
-   🌐 Main Dashboard:      http://localhost:{HTTP_PORT}/index.html
-   📈 Sentiment Analysis:  http://localhost:{HTTP_PORT}/sentiment.html
-   📊 Correlation:         http://localhost:{HTTP_PORT}/correlation.html
-   🤖 ML Predictions:      http://localhost:{HTTP_PORT}/predictions.html
+    Main Dashboard:      http://localhost:{HTTP_PORT}/index.html
+    Sentiment Analysis:  http://localhost:{HTTP_PORT}/sentiment.html
+    Correlation:         http://localhost:{HTTP_PORT}/correlation.html
+    ML Predictions:      http://localhost:{HTTP_PORT}/predictions.html
         """)
         print("=" * 60)
         print("   Press Ctrl+C to stop the dashboard")
@@ -268,12 +246,12 @@ class DashboardOrchestrator:
                 if not self.running:
                     break
                     
-                print(f"\n🔄 Auto-refresh at {datetime.now().strftime('%H:%M:%S')}")
+                print(f"\n Auto-refresh at {datetime.now().strftime('%H:%M:%S')}")
                 try:
                     self.run_data_collection()
                     self.run_sentiment_collection()
                 except Exception as e:
-                    print(f"   ⚠️ Update error: {e}")
+                    print(f" Update error: {e}")
         
         update_thread = threading.Thread(target=update_loop)
         update_thread.daemon = True
@@ -281,26 +259,26 @@ class DashboardOrchestrator:
     
     def shutdown(self, signum=None, frame=None):
         """Graceful shutdown"""
-        print("\n\n👋 Shutting down CryptoSentiment Dashboard...")
+        print("\n\n Shutting down CryptoSentiment Dashboard...")
         self.running = False
         
         if self.http_server:
             self.http_server.shutdown()
         
-        print("✅ Goodbye!")
+        print(" Goodbye!")
         sys.exit(0)
     
     def run(self, skip_mongodb=False, skip_spark=False, open_browser=True):
         """Run the complete dashboard pipeline"""
         self.print_banner()
         
-        print(f"\n⏰ Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        print(f"📁 Data directory: {os.path.abspath(DATA_DIR)}")
+        print(f"\n Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f" Data directory: {os.path.abspath(DATA_DIR)}")
         
         # Step 1: Crypto Data
         crypto_ok = self.run_data_collection()
         if not crypto_ok:
-            print("\n❌ Cannot proceed without cryptocurrency data")
+            print("\n Cannot proceed without cryptocurrency data")
             print("   Please ensure crypto-prices.json exists in resources/data/")
             return False
         

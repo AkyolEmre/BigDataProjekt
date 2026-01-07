@@ -37,9 +37,9 @@ async function loadData() {
     updateMarketOverview();
     updatePriceChart();
     updateSentimentGauge();
-    console.log("✅ Data loaded successfully");
+    console.log("Data loaded successfully");
   } catch (error) {
-    console.error("❌ Error loading data:", error);
+    console.error("Error loading data:", error);
     // Use fallback data
     loadFallbackData();
   }
@@ -542,7 +542,7 @@ function getTimeframeInterval() {
 function startRealTimeUpdates() {
   // Update all data every 10 seconds to match backend update frequency
   setInterval(async () => {
-    console.log("🔄 Auto-updating with real data...");
+    console.log("Auto-updating with real data...");
     await loadData(); // Reload all JSON data files for real updates
     updateLastUpdateTime();
   }, 10000); // Update every 10 seconds
@@ -552,7 +552,7 @@ function startRealTimeUpdates() {
 function updateLastUpdateTime() {
   const now = new Date();
   const timeStr = now.toLocaleTimeString();
-  console.log(`✅ Data refreshed at ${timeStr}`);
+  console.log(`Data refreshed at ${timeStr}`);
   
   // Update any last-update elements if they exist
   const lastUpdateEl = document.getElementById('last-update');

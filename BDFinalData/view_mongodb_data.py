@@ -22,7 +22,7 @@ def view_mongodb_data():
         print("=" * 70)
         
         # 1. Database Statistics
-        print("\n📊 DATABASE STATISTICS")
+        print("\n DATABASE STATISTICS")
         print("-" * 70)
         
         stats = db.command("dbStats")
@@ -33,7 +33,7 @@ def view_mongodb_data():
         print(f"Storage Size: {stats['storageSize'] / 1024:.2f} KB")
         
         # 2. Collections Overview
-        print("\n📚 COLLECTIONS OVERVIEW")
+        print("\n COLLECTIONS OVERVIEW")
         print("-" * 70)
         
         collections = db.list_collection_names()
@@ -48,7 +48,7 @@ def view_mongodb_data():
                 print(f"   Sample Fields: {list(sample.keys())}")
         
         # 3. Crypto Prices Collection
-        print("\n\n💰 CRYPTO PRICES COLLECTION")
+        print("\n\n CRYPTO PRICES COLLECTION")
         print("-" * 70)
         
         crypto_prices = db["crypto_prices"]
@@ -72,12 +72,12 @@ def view_mongodb_data():
                 print(f"{symbol:<10} {name:<15} ${price:<14,.2f} {change_str:<12} {mcap_str:<15}")
             
             # Show detailed view of one crypto
-            print(f"\n\n📋 DETAILED VIEW - {cryptos[0]['name']} (BTC)")
+            print(f"\n\n DETAILED VIEW - {cryptos[0]['name']} (BTC)")
             print("-" * 70)
             print(json.dumps(cryptos[0], indent=2, default=str))
         
         # 4. Sentiment Data Collection
-        print("\n\n😊 SENTIMENT DATA COLLECTION")
+        print("\n\n SENTIMENT DATA COLLECTION")
         print("-" * 70)
         
         sentiment_data = db["sentiment_data"]
@@ -104,7 +104,7 @@ def view_mongodb_data():
                 print(f"      Influence: {data.get('influenceScore', 'N/A')}%")
         
         # 5. Market Overview Collection
-        print("\n\n📈 MARKET OVERVIEW HISTORY")
+        print("\n\n MARKET OVERVIEW HISTORY")
         print("-" * 70)
         
         market_overview = db["market_overview"]
@@ -134,7 +134,7 @@ def view_mongodb_data():
                 print(f"{ts.strftime('%Y-%m-%d %H:%M:%S'):<25} ${mcap/1e12:<19.2f}T {btc_dom:<14.2f}% {fg:<15}")
         
         # 6. Query Examples
-        print("\n\n💡 USEFUL MONGODB QUERIES")
+        print("\n\n USEFUL MONGODB QUERIES")
         print("-" * 70)
         print("""
 # Find specific cryptocurrency:
@@ -156,14 +156,14 @@ db.crypto_prices.countDocuments({volatility: {$gt: 0.03}})
         """)
         
         print("\n" + "=" * 70)
-        print("✅ MongoDB Data Inspection Complete!")
+        print(" MongoDB Data Inspection Complete!")
         print("=" * 70)
         
         client.close()
         
     except Exception as e:
-        print(f"❌ Error connecting to MongoDB: {e}")
-        print("\n💡 Make sure MongoDB is running:")
+        print(f" Error connecting to MongoDB: {e}")
+        print("\n Make sure MongoDB is running:")
         print("   docker start crypto-mongodb")
         print("   OR")
         print("   docker run -d -p 27017:27017 --name crypto-mongodb mongo")

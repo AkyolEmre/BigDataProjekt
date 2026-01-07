@@ -55,7 +55,7 @@ class EnhancedSentimentFetcher:
         This is REAL, verifiable data that updates daily.
         """
         try:
-            print("📊 Fetching Fear & Greed Index from Alternative.me...")
+            print("Fetching Fear & Greed Index from Alternative.me...")
             response = requests.get(
                 'https://api.alternative.me/fng/?limit=30',
                 timeout=10
@@ -588,20 +588,7 @@ def main():
         fetcher.fetch_all_data()
         print(" Single fetch complete")
     else:
-        print("""
-╔═══════════════════════════════════════════════════════════════════════╗
-║  Enhanced Crypto Sentiment Fetcher                                     ║
-║  Big Data Analytics Final Project                                      ║
-║                                                                        ║
-║  Data Sources (100% FREE & REAL):                                      ║
-║  • Alternative.me - Fear & Greed Index (verifiable)                    ║
-║  • CryptoPanic - Real news headlines with vote sentiment               ║
-║  • CoinGecko - Trending coins and market data                          ║
-║                                                                        ║
-║  Updates every 60 seconds                                              ║
-║  Press Ctrl+C to stop                                                  ║
-╚═══════════════════════════════════════════════════════════════════════╝
-        """)
+        print("Enhanced Crypto Sentiment Fetcher")
         
         while True:
             try:

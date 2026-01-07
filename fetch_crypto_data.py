@@ -43,7 +43,7 @@ class RealtimeCryptoFetcher:
             
             return info, hist
         except Exception as e:
-            print(f"⚠️ Error fetching {ticker}: {e}")
+            print(f"Error fetching {ticker}: {e}")
             return None, None
     
     def calculate_realtime_volatility(self, hist_data):
@@ -67,7 +67,7 @@ class RealtimeCryptoFetcher:
         return max(-1, min(1, final_sentiment))
     
     def fetch_data(self):
-        print(f"\n🔄 Fetching at {datetime.now().strftime('%H:%M:%S')}")
+        print(f"\n Fetching at {datetime.now().strftime('%H:%M:%S')}")
         
         cryptocurrencies = []
         total_market_cap = 0
@@ -148,8 +148,8 @@ class RealtimeCryptoFetcher:
         with open(self.sentiment_file, 'w') as f:
             json.dump(sentiment_data, f, indent=2)
         
-        print(f"✅ Saved to: {self.output_file}")
-        print(f"✅ Saved to: {self.sentiment_file}")
+        print(f"Saved to: {self.output_file}")
+        print(f"Saved to: {self.sentiment_file}")
         return data
     
     def generate_sentiment_data(self, cryptocurrencies, avg_sentiment):
@@ -190,7 +190,7 @@ class RealtimeCryptoFetcher:
                 self.fetch_data()
                 time.sleep(self.update_interval)
             except Exception as e:
-                print(f"❌ Error: {e}")
+                print(f"Error: {e}")
                 time.sleep(self.update_interval)
     
     def start(self):
@@ -198,12 +198,12 @@ class RealtimeCryptoFetcher:
             self.running = True
             self.thread = threading.Thread(target=self.auto_refresh, daemon=True)
             self.thread.start()
-            print(f"🚀 Started (updating every {self.update_interval}s)")
+            print(f"Started (updating every {self.update_interval}s)")
             print("Press Ctrl+C to stop...")
     
     def stop(self):
         self.running = False
-        print("🛑 Stopped")
+        print("Stopped")
 
 if __name__ == "__main__":
     fetcher = RealtimeCryptoFetcher(update_interval=10)
@@ -217,5 +217,5 @@ if __name__ == "__main__":
             while True:
                 time.sleep(1)
         except KeyboardInterrupt:
-            print("\n👋 Shutting down...")
+            print("\n Shutting down...")
             fetcher.stop()
