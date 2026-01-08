@@ -69,19 +69,19 @@
             <p class="text-3xl font-bold" id="overall-sentiment">Loading...</p>
             <p class="text-sm mt-2" id="sentiment-change">...</p>
           </div>
-          
+
           <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
             <h3 class="text-lg font-semibold text-gray-300 mb-4">Total Mentions</h3>
             <p class="text-3xl font-bold text-white" id="total-mentions">Loading...</p>
             <p class="text-sm text-blue-400 mt-2">Estimated 24h volume</p>
           </div>
-          
+
           <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
             <h3 class="text-lg font-semibold text-gray-300 mb-4">Positive Mentions</h3>
             <p class="text-3xl font-bold text-emerald-400" id="positive-mentions">Loading...</p>
             <p class="text-sm text-emerald-400 mt-2" id="positive-pct">...</p>
           </div>
-          
+
           <div class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700">
             <h3 class="text-lg font-semibold text-gray-300 mb-4">Fear & Greed Index</h3>
             <p class="text-3xl font-bold" id="fear-greed-value">Loading...</p>
@@ -134,7 +134,7 @@
             </svg>
           </a>
         </div>
-        
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <!-- News Headlines -->
           <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
@@ -146,7 +146,7 @@
               <p class="text-gray-400">Loading news...</p>
             </div>
           </div>
-          
+
           <!-- News Sentiment Distribution -->
           <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
             <h3 class="text-xl font-bold mb-4">News Sentiment Distribution</h3>
@@ -201,49 +201,6 @@
       </div>
     </section>
 
-    <!-- Data Sources Section -->
-    <section class="py-12 bg-gray-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-8 gradient-text">Data Sources & Methodology</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="data-sources">
-          <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
-            <div class="flex items-center mb-4">
-              <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center mr-3">
-                <span class="text-xl">📊</span>
-              </div>
-              <h3 class="font-bold">Fear & Greed Index</h3>
-            </div>
-            <p class="text-gray-400 text-sm mb-2">Alternative.me API</p>
-            <p class="text-gray-500 text-xs">Real daily index measuring market sentiment from 0 (Extreme Fear) to 100 (Extreme Greed). Weight: 50%</p>
-            <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" class="text-blue-400 text-xs hover:underline mt-2 block">View Source →</a>
-          </div>
-          
-          <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
-            <div class="flex items-center mb-4">
-              <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
-                <span class="text-xl">📰</span>
-              </div>
-              <h3 class="font-bold">News Sentiment</h3>
-            </div>
-            <p class="text-gray-400 text-sm mb-2">CryptoPanic API</p>
-            <p class="text-gray-500 text-xs">Real news headlines with community vote-based sentiment (positive/negative votes). Weight: 30%</p>
-            <a href="https://cryptopanic.com/" target="_blank" class="text-blue-400 text-xs hover:underline mt-2 block">View Source →</a>
-          </div>
-          
-          <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
-            <div class="flex items-center mb-4">
-              <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center mr-3">
-                <span class="text-xl">📈</span>
-              </div>
-              <h3 class="font-bold">Market Metrics</h3>
-            </div>
-            <p class="text-gray-400 text-sm mb-2">CoinGecko API</p>
-            <p class="text-gray-500 text-xs">Real market data including prices, volumes, and trending coins. Sentiment derived from market cap changes. Weight: 20%</p>
-            <a href="https://www.coingecko.com/" target="_blank" class="text-blue-400 text-xs hover:underline mt-2 block">View Source →</a>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <footer class="bg-gray-900 py-12 border-t border-gray-700">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -273,38 +230,38 @@
 
       function updateUI() {
         if (!sentimentData) return;
-        
+
         const overview = sentimentData.sentimentOverview || {};
-        
+
         // Update last update time
         const lastUpdate = sentimentData.metadata?.lastUpdate;
         if (lastUpdate) {
           const date = new Date(lastUpdate);
           document.getElementById("last-update").textContent = `Last updated: ${date.toLocaleString()}`;
         }
-        
+
         // Overview cards
         const sentiment = overview.overallSentiment || 0;
         const sentimentEl = document.getElementById("overall-sentiment");
         sentimentEl.textContent = (sentiment >= 0 ? "+" : "") + sentiment.toFixed(2);
         sentimentEl.className = sentiment >= 0 ? "text-3xl font-bold text-emerald-400" : "text-3xl font-bold text-red-400";
-        
+
         const changeEl = document.getElementById("sentiment-change");
         const change = overview.change24h || 0;
         changeEl.textContent = `${change >= 0 ? '↑' : '↓'} ${Math.abs(change)} from yesterday`;
         changeEl.className = change >= 0 ? "text-sm text-emerald-400 mt-2" : "text-sm text-red-400 mt-2";
-        
+
         document.getElementById("total-mentions").textContent = ((overview.totalMentions || 0) / 1000).toFixed(1) + "K";
         document.getElementById("positive-mentions").textContent = ((overview.positiveMentions || 0) / 1000).toFixed(1) + "K";
-        
+
         const positivePct = overview.totalMentions ? ((overview.positiveMentions / overview.totalMentions) * 100).toFixed(1) : 0;
         document.getElementById("positive-pct").textContent = positivePct + "% of total";
-        
+
         // Fear & Greed
         const fgValue = overview.fearGreedIndex || 50;
         const fgEl = document.getElementById("fear-greed-value");
         fgEl.textContent = fgValue;
-        
+
         // Color based on value
         if (fgValue < 25) {
           fgEl.className = "text-3xl font-bold text-red-500";
@@ -317,11 +274,11 @@
         } else {
           fgEl.className = "text-3xl font-bold text-emerald-400";
         }
-        
+
         const fgLabel = document.getElementById("fear-greed-label");
         fgLabel.textContent = overview.fearGreedClassification || "Neutral";
         fgLabel.className = fgEl.className.replace("text-3xl font-bold", "text-sm mt-2");
-        
+
         // Update all sections
         updatePlatformCards();
         updateSentimentTimeline();
@@ -336,13 +293,13 @@
         const platforms = sentimentData.platformAnalysis || {};
         const container = document.getElementById("platform-cards");
         container.innerHTML = "";
-        
+
         const platformConfig = {
           twitter: { bg: "bg-blue-500", color: "text-blue-400", icon: "𝕏" },
           reddit: { bg: "bg-orange-500", color: "text-orange-400", icon: "🔴" },
           youtube: { bg: "bg-red-500", color: "text-red-400", icon: "▶️" }
         };
-        
+
         Object.entries(platforms).forEach(([name, data]) => {
           const config = platformConfig[name] || { bg: "bg-gray-500", color: "text-gray-400", icon: "📱" };
           const card = `
@@ -371,7 +328,7 @@
               <div class="mt-4 pt-4 border-t border-gray-700">
                 <h4 class="text-sm font-semibold text-gray-400 mb-2">Trending Keywords</h4>
                 <div class="flex flex-wrap gap-2">
-                  ${(data.trendingKeywords || []).slice(0, 4).map(kw => 
+                  ${(data.trendingKeywords || []).slice(0, 4).map(kw =>
                     `<span class="${config.bg} text-white px-2 py-1 rounded text-xs">${kw}</span>`
                   ).join('')}
                 </div>
@@ -386,14 +343,14 @@
       function updateSentimentTimeline() {
         const element = document.getElementById("sentiment-timeline");
         if (!element) return;
-        
+
         if (sentimentTimelineChart) sentimentTimelineChart.dispose();
         sentimentTimelineChart = echarts.init(element);
-        
+
         const timeline = sentimentData.sentimentTimeline || [];
         const data = timeline.map(t => [t.timestamp, t.sentiment]);
         const fgData = timeline.map(t => [t.timestamp, t.fear_greed_value / 50 - 1]); // Normalize to -1 to 1
-        
+
         const option = {
           backgroundColor: "transparent",
           tooltip: {
@@ -458,22 +415,22 @@
             }
           ]
         };
-        
+
         sentimentTimelineChart.setOption(option);
       }
 
       function updatePlatformComparison() {
         const element = document.getElementById("platform-comparison");
         if (!element) return;
-        
+
         if (platformComparisonChart) platformComparisonChart.dispose();
         platformComparisonChart = echarts.init(element);
-        
+
         const platforms = sentimentData.platformAnalysis || {};
         const timeline = sentimentData.sentimentTimeline || [];
-        
+
         const colors = { twitter: "#3b82f6", reddit: "#f97316", youtube: "#ef4444" };
-        
+
         const series = Object.entries(platforms).map(([name, data]) => {
           const baseScore = data.sentimentScore;
           // Generate platform-specific timeline variation
@@ -481,7 +438,7 @@
             t.timestamp,
             Math.max(-1, Math.min(1, baseScore + (t.sentiment - baseScore) * 0.5 + (Math.sin(i * 0.5) * 0.1)))
           ]);
-          
+
           return {
             name: name.charAt(0).toUpperCase() + name.slice(1),
             type: "line",
@@ -491,7 +448,7 @@
             symbol: "none"
           };
         });
-        
+
         const option = {
           backgroundColor: "transparent",
           tooltip: { trigger: "axis", backgroundColor: "#1f2937", textStyle: { color: "#e5e7eb" } },
@@ -512,27 +469,27 @@
           },
           series: series
         };
-        
+
         platformComparisonChart.setOption(option);
       }
 
       function updateNewsHeadlines() {
         const container = document.getElementById("news-headlines");
         const headlines = sentimentData.newsHeadlines || [];
-        
+
         if (headlines.length === 0) {
           container.innerHTML = '<p class="text-gray-400">No news available</p>';
           return;
         }
-        
+
         container.innerHTML = headlines.slice(0, 30).map(news => {
           const sentiment = news.sentiment?.combined || 0;
           const sentimentColor = sentiment > 0.1 ? 'text-emerald-400' : sentiment < -0.1 ? 'text-red-400' : 'text-gray-400';
           const sentimentIcon = sentiment > 0.1 ? '📈' : sentiment < -0.1 ? '📉' : '➖';
-          
+
           const votes = news.votes || {};
           const voteDisplay = `${votes.positive || 0} ${votes.negative || 0}`;
-          
+
           return `
             <a href="${news.url}" target="_blank" class="news-item block p-3 rounded-lg border border-gray-700 hover:border-blue-500">
               <div class="flex justify-between items-start mb-2">
@@ -542,8 +499,8 @@
               <p class="text-sm text-white mb-2 line-clamp-2">${news.title}</p>
               <div class="flex justify-between items-center">
                 <span class="text-xs text-gray-500">${voteDisplay}</span>
-                ${news.currencies && news.currencies.length > 0 ? 
-                  `<div class="flex gap-1">${news.currencies.slice(0, 3).map(c => 
+                ${news.currencies && news.currencies.length > 0 ?
+                  `<div class="flex gap-1">${news.currencies.slice(0, 3).map(c =>
                     `<span class="text-xs bg-blue-500/20 text-blue-400 px-1 rounded">${c}</span>`
                   ).join('')}</div>` : ''
                 }
@@ -556,25 +513,25 @@
       function updateNewsSentimentChart() {
         const element = document.getElementById("news-sentiment-chart");
         if (!element) return;
-        
+
         if (newsSentimentChart) newsSentimentChart.dispose();
         newsSentimentChart = echarts.init(element);
-        
+
         const headlines = sentimentData.newsHeadlines || [];
         let positive = 0, neutral = 0, negative = 0;
-        
+
         headlines.forEach(news => {
           const s = news.sentiment?.combined || 0;
           if (s > 0.1) positive++;
           else if (s < -0.1) negative++;
           else neutral++;
         });
-        
+
         // Update stats
         document.getElementById("news-positive").textContent = positive;
         document.getElementById("news-neutral").textContent = neutral;
         document.getElementById("news-negative").textContent = negative;
-        
+
         const option = {
           backgroundColor: "transparent",
           tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
@@ -595,23 +552,23 @@
             ]
           }]
         };
-        
+
         newsSentimentChart.setOption(option);
       }
 
       function updateTrendingTopics() {
         const topics = sentimentData.trendingTopics || [];
         const container = document.getElementById("trending-topics");
-        
+
         if (topics.length === 0) {
           container.innerHTML = '<div class="col-span-full text-center text-gray-400">No trending topics available</div>';
           return;
         }
-        
+
         container.innerHTML = topics.map(topic => {
           const sentimentClass = topic.sentiment > 0 ? "text-emerald-400" : topic.sentiment < 0 ? "text-red-400" : "text-gray-400";
           const impactClass = topic.impact === "High Impact" ? "bg-emerald-500" : topic.impact === "Medium Impact" ? "bg-yellow-500" : "bg-gray-500";
-          
+
           return `
             <div class="bg-gray-900 rounded-xl p-6 border border-gray-700 card-hover">
               <div class="flex items-center justify-between mb-4">
@@ -627,14 +584,14 @@
                 <span class="font-bold text-blue-400">${topic.article_count || Math.round(topic.mentions / 5000)}</span>
               </div>
               <div class="flex flex-wrap gap-2 mb-4">
-                ${(topic.keywords || []).map(kw => 
+                ${(topic.keywords || []).map(kw =>
                   `<span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">${kw}</span>`
                 ).join('')}
               </div>
               ${topic.sample_headlines ? `
                 <div class="border-t border-gray-700 pt-3">
                   <p class="text-xs text-gray-500 mb-2">Sample Headlines:</p>
-                  ${topic.sample_headlines.slice(0, 2).map(h => 
+                  ${topic.sample_headlines.slice(0, 2).map(h =>
                     `<p class="text-xs text-gray-400 truncate mb-1">• ${h}</p>`
                   ).join('')}
                 </div>
@@ -647,17 +604,17 @@
       function updateTrendingCoins() {
         const coins = sentimentData.trendingCoins || [];
         const container = document.getElementById("trending-coins");
-        
+
         if (coins.length === 0) {
           container.innerHTML = '<div class="col-span-full text-center text-gray-400">No trending coins available</div>';
           return;
         }
-        
+
         container.innerHTML = coins.slice(0, 10).map((coin, index) => `
           <div class="bg-gray-800 rounded-lg p-4 border border-gray-700 card-hover">
             <div class="flex items-center space-x-3">
               <span class="text-lg font-bold text-yellow-400">#${index + 1}</span>
-              ${coin.thumb ? `<img src="${coin.thumb}" alt="${coin.symbol}" class="w-8 h-8 rounded-full">` : 
+              ${coin.thumb ? `<img src="${coin.thumb}" alt="${coin.symbol}" class="w-8 h-8 rounded-full">` :
                 `<div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-xs">${coin.symbol?.charAt(0) || '?'}</div>`}
               <div>
                 <p class="font-bold text-white">${coin.symbol}</p>

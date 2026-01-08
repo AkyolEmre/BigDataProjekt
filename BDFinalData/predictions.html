@@ -117,19 +117,6 @@
       </div>
     </section>
 
-    <section class="py-12 bg-gray-900">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Model Performance</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="performance-cards">
-          <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 text-center"><p class="text-gray-400">Loading metrics...</p></div>
-        </div>
-        <div class="bg-gray-800 rounded-xl p-8 border border-gray-700">
-          <h3 class="text-2xl font-bold mb-6">Model Comparison</h3>
-          <div id="model-comparison" class="h-96"></div>
-        </div>
-      </div>
-    </section>
-
     <section class="py-12 bg-gray-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Feature Importance</h2>
@@ -141,29 +128,6 @@
           <div class="bg-gray-900 rounded-xl p-8 border border-gray-700">
             <h3 class="text-xl font-bold mb-6">Crypto Predictions Overview</h3>
             <div id="crypto-predictions-table"><p class="text-gray-400">Loading...</p></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="py-12 bg-gray-900">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-12 gradient-text">Data Sources</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 text-center">
-            <div class="text-4xl mb-4">📊</div>
-            <h3 class="text-xl font-bold mb-2">CoinGecko API</h3>
-            <p class="text-gray-400">Real-time prices, market cap, volume, and historical data</p>
-          </div>
-          <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 text-center">
-            <div class="text-4xl mb-4">😱</div>
-            <h3 class="text-xl font-bold mb-2">Fear & Greed Index</h3>
-            <p class="text-gray-400">Market sentiment from Alternative.me API</p>
-          </div>
-          <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 text-center">
-            <div class="text-4xl mb-4">🤖</div>
-            <h3 class="text-xl font-bold mb-2">ML Models</h3>
-            <p class="text-gray-400">Random Forest, Gradient Boosting, Linear Regression</p>
           </div>
         </div>
       </div>
@@ -243,7 +207,7 @@
         const predictedPriceStr = predictedPrice < 10 ? `$${predictedPrice.toFixed(4)}` : `$${predictedPrice.toLocaleString(undefined, {maximumFractionDigits: 2})}`;
         const predictedEl = document.getElementById('predicted-price');
         const changeEl = document.getElementById('price-change');
-        
+
         predictedEl.textContent = predictedPriceStr;
         predictedEl.className = `text-3xl font-bold ${priceChange >= 0 ? 'prediction-positive' : 'prediction-negative'}`;
         changeEl.textContent = `${changePercent >= 0 ? '+' : ''}${changePercent.toFixed(2)}% ($${Math.abs(priceChange).toFixed(2)})`;
