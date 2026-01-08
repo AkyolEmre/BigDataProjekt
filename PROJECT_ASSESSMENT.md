@@ -155,81 +155,6 @@ CryptoSentiment/
 
 ---
 
-## Improvements Made
-
-### 1. Correlation Page (Enhanced)
-**Before:**
-- Basic scatter plot
-- Simple heatmap
-
-**After:**
-- Multi-variable correlation matrix
-- Feature importance visualization
-- Linear regression statistics (slope, intercept, std error)
-- Per-cryptocurrency risk assessment cards
-- Key findings panel with dynamic insights
-- Methodology section for academic credibility
-
-### 2. Predictions Page (Enhanced)
-**Before:**
-- Basic price prediction chart
-- Simple model metrics
-
-**After:**
-- Interactive prediction configuration (crypto, horizon, model)
-- Confidence intervals on predictions
-- Model comparison bar chart
-- Feature importance bars with percentages
-- Backtesting section with direction accuracy
-- All-cryptocurrencies prediction summary
-- Methodology explanation section
-
-### 3. MongoDB Storage (Enhanced)
-**Before:**
-- Basic CRUD operations
-- Simple indexes
-
-**After:**
-- Schema validation for data integrity
-- TTL index for automatic cleanup (30-day retention)
-- Compound indexes for time-series queries
-- Aggregation pipelines for analytics
-- Sentiment-volatility correlation query
-- Comprehensive backup/restore
-- JSON export for web dashboard
-
-### 4. Dashboard Orchestrator (Enhanced)
-**Before:**
-- Basic script execution
-
-**After:**
-- 6-step orchestration with status indicators
-- Graceful error handling and fallbacks
-- Background auto-refresh (120s interval)
-- Command-line arguments for flexibility
-- ASCII banner and formatted output
-- Browser auto-open functionality
-
----
-
-## Project Scoring Assessment
-
-Based on the project specification (50 points total):
-
-| Category | Points | Status | Notes |
-|----------|--------|--------|-------|
-| Architecture (4 layers) | 10 | Full | All 4 layers implemented |
-| Web Scraping/API | 5 | Full | 3 real APIs integrated |
-| NoSQL Database | 5 | Full | MongoDB with indexes |
-| MapReduce/Spark | 10 | Full | 5 MapReduce operations |
-| ML/Prediction | 10 | Full | 3 models with CV |
-| Visualization | 5 | Full | Interactive dashboard |
-| Documentation | 5 | Full | 4 notebooks + comments |
-
-**Estimated Score: 50/50**
-
----
-
 ## Running the Project
 
 ### Quick Start
@@ -337,6 +262,5 @@ The CryptoSentiment Analytics project successfully demonstrates a complete Big D
 
 ---
 
-*Generated: January 2026*
 *Project: Big Data Analytics Final Project*
 *Team: Emre Akyol, Harmanpreet Chauhan, Mohamed Nasr*
