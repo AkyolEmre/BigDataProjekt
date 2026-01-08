@@ -190,57 +190,6 @@ python real_data_ml_analysis.py
 # Spark analysis
 python spark_mapreduce_analysis.py
 ```
-
----
-
-## Presentation Notes (30 minutes)
-
-### Suggested Outline:
-
-1. **Introduction** (3 min)
-   - Project overview and objectives
-   - Team roles
-
-2. **Data Sources** (5 min)
-   - CoinGecko API demonstration
-   - Fear & Greed Index explanation
-   - CryptoPanic news integration
-
-3. **MongoDB Storage** (5 min)
-   - Schema design decisions
-   - Indexing strategy
-   - Query examples
-
-4. **Spark MapReduce** (5 min)
-   - MapReduce operations walkthrough
-   - RDD transformations
-   - Performance considerations
-
-5. **Machine Learning** (7 min)
-   - Model comparison
-   - Feature importance
-   - Prediction accuracy
-
-6. **Dashboard Demo** (5 min)
-   - Live demonstration
-   - Real-time updates
-   - Interactive features
-
----
-
-## Checklist for Submission
-
-- [x] All 4 layers implemented
-- [x] NoSQL (MongoDB) working
-- [x] Spark/MapReduce with 5+ operations
-- [x] ML models with cross-validation
-- [x] Interactive web dashboard
-- [x] Jupyter notebooks documented
-- [x] Requirements.txt complete
-- [x] Code comments adequate
-- [x] README/documentation included
-- [x] All team members listed
-
 ---
 
 ## Conclusion
