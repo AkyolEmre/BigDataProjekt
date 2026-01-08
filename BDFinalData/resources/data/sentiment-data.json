@@ -1,23 +1,23 @@
 {
   "sentimentOverview": {
-    "overallSentiment": -0.14,
-    "totalMentions": 450000,
-    "positiveMentions": 154242,
-    "negativeMentions": 128598,
-    "neutralMentions": 167160,
-    "change24h": -4,
-    "fearGreedIndex": 25,
-    "fearGreedClassification": "Extreme Fear",
+    "overallSentiment": -0.25,
+    "totalMentions": 456000,
+    "positiveMentions": 137000,
+    "negativeMentions": 142374,
+    "neutralMentions": 176626,
+    "change24h": -14,
+    "fearGreedIndex": 28,
+    "fearGreedClassification": "Fear",
     "sentimentSources": [
-      "Fear & Greed: 25",
-      "News: 0.02",
-      "Market: 0.50"
+      "Fear & Greed: 28",
+      "News: 0.04",
+      "Market: -0.20"
     ]
   },
   "platformAnalysis": {
     "twitter": {
-      "sentimentScore": -0.16,
-      "mentionVolume": 292845,
+      "sentimentScore": -0.27,
+      "mentionVolume": 287555,
       "influenceScore": 85,
       "trendingKeywords": [
         "Bitcoin",
@@ -28,8 +28,8 @@
       "note": "Estimated based on Fear & Greed Index correlation"
     },
     "reddit": {
-      "sentimentScore": -0.13,
-      "mentionVolume": 175707,
+      "sentimentScore": -0.22,
+      "mentionVolume": 172533,
       "influenceScore": 72,
       "trendingKeywords": [
         "HODL",
@@ -40,8 +40,8 @@
       "note": "Estimated based on Fear & Greed Index correlation"
     },
     "youtube": {
-      "sentimentScore": 0.02,
-      "mentionVolume": 72853,
+      "sentimentScore": 0.03,
+      "mentionVolume": 71266,
       "influenceScore": 63,
       "trendingKeywords": [
         "price prediction",
@@ -54,56 +54,56 @@
   "trendingTopics": [
     {
       "title": "General",
-      "sentiment": 0.02,
-      "mentions": 50000,
-      "article_count": 8,
+      "sentiment": 0.06,
+      "mentions": 40000,
+      "article_count": 6,
       "keywords": [
-        "2026",
+        "market",
         "crypto",
-        "biggest",
-        "what"
+        "data",
+        "analysis"
       ],
       "impact": "High Impact",
       "sample_headlines": [
-        "Chainlink vs. Filecoin: Which AI token has the stronger setup for Q1 2026?",
-        "Read more",
-        "\ud83c\uddea\ud83c\uddfa INSIGHT: Crypto tax reporting ramps up in 48 countries in 2026 ahead of global CARF data sharing in 2027."
+        "Analysis Company Santiment Says Participation in the Cryptocurrency Market Has Increased Again, Pointing to These Three Areas",
+        "Florida lawmakers propose bill to establish state-run crypto reserve",
+        "Investors Back Maxi Doge as the Next Crypto to Explode by Q2 of 2026"
+      ]
+    },
+    {
+      "title": "Regulatory",
+      "sentiment": -0.03,
+      "mentions": 35000,
+      "article_count": 5,
+      "keywords": [
+        "committee",
+        "senate",
+        "crypto",
+        "agriculture"
+      ],
+      "impact": "High Impact",
+      "sample_headlines": [
+        "Senate Agriculture Committee to follow Banking panel in crypto vote next week: report",
+        "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate Agriculture Committee to hold Bitcoin and crypto market structure bill markup next week in addition to the Senate Banking Committee \u2014 Punchbowl News\n\nHuge week ahead for Bitcoin ",
+        "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate Agriculture Committee will also hold a crypto market structure legislation markup next week in addition to the Senate Banking Committee \u2014 Punchbowl News\n\n\"Next week shaping up to be massive for bipartisan crypto policy in 2026\" "
       ]
     },
     {
       "title": "Bitcoin",
-      "sentiment": -0.02,
+      "sentiment": 0.07,
       "mentions": 35000,
       "article_count": 5,
       "keywords": [
         "bitcoin",
-        "crypto",
-        "that",
-        "point,"
+        "2026",
+        "bulls",
+        "despair"
       ],
       "impact": "High Impact",
       "sample_headlines": [
-        "$BTC Let's see if we'll get a bit of a catch up play in Q1.\n\nThe good thing for crypto is that at this point, the tax loss harvesting is done, as well as pretty much all the people that sold for the 4 year cycle timing.\n\nFrom here on out it will just be a matter of how macro",
-        "US national debt crosses $38.5T, as Bitcoiners celebrate 'Genesis Day'",
-        "Crypto Market Move: Shiba Inu Hits Significant Price Point, Bitcoin Eyes $100,000, Ethereum Steady At $3,000, And Dogecoin Broke Above Key Resistance"
-      ]
-    },
-    {
-      "title": "Price Movement",
-      "sentiment": 0.2,
-      "mentions": 25000,
-      "article_count": 3,
-      "keywords": [
-        "here\u2019s",
-        "what",
-        "finance",
-        "skyrockets"
-      ],
-      "impact": "Medium Impact",
-      "sample_headlines": [
-        "MYX Finance Skyrockets 90%, Here\u2019s What Caused The Rally",
-        "XRP Price Mirrors 2017 Sideways Accumulation Trend \u2013 Here\u2019s What Happened Last Time",
-        "Apertum Expands Layer-1 Amid Adoption Surge"
+        "Bulls in Despair as Bitcoin Erases 2026 Gains",
+        "Babylon receives $15M from a16z Crypto to expand Bitcoin-native lending",
+        "Bitcoin slid toward $91K as traders focused on a CME weekend gap near $90,600.\n\nHistorically, BTC often retraces to fill these gaps before choosing its next direction.\n@jennsanasie brings you \"Chart of the Day,\" presented by @cryptocom."
       ]
     },
     {
@@ -112,74 +112,74 @@
       "mentions": 20000,
       "article_count": 2,
       "keywords": [
-        "big:",
-        "etfs",
-        "record",
-        "$1.48t"
+        "intel:",
+        "warner",
+        "bros.",
+        "says"
       ],
       "impact": "Low Impact",
       "sample_headlines": [
-        " BIG: ETFs set a record $1.48T year with Blackrock's $IBIT coming in 6th.",
-        "Cumulative spot crypto ETF trading volume surpasses $2 trillion, doubling in half the time"
+        "INTEL: Warner Bros. Says No to $108B Hostile Bid, Backs Netflix Instead",
+        "Morgan Stanley just filed for two crypto ETFs, but one massive omission sends a brutal signal"
       ]
     },
     {
-      "title": "Security",
-      "sentiment": -0.27,
+      "title": "Price Movement",
+      "sentiment": -0.24,
       "mentions": 15000,
       "article_count": 1,
       "keywords": [
-        "crypto",
-        "exploits",
-        "decline",
-        "sharply,"
+        "know:",
+        "@bscnews",
+        "also",
+        "tiktok"
       ],
       "impact": "Low Impact",
       "sample_headlines": [
-        "Crypto Exploits Decline Sharply, With Only $76M Stolen in December 2025"
+        "DID YOU KNOW: @BSCNews also has its own TikTok channel where we produce exclusive content about Prediction Markets and current affairs...?\n\nMake sure to drop us a follow! \u2b07\ufe0f"
       ]
     },
     {
-      "title": "Regulatory",
-      "sentiment": -0.13,
+      "title": "NFT & Gaming",
+      "sentiment": 0.13,
       "mentions": 15000,
       "article_count": 1,
       "keywords": [
-        "argentina",
-        "crypto",
-        "users",
-        "swap"
+        "clone-x",
+        "nfts",
+        "soar",
+        "200%"
       ],
       "impact": "Low Impact",
       "sample_headlines": [
-        "Argentina crypto users swap banks for premium-offering wallets"
+        "Clone-X NFTs Soar 200% as Nike Sells RTFKT"
       ]
     }
   ],
   "trendingCoins": [
     {
+      "name": "Zcash",
+      "symbol": "ZEC",
+      "market_cap_rank": 26,
+      "score": 0,
+      "price_btc": 0.004753649632431003,
+      "thumb": "https://coin-images.coingecko.com/coins/images/486/standard/circle-zcash-color.png?1696501740"
+    },
+    {
       "name": "Pudgy Penguins",
       "symbol": "PENGU",
-      "market_cap_rank": 115,
-      "score": 0,
-      "price_btc": 1.373056296578764e-07,
+      "market_cap_rank": 118,
+      "score": 1,
+      "price_btc": 1.3075265368711648e-07,
       "thumb": "https://coin-images.coingecko.com/coins/images/52622/standard/PUDGY_PENGUINS_PENGU_PFP.png?1733809110"
     },
     {
-      "name": "PONKE",
-      "symbol": "PONKE",
-      "market_cap_rank": 850,
-      "score": 1,
-      "price_btc": 6.836329723253688e-07,
-      "thumb": "https://coin-images.coingecko.com/coins/images/33929/standard/ponke-logo.png?1747200908"
-    },
-    {
-      "name": "Pepe",
-      "symbol": "PEPE",
-      "market_cap_rank": 48,
+      "name": "Brevis",
+      "symbol": "BREV",
+      "market_cap_rank": 437,
       "score": 2,
-      "price_btc": 7.729123070422449e-11,
-      "thumb": "https://coin-images.coingecko.com/coins/images/29850/standard/pepe-token.jpeg?1696528776"
+      "price_btc": 4.372488494746105e-06,
+      "thumb": "https://coin-images.coingecko.com/coins/images/71219/standard/brevis.png?1766454723"
     },
     {
       "name": "Bitcoin",
@@ -190,95 +190,119 @@
       "thumb": "https://coin-images.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400"
     },
     {
-      "name": "Monad",
-      "symbol": "MON",
-      "market_cap_rank": 210,
+      "name": "Solana",
+      "symbol": "SOL",
+      "market_cap_rank": 6,
       "score": 4,
-      "price_btc": 3.204128532698629e-07,
-      "thumb": "https://coin-images.coingecko.com/coins/images/38927/standard/mon.png?1766029057"
+      "price_btc": 0.0015107538522643417,
+      "thumb": "https://coin-images.coingecko.com/coins/images/4128/standard/solana.png?1718769756"
     },
     {
-      "name": "Bonk",
-      "symbol": "BONK",
-      "market_cap_rank": 98,
+      "name": "Virtuals Protocol",
+      "symbol": "VIRTUAL",
+      "market_cap_rank": 122,
       "score": 5,
-      "price_btc": 1.3173382096670502e-10,
-      "thumb": "https://coin-images.coingecko.com/coins/images/28600/standard/bonk.jpg?1696527587"
+      "price_btc": 1.1696675784401565e-05,
+      "thumb": "https://coin-images.coingecko.com/coins/images/34057/standard/LOGOMARK.png?1708356054"
+    },
+    {
+      "name": "XRP",
+      "symbol": "XRP",
+      "market_cap_rank": 4,
+      "score": 6,
+      "price_btc": 2.3395365735993925e-05,
+      "thumb": "https://coin-images.coingecko.com/coins/images/44/standard/xrp-symbol-white-128.png?1696501442"
+    },
+    {
+      "name": "Bittensor",
+      "symbol": "TAO",
+      "market_cap_rank": 50,
+      "score": 7,
+      "price_btc": 0.00312438185017537,
+      "thumb": "https://coin-images.coingecko.com/coins/images/28452/standard/ARUsPeNQ_400x400.jpeg?1696527447"
+    },
+    {
+      "name": "Monero",
+      "symbol": "XMR",
+      "market_cap_rank": 22,
+      "score": 8,
+      "price_btc": 0.0050517204974273614,
+      "thumb": "https://coin-images.coingecko.com/coins/images/69/standard/monero_logo.png?1696501460"
+    },
+    {
+      "name": "Optimism",
+      "symbol": "OP",
+      "market_cap_rank": 140,
+      "score": 9,
+      "price_btc": 3.4482208835503308e-06,
+      "thumb": "https://coin-images.coingecko.com/coins/images/25244/standard/Optimism.png?1696524385"
+    },
+    {
+      "name": "Lighter",
+      "symbol": "LIT",
+      "market_cap_rank": 117,
+      "score": 10,
+      "price_btc": 3.322163534047193e-05,
+      "thumb": "https://coin-images.coingecko.com/coins/images/71121/standard/lighter.png?1765888098"
+    },
+    {
+      "name": "POL (ex-MATIC)",
+      "symbol": "POL",
+      "market_cap_rank": 76,
+      "score": 11,
+      "price_btc": 1.481856330775193e-06,
+      "thumb": "https://coin-images.coingecko.com/coins/images/32440/standard/pol.png?1759114181"
+    },
+    {
+      "name": "Canton",
+      "symbol": "CC",
+      "market_cap_rank": 35,
+      "score": 12,
+      "price_btc": 1.4842909532367095e-06,
+      "thumb": "https://coin-images.coingecko.com/coins/images/70468/standard/Canton-Ticker_%281%29.png?1762826299"
+    },
+    {
+      "name": "Aster",
+      "symbol": "ASTER",
+      "market_cap_rank": 66,
+      "score": 13,
+      "price_btc": 7.831323130020915e-06,
+      "thumb": "https://coin-images.coingecko.com/coins/images/69040/standard/_ASTER.png?1757326782"
     },
     {
       "name": "Sui",
       "symbol": "SUI",
       "market_cap_rank": 28,
-      "score": 6,
-      "price_btc": 1.8763470284835586e-05,
-      "thumb": "https://coin-images.coingecko.com/coins/images/26375/standard/sui-ocean-square.png?1727791290"
-    },
-    {
-      "name": "Solana",
-      "symbol": "SOL",
-      "market_cap_rank": 6,
-      "score": 7,
-      "price_btc": 0.0014674948813549334,
-      "thumb": "https://coin-images.coingecko.com/coins/images/4128/standard/solana.png?1718769756"
-    },
-    {
-      "name": "Lighter",
-      "symbol": "LIT",
-      "market_cap_rank": 129,
-      "score": 8,
-      "price_btc": 2.881061681815538e-05,
-      "thumb": "https://coin-images.coingecko.com/coins/images/71121/standard/lighter.png?1765888098"
-    },
-    {
-      "name": "Zcash",
-      "symbol": "ZEC",
-      "market_cap_rank": 22,
-      "score": 9,
-      "price_btc": 0.005534671661329367,
-      "thumb": "https://coin-images.coingecko.com/coins/images/486/standard/circle-zcash-color.png?1696501740"
-    },
-    {
-      "name": "Render",
-      "symbol": "RENDER",
-      "market_cap_rank": 103,
-      "score": 10,
-      "price_btc": 2.122258016745363e-05,
-      "thumb": "https://coin-images.coingecko.com/coins/images/11636/standard/rndr.png?1696511529"
-    },
-    {
-      "name": "Aster",
-      "symbol": "ASTER",
-      "market_cap_rank": 62,
-      "score": 11,
-      "price_btc": 8.585336899191253e-06,
-      "thumb": "https://coin-images.coingecko.com/coins/images/69040/standard/_ASTER.png?1757326782"
-    },
-    {
-      "name": "Ethereum",
-      "symbol": "ETH",
-      "market_cap_rank": 2,
-      "score": 12,
-      "price_btc": 0.03439928157630891,
-      "thumb": "https://coin-images.coingecko.com/coins/images/279/standard/ethereum.png?1696501628"
-    },
-    {
-      "name": "SPX6900",
-      "symbol": "SPX",
-      "market_cap_rank": 141,
-      "score": 13,
-      "price_btc": 6.993308607685064e-06,
-      "thumb": "https://coin-images.coingecko.com/coins/images/31401/standard/centeredcoin_%281%29.png?1737048493"
-    },
-    {
-      "name": "Monero",
-      "symbol": "XMR",
-      "market_cap_rank": 25,
       "score": 14,
-      "price_btc": 0.004621672146967797,
-      "thumb": "https://coin-images.coingecko.com/coins/images/69/standard/monero_logo.png?1696501460"
+      "price_btc": 1.9995403953230303e-05,
+      "thumb": "https://coin-images.coingecko.com/coins/images/26375/standard/sui-ocean-square.png?1727791290"
     }
   ],
   "sentimentTimeline": [
+    {
+      "timestamp": "2026-01-08T00:00:00",
+      "sentiment": -0.44,
+      "fear_greed_value": 28,
+      "classification": "Fear"
+    },
+    {
+      "timestamp": "2026-01-07T00:00:00",
+      "sentiment": -0.16,
+      "fear_greed_value": 42,
+      "classification": "Fear"
+    },
+    {
+      "timestamp": "2026-01-06T00:00:00",
+      "sentiment": -0.12,
+      "fear_greed_value": 44,
+      "classification": "Fear"
+    },
+    {
+      "timestamp": "2026-01-05T00:00:00",
+      "sentiment": -0.48,
+      "fear_greed_value": 26,
+      "classification": "Fear"
+    },
     {
       "timestamp": "2026-01-04T00:00:00",
       "sentiment": -0.5,
@@ -422,58 +446,14 @@
       "sentiment": -0.42,
       "fear_greed_value": 29,
       "classification": "Fear"
-    },
-    {
-      "timestamp": "2025-12-11T00:00:00",
-      "sentiment": -0.42,
-      "fear_greed_value": 29,
-      "classification": "Fear"
-    },
-    {
-      "timestamp": "2025-12-10T00:00:00",
-      "sentiment": -0.48,
-      "fear_greed_value": 26,
-      "classification": "Fear"
-    },
-    {
-      "timestamp": "2025-12-09T00:00:00",
-      "sentiment": -0.56,
-      "fear_greed_value": 22,
-      "classification": "Extreme Fear"
-    },
-    {
-      "timestamp": "2025-12-08T00:00:00",
-      "sentiment": -0.6,
-      "fear_greed_value": 20,
-      "classification": "Extreme Fear"
     }
   ],
   "newsHeadlines": [
     {
-      "title": "$BTC Let's see if we'll get a bit of a catch up play in Q1.\n\nThe good thing for crypto is that at this point, the tax loss harvesting is done, as well as pretty much all the people that sold for the 4 year cycle timing.\n\nFrom here on out it will just be a matter of how macro",
+      "title": "INTEL: Warner Bros. Says No to $108B Hostile Bid, Backs Netflix Instead",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-03T21:02:00Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": -0.6,
-        "combined": -0.24
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Chainlink vs. Filecoin: Which AI token has the stronger setup for Q1 2026?",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-03T21:00:42Z",
+      "published_at": "2026-01-07T20:56:23Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -490,210 +470,10 @@
       "kind": "news"
     },
     {
-      "title": "Read more",
+      "title": "Senate Agriculture Committee to follow Banking panel in crypto vote next week: report",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-03T21:00:07Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "\ud83c\uddea\ud83c\uddfa INSIGHT: Crypto tax reporting ramps up in 48 countries in 2026 ahead of global CARF data sharing in 2027.",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-03T21:00:06Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "MYX Finance Skyrockets 90%, Here\u2019s What Caused The Rally",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-03T21:00:00Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0.714,
-        "combined": 0.286
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Where to Find the Best Crypto Courses in 2026",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-03T20:52:28Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "blog"
-    },
-    {
-      "title": "Crypto Exploits Decline Sharply, With Only $76M Stolen in December 2025",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-03T20:49:22Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": -0.667,
-        "combined": -0.267
-      },
-      "kind": "news"
-    },
-    {
-      "title": "US national debt crosses $38.5T, as Bitcoiners celebrate 'Genesis Day'",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-03T20:37:57Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "\ufe0f Pi Network's BIGGEST News...\n\n2025 was the busiest year @PiCoreTeam has ever had, despite a wider market downturn.\n\nWe recap on the updates that matter to get you ready for, what could be, an even bigger 2026...\n\nHere's what you cannot miss \u2b07\ufe0f",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-03T20:31:01Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Coinbase Ventures Maps Crypto\u2019s Biggest Bets for 2026",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-03T20:30:44Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "XRP Price Mirrors 2017 Sideways Accumulation Trend \u2013 Here\u2019s What Happened Last Time",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-03T20:30:05Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Crypto Market Move: Shiba Inu Hits Significant Price Point, Bitcoin Eyes $100,000, Ethereum Steady At $3,000, And Dogecoin Broke Above Key Resistance",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-03T20:16:15Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Argentina crypto users swap banks for premium-offering wallets",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-03T20:15:17Z",
+      "published_at": "2026-01-07T20:54:33Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -710,10 +490,50 @@
       "kind": "news"
     },
     {
-      "title": "Berkshire Hathaway\u2019s Cash Pile Hits 31%, Signaling Peak Caution Under Buffett Transition",
+      "title": "Bulls in Despair as Bitcoin Erases 2026 Gains",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-03T20:05:05Z",
+      "published_at": "2026-01-07T20:53:46Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0.333,
+        "combined": 0.133
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Analysis Company Santiment Says Participation in the Cryptocurrency Market Has Increased Again, Pointing to These Three Areas",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-07T20:51:08Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0.333,
+        "combined": 0.133
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Florida lawmakers propose bill to establish state-run crypto reserve",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-07T20:50:10Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -730,10 +550,10 @@
       "kind": "news"
     },
     {
-      "title": "Bitcoin vs. Gold: Why Bitcoin Wins as Store of Value",
+      "title": "DID YOU KNOW: @BSCNews also has its own TikTok channel where we produce exclusive content about Prediction Markets and current affairs...?\n\nMake sure to drop us a follow! \u2b07\ufe0f",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-03T20:00:18Z",
+      "published_at": "2026-01-07T20:49:02Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -744,16 +564,16 @@
       },
       "sentiment": {
         "vote_based": 0.0,
-        "text_based": 0.333,
-        "combined": 0.133
+        "text_based": -0.6,
+        "combined": -0.24
       },
-      "kind": "media"
+      "kind": "news"
     },
     {
-      "title": "\u201cBitcoin IS The LAST Cycle\u201d \u2014 Jeff Booth Reveals Why Almost NO-ONE Understands What Happens Next",
+      "title": "Babylon receives $15M from a16z Crypto to expand Bitcoin-native lending",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-03T20:00:18Z",
+      "published_at": "2026-01-07T20:48:35Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -767,13 +587,33 @@
         "text_based": 0,
         "combined": 0.0
       },
-      "kind": "media"
+      "kind": "news"
     },
     {
-      "title": " BIG: ETFs set a record $1.48T year with Blackrock's $IBIT coming in 6th.",
+      "title": "Bitcoin slid toward $91K as traders focused on a CME weekend gap near $90,600.\n\nHistorically, BTC often retraces to fill these gaps before choosing its next direction.\n@jennsanasie brings you \"Chart of the Day,\" presented by @cryptocom.",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-03T20:00:07Z",
+      "published_at": "2026-01-07T20:48:23Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Investors Back Maxi Doge as the Next Crypto to Explode by Q2 of 2026",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-07T20:47:57Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -790,10 +630,90 @@
       "kind": "news"
     },
     {
-      "title": "Zcash (ZEC) Charts Hint at a Possible 38% Breakout, But Optimism is Fading",
+      "title": "INTEL: US reschedules December income, PCE and GDP data to February 20",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-03T20:00:00Z",
+      "published_at": "2026-01-07T20:46:05Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Morgan Stanley just filed for two crypto ETFs, but one massive omission sends a brutal signal",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-07T20:45:37Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0.6,
+        "combined": 0.24
+      },
+      "kind": "news"
+    },
+    {
+      "title": "60K Bitcoin absorbed by accumulators as miners send BTC to exchanges: Will the rally stall?",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-07T20:45:00Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0.6,
+        "combined": 0.24
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Polymarket Partners With Dow Jones To Supply Prediction Market Data Across Major Outlets",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-07T20:44:18Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
+      },
+      "kind": "news"
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate Agriculture Committee to hold Bitcoin and crypto market structure bill markup next week in addition to the Senate Banking Committee \u2014 Punchbowl News\n\nHuge week ahead for Bitcoin ",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-07T20:43:03Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -810,10 +730,10 @@
       "kind": "news"
     },
     {
-      "title": "Apertum Expands Layer-1 Amid Adoption Surge",
+      "title": "Clone-X NFTs Soar 200% as Nike Sells RTFKT",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-03T20:00:00Z",
+      "published_at": "2026-01-07T20:42:10Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -824,16 +744,16 @@
       },
       "sentiment": {
         "vote_based": 0.0,
-        "text_based": 0.75,
-        "combined": 0.3
+        "text_based": 0.333,
+        "combined": 0.133
       },
       "kind": "news"
     },
     {
-      "title": "Cumulative spot crypto ETF trading volume surpasses $2 trillion, doubling in half the time",
+      "title": "Why Bitcoin, Ethereum, XRP Are Surging In Early 2026",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-03T19:40:42Z",
+      "published_at": "2026-01-07T20:40:25Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -848,18 +768,98 @@
         "combined": 0.0
       },
       "kind": "news"
+    },
+    {
+      "title": "Thinking about grabbing more HBAR at $0.11 \u2014 thoughts?",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-07T20:40:22Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
+      },
+      "kind": "reddit"
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate Agriculture Committee will also hold a crypto market structure legislation markup next week in addition to the Senate Banking Committee \u2014 Punchbowl News\n\n\"Next week shaping up to be massive for bipartisan crypto policy in 2026\" ",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-07T20:40:08Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0.333,
+        "combined": 0.133
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Why a Bank Buying Stablecoin Plumbing Actually Matters to Your Bags",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-07T20:39:19Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": -0.333,
+        "combined": -0.133
+      },
+      "kind": "news"
+    },
+    {
+      "title": "The U.S. Senate Banking Committee and Senate Agriculture Committee are both scheduled to hold markup votes on crypto market structure legislation on January 15. If the bills are approved at the committee level, they will proceed to internal reconciliation in the Senate, be",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-07T20:35:29Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": -0.333,
+        "combined": -0.133
+      },
+      "kind": "news"
     }
   ],
   "globalMarket": {
-    "market_cap_change_24h": 1.0410722127181353,
-    "btc_dominance": 56.864182690510226,
-    "eth_dominance": 11.820941053914858,
-    "active_cryptos": 18941,
-    "markets": 1444,
-    "derived_sentiment": 0.5
+    "market_cap_change_24h": -0.48733138851136265,
+    "btc_dominance": 56.88665645995019,
+    "eth_dominance": 11.740636073413246,
+    "active_cryptos": 18985,
+    "markets": 1451,
+    "derived_sentiment": -0.2
   },
   "metadata": {
-    "lastUpdate": "2026-01-04T21:09:37.051085",
+    "lastUpdate": "2026-01-08T20:59:06.400117",
     "dataSources": [
       {
         "name": "Alternative.me Fear & Greed Index",

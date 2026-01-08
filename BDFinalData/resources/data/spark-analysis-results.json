@@ -1,75 +1,98 @@
 {
-  "timestamp": "2026-01-04T22:06:00.249609",
-  "engine": "Spark",
+  "timestamp": "2026-01-08T20:59:46.090931",
+  "data_source": "CoinGecko API (Live)",
   "results": {
-    "average_sentiment": {
-      "BTC": 0.02,
-      "ETH": 0.03,
-      "XRP": 0.08,
-      "SOL": 0.04,
-      "DOGE": 0.12,
-      "ADA": 0.06
-    },
-    "market_metrics": {
-      "total_market_cap": 2443657632215.0,
-      "total_volume": 54861395303.0,
-      "btc_dominance": 74.58211442463836
-    },
-    "volatility_classification": {
-      "Low": [
-        "BTC",
-        "ETH",
-        "SOL"
-      ],
-      "Medium": [
+    "average_sentiment": [
+      [
         "XRP",
-        "ADA"
+        0.04
       ],
-      "High": [
-        "DOGE"
-      ]
-    },
-    "price_performance": {
-      "Strong Gain": [
-        "DOGE"
+      [
+        "ADA",
+        0.03
       ],
-      "Gain": [
+      [
         "BTC",
+        0.01
+      ],
+      [
         "ETH",
-        "XRP",
+        0.01
+      ],
+      [
+        "DOGE",
+        0.03
+      ],
+      [
         "SOL",
-        "ADA"
+        0.05
       ]
+    ],
+    "market_metrics": {
+      "total_market_cap": 3189557488330.033,
+      "total_volume": 125128026717.35449,
+      "btc_dominance": 56.9,
+      "timestamp": "2026-01-08T20:59:44.619307",
+      "is_global": true
     },
-    "engagement_scores": [
-      {
-        "symbol": "BTC",
-        "score": 0.6343563854600001
-      },
-      {
-        "symbol": "ETH",
-        "score": 0.41409068268
-      },
-      {
-        "symbol": "DOGE",
-        "score": 0.27355344276
-      },
-      {
-        "symbol": "XRP",
-        "score": 0.24526694192
-      },
-      {
-        "symbol": "SOL",
-        "score": 0.13428392832
-      },
-      {
-        "symbol": "ADA",
-        "score": 0.03828037614
-      }
+    "volatility_classification": [
+      [
+        "Medium",
+        [
+          "XRP",
+          "DOGE",
+          "ADA"
+        ]
+      ],
+      [
+        "Low",
+        [
+          "BTC",
+          "ETH",
+          "SOL"
+        ]
+      ]
+    ],
+    "price_performance": [
+      [
+        "Gain",
+        [
+          [
+            "SOL",
+            1.32214
+          ]
+        ]
+      ],
+      [
+        "Loss",
+        [
+          [
+            "BTC",
+            -0.12079
+          ],
+          [
+            "ETH",
+            -1.03942
+          ],
+          [
+            "XRP",
+            -2.24265
+          ],
+          [
+            "DOGE",
+            -2.84632
+          ],
+          [
+            "ADA",
+            -2.0559
+          ]
+        ]
+      ]
     ]
   },
   "metadata": {
-    "cryptos": 6,
-    "operations": 5
+    "processor": "Apache Spark",
+    "method": "MapReduce",
+    "realtime": true
   }
 }

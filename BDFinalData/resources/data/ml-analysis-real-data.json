@@ -1,65 +1,108 @@
 {
-  "timestamp": "2026-01-04T22:04:04.683499",
-  "data_summary": {
-    "crypto_count": 5,
-    "features": [
-      "fearGreedIndex",
-      "volume_normalized",
-      "price_normalized",
-      "sentiment_normalized"
-    ],
-    "fear_greed_index": 25
+  "timestamp": "2026-01-08T20:59:11.566822",
+  "data_sources": {
+    "prices": "Yahoo Finance API",
+    "volumes": "Yahoo Finance API",
+    "market_cap": "Yahoo Finance API",
+    "volatility": "Calculated from historical prices",
+    "fear_greed": "Alternative.me API"
   },
   "analysis_results": {
+    "correlation_matrix": {
+      "price": {
+        "price": 1.0,
+        "change_24h": 0.34170428306462786,
+        "volume_24h": 0.9024901425950985,
+        "market_cap": 0.9876312871333137,
+        "volatility": -0.7666690719869701,
+        "fear_greed_index": NaN
+      },
+      "change_24h": {
+        "price": 0.34170428306462786,
+        "change_24h": 1.0,
+        "volume_24h": 0.3985833766345079,
+        "market_cap": 0.3630889412848249,
+        "volatility": -0.7273516203411727,
+        "fear_greed_index": NaN
+      },
+      "volume_24h": {
+        "price": 0.9024901425950985,
+        "change_24h": 0.3985833766345079,
+        "volume_24h": 1.0,
+        "market_cap": 0.9573744672316767,
+        "volatility": -0.8884898070823671,
+        "fear_greed_index": NaN
+      },
+      "market_cap": {
+        "price": 0.9876312871333137,
+        "change_24h": 0.3630889412848249,
+        "volume_24h": 0.9573744672316767,
+        "market_cap": 1.0,
+        "volatility": -0.8246807101744416,
+        "fear_greed_index": NaN
+      },
+      "volatility": {
+        "price": -0.7666690719869701,
+        "change_24h": -0.7273516203411727,
+        "volume_24h": -0.8884898070823671,
+        "market_cap": -0.8246807101744416,
+        "volatility": 1.0,
+        "fear_greed_index": NaN
+      },
+      "fear_greed_index": {
+        "price": NaN,
+        "change_24h": NaN,
+        "volume_24h": NaN,
+        "market_cap": NaN,
+        "volatility": NaN,
+        "fear_greed_index": NaN
+      }
+    },
     "volatility_prediction": {
       "Random Forest": {
-        "R2": 0.9449367506459103,
-        "RMSE": 0.004306582880240609,
-        "MAE": 0.0033273838000000117,
+        "MSE": 0.00014295272392089627,
+        "RMSE": 0.011956283867527413,
+        "R2": -5.27691231540496,
+        "MAE": 0.01153722249999999,
         "CV_R2_mean": NaN,
         "CV_R2_std": NaN
       },
       "Gradient Boosting": {
-        "R2": 0.9999999992944921,
-        "RMSE": 4.874755472714374e-07,
-        "MAE": 4.6395794145483173e-07,
+        "MSE": 9.844364405301576e-05,
+        "RMSE": 0.00992187704282893,
+        "R2": -3.3225627660767607,
+        "MAE": 0.009495906776949021,
         "CV_R2_mean": NaN,
         "CV_R2_std": NaN
       },
       "Linear Regression": {
-        "R2": 0.9999948641291139,
-        "RMSE": 4.159191723261475e-05,
-        "MAE": 2.987458720696036e-05,
+        "MSE": 0.0002722304991693077,
+        "RMSE": 0.0164994090551543,
+        "R2": -10.95337119851052,
+        "MAE": 0.015897775047760354,
         "CV_R2_mean": NaN,
         "CV_R2_std": NaN
       }
     },
     "price_change_prediction": {
-      "models": {
-        "Random Forest": {
-          "R2": 0.9546257730024199,
-          "RMSE": 0.3909367617852399
-        },
-        "Gradient Boosting": {
-          "R2": 0.9999999992944921,
-          "RMSE": 4.874755472701888e-05
-        },
-        "Linear Regression": {
-          "R2": 0.9999948641291139,
-          "RMSE": 0.004159191723261485
-        }
-      },
+      "R2": -3.1538976368191713,
+      "MSE": 0.9460240198266404,
+      "MAE": 0.8475142000000002,
+      "CV_R2_mean": NaN,
+      "CV_R2_std": NaN,
       "feature_importance": {
-        "fearGreedIndex": 0.0,
-        "volume_normalized": 0.2967775299503381,
-        "price_normalized": 0.22286794080781339,
-        "sentiment_normalized": 0.48035452924184857
+        "Fear & Greed Index": 0.0,
+        "Volume 24h": 0.439163247077316,
+        "Volatility": 0.5608367529226841
       }
+    },
+    "fear_greed_analysis": {
+      "current_index": 28,
+      "sentiment": "Fear",
+      "avg_price_change": -1.1569366666666665,
+      "avg_volatility": 0.0159765,
+      "correlation_with_price": 0.0
     }
   },
-  "correlations": {
-    "volatility_vs_sentiment": 0.9998545448399329,
-    "volatility_vs_volume": -0.6358463865154382,
-    "change_vs_sentiment": 0.9998545448399326
-  }
+  "note": "All ML models trained on 100% REAL data from verified APIs"
 }

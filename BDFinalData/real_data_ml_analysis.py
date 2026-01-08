@@ -93,7 +93,7 @@ class RealDataMLAnalyzer:
         print(correlation_matrix.round(3))
         
         # Key correlations (handle NaN)
-        print("\n🔑 Key Correlations:")
+        print("\n Key Correlations:")
         fg_price_corr = correlation_matrix.loc['fear_greed_index', 'change_24h']
         vol_vol_corr = correlation_matrix.loc['volume_24h', 'volatility']
         mc_price_corr = correlation_matrix.loc['market_cap', 'price']
