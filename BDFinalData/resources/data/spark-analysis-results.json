@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-08T20:59:46.090931",
+  "timestamp": "2026-01-09T12:25:21.316468",
   "data_source": "CoinGecko API (Live)",
   "results": {
     "average_sentiment": [
@@ -9,7 +9,7 @@
       ],
       [
         "ADA",
-        0.03
+        0.04
       ],
       [
         "BTC",
@@ -17,7 +17,7 @@
       ],
       [
         "ETH",
-        0.01
+        0.0
       ],
       [
         "DOGE",
@@ -29,19 +29,17 @@
       ]
     ],
     "market_metrics": {
-      "total_market_cap": 3189557488330.033,
-      "total_volume": 125128026717.35449,
-      "btc_dominance": 56.9,
-      "timestamp": "2026-01-08T20:59:44.619307",
+      "total_market_cap": 3169087750942.071,
+      "total_volume": 108459867471.40761,
+      "btc_dominance": 56.8,
+      "timestamp": "2026-01-09T12:25:19.557419",
       "is_global": true
     },
     "volatility_classification": [
       [
         "Medium",
         [
-          "XRP",
-          "DOGE",
-          "ADA"
+          "SOL"
         ]
       ],
       [
@@ -49,7 +47,9 @@
         [
           "BTC",
           "ETH",
-          "SOL"
+          "XRP",
+          "DOGE",
+          "ADA"
         ]
       ]
     ],
@@ -58,8 +58,24 @@
         "Gain",
         [
           [
+            "BTC",
+            0.37059
+          ],
+          [
+            "XRP",
+            0.5051
+          ],
+          [
             "SOL",
-            1.32214
+            2.90201
+          ],
+          [
+            "DOGE",
+            0.08745
+          ],
+          [
+            "ADA",
+            0.4101
           ]
         ]
       ],
@@ -67,24 +83,8 @@
         "Loss",
         [
           [
-            "BTC",
-            -0.12079
-          ],
-          [
             "ETH",
-            -1.03942
-          ],
-          [
-            "XRP",
-            -2.24265
-          ],
-          [
-            "DOGE",
-            -2.84632
-          ],
-          [
-            "ADA",
-            -2.0559
+            -0.65448
           ]
         ]
       ]

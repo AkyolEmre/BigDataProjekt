@@ -110,7 +110,7 @@ class EnhancedSentimentFetcher:
             # CryptoPanic free public API
             url = "https://cryptopanic.com/api/developer/v2/posts/"
             params = {
-                'auth_token': 'cef669b5f72036d4339b4c458b828eaead422efc',
+                'auth_token': '147160c88c37402ebc091580babbf5e24c296e72',
                 'public': 'true'
             }
             

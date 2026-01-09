@@ -1,10 +1,10 @@
 {
   "news_items": [
     {
-      "title": "INTEL: Warner Bros. Says No to $108B Hostile Bid, Backs Netflix Instead",
+      "title": "Solana is becoming settlement rail for Visa and JPMorgan but one metric still scares insiders",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-07T20:56:23Z",
+      "published_at": "2026-01-08T12:20:35Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -21,70 +21,10 @@
       "kind": "news"
     },
     {
-      "title": "Senate Agriculture Committee to follow Banking panel in crypto vote next week: report",
+      "title": "Bitcoin Struggles Around $90,000 As Ethereum, XRP, Dogecoin Slide On Heavy ETF Outflows",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-07T20:54:33Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": -0.333,
-        "combined": -0.133
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Bulls in Despair as Bitcoin Erases 2026 Gains",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:53:46Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0.333,
-        "combined": 0.133
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Analysis Company Santiment Says Participation in the Cryptocurrency Market Has Increased Again, Pointing to These Three Areas",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:51:08Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0.333,
-        "combined": 0.133
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Florida lawmakers propose bill to establish state-run crypto reserve",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:50:10Z",
+      "published_at": "2026-01-08T12:19:49Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -101,230 +41,10 @@
       "kind": "news"
     },
     {
-      "title": "DID YOU KNOW: @BSCNews also has its own TikTok channel where we produce exclusive content about Prediction Markets and current affairs...?\n\nMake sure to drop us a follow! \u2b07\ufe0f",
+      "title": "I get this error when i try to send trc 20 usdt",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-07T20:49:02Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": -0.6,
-        "combined": -0.24
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Babylon receives $15M from a16z Crypto to expand Bitcoin-native lending",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:48:35Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Bitcoin slid toward $91K as traders focused on a CME weekend gap near $90,600.\n\nHistorically, BTC often retraces to fill these gaps before choosing its next direction.\n@jennsanasie brings you \"Chart of the Day,\" presented by @cryptocom.",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:48:23Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Investors Back Maxi Doge as the Next Crypto to Explode by Q2 of 2026",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:47:57Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0.6,
-        "combined": 0.24
-      },
-      "kind": "news"
-    },
-    {
-      "title": "INTEL: US reschedules December income, PCE and GDP data to February 20",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:46:05Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Morgan Stanley just filed for two crypto ETFs, but one massive omission sends a brutal signal",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:45:37Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0.6,
-        "combined": 0.24
-      },
-      "kind": "news"
-    },
-    {
-      "title": "60K Bitcoin absorbed by accumulators as miners send BTC to exchanges: Will the rally stall?",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:45:00Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0.6,
-        "combined": 0.24
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Polymarket Partners With Dow Jones To Supply Prediction Market Data Across Major Outlets",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:44:18Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate Agriculture Committee to hold Bitcoin and crypto market structure bill markup next week in addition to the Senate Banking Committee \u2014 Punchbowl News\n\nHuge week ahead for Bitcoin ",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:43:03Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0.333,
-        "combined": 0.133
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Clone-X NFTs Soar 200% as Nike Sells RTFKT",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:42:10Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0.333,
-        "combined": 0.133
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Why Bitcoin, Ethereum, XRP Are Surging In Early 2026",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:40:25Z",
-      "currencies": [],
-      "votes": {
-        "positive": 0,
-        "negative": 0,
-        "important": 0,
-        "liked": 0,
-        "saved": 0
-      },
-      "sentiment": {
-        "vote_based": 0.0,
-        "text_based": 0,
-        "combined": 0.0
-      },
-      "kind": "news"
-    },
-    {
-      "title": "Thinking about grabbing more HBAR at $0.11 \u2014 thoughts?",
-      "url": "",
-      "source": "Unknown",
-      "published_at": "2026-01-07T20:40:22Z",
+      "published_at": "2026-01-08T12:17:38Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -341,10 +61,30 @@
       "kind": "reddit"
     },
     {
-      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate Agriculture Committee will also hold a crypto market structure legislation markup next week in addition to the Senate Banking Committee \u2014 Punchbowl News\n\n\"Next week shaping up to be massive for bipartisan crypto policy in 2026\" ",
+      "title": "Morgan Stanley Exec Says Bitcoin ETF Offers Intangible Benefits Beyond Flows",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-07T20:40:08Z",
+      "published_at": "2026-01-08T12:15:59Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Ethereum ETFs Record $98.45M Net Outflow as Selling Pressure Broadens",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:15:54Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -361,10 +101,10 @@
       "kind": "news"
     },
     {
-      "title": "Why a Bank Buying Stablecoin Plumbing Actually Matters to Your Bags",
+      "title": "\u2018Scam centre billionaire\u2019 deported months after seizure of $15B in Bitcoin",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-07T20:39:19Z",
+      "published_at": "2026-01-08T12:15:47Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -381,10 +121,50 @@
       "kind": "news"
     },
     {
-      "title": "The U.S. Senate Banking Committee and Senate Agriculture Committee are both scheduled to hold markup votes on crypto market structure legislation on January 15. If the bills are approved at the committee level, they will proceed to internal reconciliation in the Senate, be",
+      "title": "XRP Whale Activity Surges as Price Holds Above $2",
       "url": "",
       "source": "Unknown",
-      "published_at": "2026-01-07T20:35:29Z",
+      "published_at": "2026-01-08T12:15:26Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0.333,
+        "combined": 0.133
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Bosch bracing for 2025 profit slump and tough new year, CEO says",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:15:12Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0.6,
+        "combined": 0.24
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Memecoins, DeFi lead declines as caution seeps in: Crypto Daybook Americas",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:15:00Z",
       "currencies": [],
       "votes": {
         "positive": 0,
@@ -397,6 +177,226 @@
         "vote_based": 0.0,
         "text_based": -0.333,
         "combined": -0.133
+      },
+      "kind": "news"
+    },
+    {
+      "title": "JUST IN: \ud83c\uddfa\ud83c\uddf8 BILLIONAIRE Tim Draper predicts Bitcoin will reach $250k in 2026 as mainstream adoption accelerates ",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:13:33Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0.75,
+        "combined": 0.3
+      },
+      "kind": "news"
+    },
+    {
+      "title": "XRP Ledger Hits 3-Month High in Whale Activity, What Does It Mean for Price?",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:12:00Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0.6,
+        "combined": 0.24
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Simply Good Foods (SMPL) Tops Q1 Earnings Expectations, Reaffirms Outlook",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:11:43Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Tesla Slips Below $433 as Nvidia AI Reveal Pressures Autonomous Driving Narrative",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:10:20Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Mass Resignations Occur in the Most Talked About Altcoin of Recent Months! CEO Makes a Statement!",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:09:09Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
+      },
+      "kind": "news"
+    },
+    {
+      "title": "XRP ETFs See First Outflows since Inception as Crypto ETF Market Suffers",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:07:20Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
+      },
+      "kind": "news"
+    },
+    {
+      "title": " Tempo has just dropped its native token standard... TIP-20\n\nThink of it like $ETH's ERC-20 or $BNB's BEP-20, but purpose-built for @Tempo's payments-focused blockchain.\n\nIt matters a lot more than you think and could become the industry standard for stablecoins and payments",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:07:02Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": -0.333,
+        "combined": -0.133
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Freedx Introduces Live Crypto Quiz Show Featuring Rewards for Participants",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:05:39Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Solana Mobile to Launch SKR Token, Giving Users Control Over Seeker App Store",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:05:00Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0.6,
+        "combined": 0.24
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Ripple Rules Out IPO Plans Despite  Million Raise at  Billion Valuation",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:05:00Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
+      },
+      "kind": "news"
+    },
+    {
+      "title": "Crypto gold promoters claim 80% APR amid speculative mania",
+      "url": "",
+      "source": "Unknown",
+      "published_at": "2026-01-08T12:03:53Z",
+      "currencies": [],
+      "votes": {
+        "positive": 0,
+        "negative": 0,
+        "important": 0,
+        "liked": 0,
+        "saved": 0
+      },
+      "sentiment": {
+        "vote_based": 0.0,
+        "text_based": 0,
+        "combined": 0.0
       },
       "kind": "news"
     }
@@ -404,118 +404,118 @@
   "trending_topics": [
     {
       "title": "General",
-      "sentiment": 0.06,
-      "mentions": 40000,
-      "article_count": 6,
+      "sentiment": 0.05,
+      "mentions": 55000,
+      "article_count": 9,
       "keywords": [
-        "market",
+        "solana",
         "crypto",
-        "data",
-        "analysis"
+        "becoming",
+        "settlement"
       ],
       "impact": "High Impact",
       "sample_headlines": [
-        "Analysis Company Santiment Says Participation in the Cryptocurrency Market Has Increased Again, Pointing to These Three Areas",
-        "Florida lawmakers propose bill to establish state-run crypto reserve",
-        "Investors Back Maxi Doge as the Next Crypto to Explode by Q2 of 2026"
-      ]
-    },
-    {
-      "title": "Regulatory",
-      "sentiment": -0.03,
-      "mentions": 35000,
-      "article_count": 5,
-      "keywords": [
-        "committee",
-        "senate",
-        "crypto",
-        "agriculture"
-      ],
-      "impact": "High Impact",
-      "sample_headlines": [
-        "Senate Agriculture Committee to follow Banking panel in crypto vote next week: report",
-        "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate Agriculture Committee to hold Bitcoin and crypto market structure bill markup next week in addition to the Senate Banking Committee \u2014 Punchbowl News\n\nHuge week ahead for Bitcoin ",
-        "JUST IN: \ud83c\uddfa\ud83c\uddf8 US Senate Agriculture Committee will also hold a crypto market structure legislation markup next week in addition to the Senate Banking Committee \u2014 Punchbowl News\n\n\"Next week shaping up to be massive for bipartisan crypto policy in 2026\" "
-      ]
-    },
-    {
-      "title": "Bitcoin",
-      "sentiment": 0.07,
-      "mentions": 35000,
-      "article_count": 5,
-      "keywords": [
-        "bitcoin",
-        "2026",
-        "bulls",
-        "despair"
-      ],
-      "impact": "High Impact",
-      "sample_headlines": [
-        "Bulls in Despair as Bitcoin Erases 2026 Gains",
-        "Babylon receives $15M from a16z Crypto to expand Bitcoin-native lending",
-        "Bitcoin slid toward $91K as traders focused on a CME weekend gap near $90,600.\n\nHistorically, BTC often retraces to fill these gaps before choosing its next direction.\n@jennsanasie brings you \"Chart of the Day,\" presented by @cryptocom."
+        "Solana is becoming settlement rail for Visa and JPMorgan but one metric still scares insiders",
+        "I get this error when i try to send trc 20 usdt",
+        "Bosch bracing for 2025 profit slump and tough new year, CEO says"
       ]
     },
     {
       "title": "ETF & Regulatory",
-      "sentiment": 0.12,
+      "sentiment": 0.03,
+      "mentions": 30000,
+      "article_count": 4,
+      "keywords": [
+        "bitcoin",
+        "outflows",
+        "etfs",
+        "struggles"
+      ],
+      "impact": "Medium Impact",
+      "sample_headlines": [
+        "Bitcoin Struggles Around $90,000 As Ethereum, XRP, Dogecoin Slide On Heavy ETF Outflows",
+        "Morgan Stanley Exec Says Bitcoin ETF Offers Intangible Benefits Beyond Flows",
+        "Ethereum ETFs Record $98.45M Net Outflow as Selling Pressure Broadens"
+      ]
+    },
+    {
+      "title": "Bitcoin",
+      "sentiment": 0.08,
       "mentions": 20000,
       "article_count": 2,
       "keywords": [
-        "intel:",
-        "warner",
-        "bros.",
-        "says"
+        "bitcoin",
+        "\u2018scam",
+        "centre",
+        "billionaire\u2019"
       ],
       "impact": "Low Impact",
       "sample_headlines": [
-        "INTEL: Warner Bros. Says No to $108B Hostile Bid, Backs Netflix Instead",
-        "Morgan Stanley just filed for two crypto ETFs, but one massive omission sends a brutal signal"
+        "\u2018Scam centre billionaire\u2019 deported months after seizure of $15B in Bitcoin",
+        "JUST IN: \ud83c\uddfa\ud83c\uddf8 BILLIONAIRE Tim Draper predicts Bitcoin will reach $250k in 2026 as mainstream adoption accelerates "
       ]
     },
     {
       "title": "Price Movement",
-      "sentiment": -0.24,
-      "mentions": 15000,
-      "article_count": 1,
+      "sentiment": 0.19,
+      "mentions": 20000,
+      "article_count": 2,
       "keywords": [
-        "know:",
-        "@bscnews",
-        "also",
-        "tiktok"
+        "whale",
+        "activity",
+        "surges",
+        "price"
       ],
       "impact": "Low Impact",
       "sample_headlines": [
-        "DID YOU KNOW: @BSCNews also has its own TikTok channel where we produce exclusive content about Prediction Markets and current affairs...?\n\nMake sure to drop us a follow! \u2b07\ufe0f"
+        "XRP Whale Activity Surges as Price Holds Above $2",
+        "XRP Ledger Hits 3-Month High in Whale Activity, What Does It Mean for Price?"
       ]
     },
     {
-      "title": "NFT & Gaming",
-      "sentiment": 0.13,
-      "mentions": 15000,
-      "article_count": 1,
+      "title": "Altcoins",
+      "sentiment": -0.07,
+      "mentions": 20000,
+      "article_count": 2,
       "keywords": [
-        "clone-x",
-        "nfts",
-        "soar",
-        "200%"
+        "memecoins,",
+        "defi",
+        "lead",
+        "declines"
       ],
       "impact": "Low Impact",
       "sample_headlines": [
-        "Clone-X NFTs Soar 200% as Nike Sells RTFKT"
+        "Memecoins, DeFi lead declines as caution seeps in: Crypto Daybook Americas",
+        "Mass Resignations Occur in the Most Talked About Altcoin of Recent Months! CEO Makes a Statement!"
+      ]
+    },
+    {
+      "title": "Ethereum",
+      "sentiment": -0.13,
+      "mentions": 15000,
+      "article_count": 1,
+      "keywords": [
+        "think",
+        "tempo",
+        "just",
+        "dropped"
+      ],
+      "impact": "Low Impact",
+      "sample_headlines": [
+        " Tempo has just dropped its native token standard... TIP-20\n\nThink of it like $ETH's ERC-20 or $BNB's BEP-20, but purpose-built for @Tempo's payments-focused blockchain.\n\nIt matters a lot more than you think and could become the industry standard for stablecoins and payments"
       ]
     }
   ],
   "aggregate": {
     "total_news": 20,
-    "average_sentiment": 0.037,
-    "positive_count": 8,
-    "negative_count": 4,
-    "neutral_count": 8,
+    "average_sentiment": 0.044,
+    "positive_count": 6,
+    "negative_count": 3,
+    "neutral_count": 11,
     "sentiment_distribution": {
-      "positive": 40.0,
-      "negative": 20.0,
-      "neutral": 40.0
+      "positive": 30.0,
+      "negative": 15.0,
+      "neutral": 55.0
     }
   },
   "data_source": "CryptoPanic Free API",

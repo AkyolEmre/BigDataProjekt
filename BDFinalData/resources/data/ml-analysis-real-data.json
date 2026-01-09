@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-08T20:59:11.566822",
+  "timestamp": "2026-01-09T12:24:45.742728",
   "data_sources": {
     "prices": "Yahoo Finance API",
     "volumes": "Yahoo Finance API",
@@ -11,41 +11,41 @@
     "correlation_matrix": {
       "price": {
         "price": 1.0,
-        "change_24h": 0.34170428306462786,
-        "volume_24h": 0.9024901425950985,
-        "market_cap": 0.9876312871333137,
-        "volatility": -0.7666690719869701,
+        "change_24h": -0.10665575152463636,
+        "volume_24h": 0.9138540287457764,
+        "market_cap": 0.9876311223897148,
+        "volatility": -0.21645201387644858,
         "fear_greed_index": NaN
       },
       "change_24h": {
-        "price": 0.34170428306462786,
+        "price": -0.10665575152463636,
         "change_24h": 1.0,
-        "volume_24h": 0.3985833766345079,
-        "market_cap": 0.3630889412848249,
-        "volatility": -0.7273516203411727,
+        "volume_24h": -0.2399322840625031,
+        "market_cap": -0.1720045688546882,
+        "volatility": 0.8842610788807341,
         "fear_greed_index": NaN
       },
       "volume_24h": {
-        "price": 0.9024901425950985,
-        "change_24h": 0.3985833766345079,
+        "price": 0.9138540287457764,
+        "change_24h": -0.2399322840625031,
         "volume_24h": 1.0,
-        "market_cap": 0.9573744672316767,
-        "volatility": -0.8884898070823671,
+        "market_cap": 0.9644413388714298,
+        "volatility": -0.15318596032172307,
         "fear_greed_index": NaN
       },
       "market_cap": {
-        "price": 0.9876312871333137,
-        "change_24h": 0.3630889412848249,
-        "volume_24h": 0.9573744672316767,
+        "price": 0.9876311223897148,
+        "change_24h": -0.1720045688546882,
+        "volume_24h": 0.9644413388714298,
         "market_cap": 1.0,
-        "volatility": -0.8246807101744416,
+        "volatility": -0.21311362968011482,
         "fear_greed_index": NaN
       },
       "volatility": {
-        "price": -0.7666690719869701,
-        "change_24h": -0.7273516203411727,
-        "volume_24h": -0.8884898070823671,
-        "market_cap": -0.8246807101744416,
+        "price": -0.21645201387644858,
+        "change_24h": 0.8842610788807341,
+        "volume_24h": -0.15318596032172307,
+        "market_cap": -0.21311362968011482,
         "volatility": 1.0,
         "fear_greed_index": NaN
       },
@@ -60,47 +60,47 @@
     },
     "volatility_prediction": {
       "Random Forest": {
-        "MSE": 0.00014295272392089627,
-        "RMSE": 0.011956283867527413,
-        "R2": -5.27691231540496,
-        "MAE": 0.01153722249999999,
+        "MSE": 5.0163412551072515e-05,
+        "RMSE": 0.007082613398391339,
+        "R2": -18.991680464249413,
+        "MAE": 0.006770484500000002,
         "CV_R2_mean": NaN,
         "CV_R2_std": NaN
       },
       "Gradient Boosting": {
-        "MSE": 9.844364405301576e-05,
-        "RMSE": 0.00992187704282893,
-        "R2": -3.3225627660767607,
-        "MAE": 0.009495906776949021,
+        "MSE": 0.0001378470223658534,
+        "RMSE": 0.0117408271585035,
+        "R2": -53.93632677562849,
+        "MAE": 0.011486231858967154,
         "CV_R2_mean": NaN,
         "CV_R2_std": NaN
       },
       "Linear Regression": {
-        "MSE": 0.0002722304991693077,
-        "RMSE": 0.0164994090551543,
-        "R2": -10.95337119851052,
-        "MAE": 0.015897775047760354,
+        "MSE": 9.588909128000015e-05,
+        "RMSE": 0.009792297548583793,
+        "R2": -37.21478594434305,
+        "MAE": 0.006924200000000021,
         "CV_R2_mean": NaN,
         "CV_R2_std": NaN
       }
     },
     "price_change_prediction": {
-      "R2": -3.1538976368191713,
-      "MSE": 0.9460240198266404,
-      "MAE": 0.8475142000000002,
+      "R2": -7.1312909405092455,
+      "MSE": 2.318816664542262,
+      "MAE": 1.4241295000000007,
       "CV_R2_mean": NaN,
       "CV_R2_std": NaN,
       "feature_importance": {
         "Fear & Greed Index": 0.0,
-        "Volume 24h": 0.439163247077316,
-        "Volatility": 0.5608367529226841
+        "Volume 24h": 0.4507694435517014,
+        "Volatility": 0.5492305564482985
       }
     },
     "fear_greed_analysis": {
-      "current_index": 28,
+      "current_index": 27,
       "sentiment": "Fear",
-      "avg_price_change": -1.1569366666666665,
-      "avg_volatility": 0.0159765,
+      "avg_price_change": 0.5963866666666667,
+      "avg_volatility": 0.008271933333333334,
       "correlation_with_price": 0.0
     }
   },
